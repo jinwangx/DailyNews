@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="horizontal"
+    >
+
+    <LinearLayout
+        android:layout_weight="5"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="2dp"
+        >
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/tvStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="主题风格"
+            android:textSize="22dp" />
+
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/tv_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+    <ImageButton
+        android:layout_weight="1"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:clickable="false"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/jiantou1_pressed" />
+</LinearLayout>

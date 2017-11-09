@@ -1,0 +1,22 @@
+javascript:
+(
+function(){
+                           var article=document.getElementsByTagName("article")[0];
+                           var content=article.querySelectorAll("div.content")[0];
+                           var pages=content.querySelectorAll("div.page");
+                           for(var i=0;i<pages.length;i++){
+                               var imgs=pages[i].querySelectorAll("div.photo");
+                               for(var j=0;j<imgs.length;j++){
+                                   var a=imgs[j].getElementsByTagName("a");
+                                   for(var k=0;k<a.length;k++){
+                                       var img=a[k].getElementsByTagName("img")[0];
+                                        img.onclick=function()
+                                        {
+                                            window.imageListener.openImage(this.src);
+                                        }
+                                   }
+                               }
+                           }
+                     }
+)
+()

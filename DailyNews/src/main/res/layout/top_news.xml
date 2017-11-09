@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="200dp">
+    <android.support.v4.view.ViewPager
+        android:id="@id/nt_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
+    <TextView
+        android:id="@id/news_top_title"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_alignBottom="@id/nt_viewpager"
+        android:background="#89E0E5"
+        android:gravity="center_vertical"
+        />
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@id/cp_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:padding="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@+id/nt_viewpager"
+        app:radius="3dp"
+        app:fillColor="#00FF00"
+        app:strokeWidth="1dp"
+        app:pageColor="#FFFFFF"
+        app:snap="true"
+        />
+</RelativeLayout>

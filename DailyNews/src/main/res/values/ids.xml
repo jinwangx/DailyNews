@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--webView-->
+    <item type="id" name="webView">false</item>
+
+    <!--HomeActivity-->
+    <item type="id" name="drawer_layout">false</item>
+    <item type="id" name="fl_content">false</item>
+    <item type="id" name="rb_group">false</item>
+    <item type="id" name="rb_shouye">false</item>
+    <item type="id" name="rb_video">false</item>
+    <item type="id" name="rb_dirbroad">false</item>
+    <item type="id" name="rb_me">false</item>
+    <item type="id" name="user_icon">false</item>
+    <item type="id" name="user_name">false</item>
+    <item type="id" name="login_qq">false</item>
+    <item type="id" name="login_wechat">false</item>
+    <item type="id" name="login_weibo">false</item>
+
+    <!--MeFragment-->
+    <item type="id" name="rl_me">false</item>
+    <item type="id" name="ci_me">false</item>
+    <item type="id" name="iv_mIcon">false</item>
+    <item type="id" name="tv_mName">false</item>
+    <item type="id" name="tv_mDesc">false</item>
+    <item type="id" name="tv_mWeibo">false</item>
+    <item type="id" name="tv_mFans">false</item>
+    <item type="id" name="tv_mConcerns">false</item>
+    <item type="id" name="tv_moreSetting">false</item>
+
+    <!--SettingActivity-->
+    <item type="id" name="siv_style">false</item>
+
+    <!--loginDialog-->
+    <item type="id" name="cancel_exit">false</item>
+    <item type="id" name="ok_exit">false</item>
+
+
+    <item type="id" name="rl_splash">false</item>
+
+
+    <item type="id" name="indicator">false</item>
+    <item type="id" name="pager">false</item>
+    <item type="id" name="iv_back">false</item>
+    <item type="id" name="image_large">false</item>
+
+    <!--item_bottom-->
+    <item type="id" name="ib_up">false</item>
+    <item type="id" name="tv_up">false</item>
+    <item type="id" name="ib_down">false</item>
+    <item type="id" name="tv_down">false</item>
+    <item type="id" name="ib_forward">false</item>
+    <item type="id" name="tv_forward">false</item>
+    <item type="id" name="ib_comment">false</item>
+    <item type="id" name="tv_commentCount">false</item>
+    <item type="id" name="top_comments">false</item>
+
+    <!--item_header-->
+    <item type="id" name="iv_icon_publisher">false</item>
+    <item type="id" name="tv_name_publisher">false</item>
+    <item type="id" name="tv_time_publish">false</item>
+    <item type="id" name="tv_title">false</item>
+
+    <!--item_middle-->
+    <item type="id" name="iv_image">false</item>
+    <item type="id" name="btn_large">false</item>
+    <item type="id" name="jc_player">false</item>
+    <item type="id" name="gif">false</item>
+
+    <!--news_type-->
+    <item type="id" name="image_type1">false</item>
+    <item type="id" name="title_type1">false</item>
+    <item type="id" name="category_type1">false</item>
+    <item type="id" name="time_type1">false</item>
+    <item type="id" name="tcount_type1">false</item>
+    <item type="id" name="title_type2">false</item>
+    <item type="id" name="image1_type2">false</item>
+    <item type="id" name="image2_type2">false</item>
+    <item type="id" name="image3_type2">false</item>
+    <item type="id" name="category_type2">false</item>
+    <item type="id" name="time_type2">false</item>
+    <item type="id" name="tcount_type2">false</item>
+    <item type="id" name="title_type3">false</item>
+    <item type="id" name="image_type3">false</item>
+    <item type="id" name="category_type3">false</item>
+    <item type="id" name="time_type3">false</item>
+    <item type="id" name="tcount_type3">false</item>
+
+    <!--item_load_more-->
+    <item type="id" name="rl_more_loading">false</item>
+    <item type="id" name="rl_more_error">false</item>
+    <item type="id" name="rl_no_more">false</item>
+
+    <!--swipe_refresh_layout-->
+    <item type="id" name="swipe_refresh_layout">false</item>
+    <item type="id" name="recycle_view">false</item>
+    <!--toolBar-->
+    <item type="id" name="toolbar">false</item>
+    <item type="id" name="toolbar_title">false</item>
+
+    <!--top_news-->
+    <item type="id" name="nt_viewpager">false</item>
+    <item type="id" name="news_top_title">false</item>
+    <item type="id" name="cp_indicator">false</item>
+</resources>

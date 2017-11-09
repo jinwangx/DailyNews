@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">闻者</string>
+    <string name="navigation_drawer_open">打开</string>
+    <string name="navigation_drawer_close">关闭</string>
+
+    <string-array name="theme_name">
+        <item>中国红</item>
+        <item>天空蓝</item>
+        <item>活力橙</item>
+        <item>金属灰</item>
+        <item>苹果绿</item>
+    </string-array>
+
+    <string-array name="theme_color">
+        <item>#FF0000</item>
+        <item>#00BFFF</item>
+        <item>#FFA500</item>
+        <item>#B5B5B5</item>
+        <item>#00FF00</item>
+    </string-array>
+</resources>

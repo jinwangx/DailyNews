@@ -1,0 +1,106 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator</item>
+        <item name="android:windowAnimationStyle">@style/fade</item>
+        <item name="android:dividerHeight">@drawable/shape_list_divider</item>
+        <item name="android:listDivider">@drawable/shape_list_divider</item>
+    </style>
+
+    <style name="CustomTabPageIndicator" parent="Widget.TabPageIndicator">
+        <item name="android:textAppearance">@style/CustomTabPageIndicator.Text</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:dividerPadding">8dp</item>
+        <item name="android:showDividers">middle</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:fadingEdge">horizontal</item>
+        <item name="android:fadingEdgeLength">8dp</item>
+    </style>
+
+    <style name="CustomTabPageIndicator.Text" parent="android:TextAppearance.Medium">
+        <item name="android:typeface">monospace</item>
+        <item name="android:textColor">@drawable/action_text_tab_indicator</item>
+    </style>
+
+    <style name="dialog_logout" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item> <!-- 边框 -->
+        <item name="android:windowIsFloating">true</item> <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">true</item> <!-- 半透明 -->
+        <item name="android:windowNoTitle">true</item> <!-- 无标题 -->
+        <item name="android:windowBackground">@android:color/transparent</item> <!-- 背景透明 -->
+        <item name="android:backgroundDimEnabled">true</item> <!-- 模糊 -->
+        <item name="android:windowAnimationStyle">@android:style/Animation.InputMethod</item>
+    </style>
+
+    <style name="fade" parent="@android:style/Animation.Activity">
+        <!--一个activity创建进入的效果-->
+        <item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>
+        <!--一个activity还没有finish()下退出效果, 比如有俩个activity A,B 首先启动A 然后再启动B 那么A还没有finish() 这A的退出效果-->
+        <item name="android:activityOpenExitAnimation">@anim/slide_left_out</item>
+        <!--上一个activity返回进入效果 比如有俩个activity A,B B退出后A进入的效果-->
+        <item name="android:activityCloseEnterAnimation">@anim/slide_left_in</item>
+        <!--activity finish()之后的效果 比如有俩个activity A,B B退出后会被finish() 那么B的退出效果在这定义-->
+        <item name="android:activityCloseExitAnimation">@anim/slide_right_out</item>
+    </style>
+
+    <style name="radioButton">
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:button">@null</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+    </style>
+
+    <style name="news_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:padding">7dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="news_category">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">7dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#FF0000</item>
+    </style>
+
+    <style name="news_time">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">8sp</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="news_line">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">12dp</item>
+        <item name="android:background">@android:color/holo_blue_dark</item>
+    </style>
+
+    <style name="news_tcount">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">8sp</item>
+        <item name="android:drawableLeft">@drawable/icon_comment</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="SwitchButtonMD">
+        <item name="kswThumbDrawable">@drawable/ksw_md_thumb</item>
+        <item name="kswBackColor">@drawable/ksw_md_back_color</item>
+        <item name="kswBackMeasureRatio">1.45</item>
+        <item name="kswThumbMarginLeft">-16dp</item>
+        <item name="kswThumbMarginTop">-14dp</item>
+        <item name="kswThumbMarginRight">-16dp</item>
+        <item name="kswThumbMarginBottom">-14dp</item>
+        <item name="kswThumbWidth">@dimen/ksw_md_thumb_ripple_size</item>
+        <item name="kswThumbHeight">@dimen/ksw_md_thumb_ripple_size</item>
+    </style>
+</resources>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="170dp"
+    android:padding="5dp"
+    >
+    <TextView
+        android:id="@id/title_type2"
+        style="@style/news_title"
+        android:layout_height="wrap_content"
+        android:text="宁乡水灾：一家5人靠冰箱残食熬了三天三夜"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:padding="2dp"
+            android:layout_weight="1"
+            android:id="@id/image1_type2"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:scaleType="fitXY"
+            />
+        <ImageView
+            android:padding="2dp"
+            android:layout_weight="1"
+            android:id="@id/image2_type2"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:scaleType="fitXY"
+            />
+        <ImageView
+            android:padding="2dp"
+            android:layout_weight="1"
+            android:id="@id/image3_type2"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:scaleType="fitXY"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="22dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+        <TextView
+            android:layout_weight="12"
+            android:id="@id/category_type2"
+            style="@style/news_category"
+            android:text="新闻"
+            />
+
+        <View
+            style="@style/news_line"/>
+
+        <TextView
+            style="@style/news_time"
+            android:id="@id/time_type2"
+            android:layout_weight="2"
+            android:gravity="center"
+            />
+        <TextView
+            style="@style/news_tcount"
+            android:layout_weight="2"
+            android:id="@id/tcount_type2"
+            android:text="1.3万"
+            />
+    </LinearLayout>
+</LinearLayout>

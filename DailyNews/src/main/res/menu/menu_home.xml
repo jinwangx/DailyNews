@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activity.HomeActivity"
+    >
+
+    <item android:id="@+id/action_skin"
+        android:title="换肤"
+        android:orderInCategory="90"
+        app:showAsAction="never"
+        />
+
+    <item android:id="@+id/action_settings1"
+        android:title="设置"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+</menu>
