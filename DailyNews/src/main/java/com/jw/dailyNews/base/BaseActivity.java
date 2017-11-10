@@ -1,42 +1,73 @@
 package com.jw.dailyNews.base;
 
-import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Window;
 
+import com.jw.dailyNews.BaseApplication;
 import com.jw.dailyNews.utils.CacheUtils;
 import com.jw.dailyNews.utils.ThemeUtils;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+/**
+ * 创建时间：
+ * 更新时间 2017/11/2 16:31
+ * 版本：
+ * 作者：Mr.jin
+ */
 
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity{
 
-	private List<Activity> activities=new LinkedList<Activity>();
 	public Unbinder unbinder;
+	protected List<BroadcastReceiver> receivers=new ArrayList<>();
 
 	@Override
 	protected void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		activities.add(this);
+		((BaseApplication)getApplication()).addActivity(this);
+		bindView();
+		unbinder= ButterKnife.bind(this);
+		init();
 		initView();
+		loadData();
+		initEvent();
 	}
 
-	public void killAll(){
-		List<Activity> copy=new LinkedList<>(activities);
-		for(Activity activity:copy){
-			activity.finish();
-		}
-		android.os.Process.killProcess(android.os.Process.myPid());
+	/**
+	 * 在初始化视图之前执行，如注册广播接收者，还有一些初始化操作
+	 */
+	protected void init(){
+
 	}
 
-	protected void initView() {
+	/**
+	 * 绑定视图
+	 */
+	protected abstract void bindView();
+
+	/**
+	 * 初始化视图
+	 */
+	protected void initView(){
+	}
+
+	/**
+	 * 初始化监听事件
+	 */
+	protected void initEvent(){
+
+	}
+
+	/**
+	 * 读取数据
+	 */
+	protected void loadData(){
 
 	}
 
@@ -44,15 +75,19 @@ public class BaseActivity extends AppCompatActivity {
 	protected void onResume() {
 		super.onResume();
 		ThemeUtils.changeStatusBar(this, CacheUtils.getCacheInt("indicatorColor", Color.RED,this));
+		loadData();
 	}
-
 
 	@Override
-	protected void onDestroy() {
+	public void onDestroy() {
 		super.onDestroy();
-		activities.remove(this);
 		if(unbinder!=null)
 			unbinder.unbind();
+		if(receivers.size()!=0){
+			for(int i=0;i<receivers.size();i++){
+				unregisterReceiver(receivers.get(i));
+			}
+		}
+		((BaseApplication)getApplication()).removeActivity(this);
 	}
-
 }

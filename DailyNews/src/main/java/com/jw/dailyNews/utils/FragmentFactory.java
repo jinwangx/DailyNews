@@ -13,9 +13,11 @@ import java.util.Map;
 import Lib.NewsURL;
 
 /**
- * Created by Administrator on 2017/6/20.
+ * 创建时间：2017/6/20
+ * 更新时间：2017/11/11 0011 上午 12:30
+ * 作者：Mr.jin
+ * 描述：首页新闻页面各板块fragment工厂
  */
-
 public class FragmentFactory {
     private  Map<Integer,Fragment> mFragments=new HashMap<Integer,Fragment>();
     private  List<String> urls=null;

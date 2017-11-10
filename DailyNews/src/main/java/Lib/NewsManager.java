@@ -8,7 +8,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.jw.dailyNews.BaseApplication;
-import com.jw.dailyNews.domain.NewsObject;
+import com.jw.dailyNews.bean.NewsObject;
 import com.jw.dailyNews.utils.CacheUtils;
 import com.jw.dailyNews.utils.CommonUtils;
 

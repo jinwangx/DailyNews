@@ -26,7 +26,6 @@ import java.util.List;
 
 import Lib.ThreadManager;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -59,12 +58,16 @@ public class ImageActivity extends BaseActivity implements ViewPager.OnPageChang
     private List<HashMap<String, String>> maps=new ArrayList<HashMap<String, String>>() {};
 
     @Override
+    protected void bindView() {
+        setContentView(R.layout.layout_image_circle);
+    }
+
+
+    @Override
     protected void initView() {
         super.initView();
-        setContentView(R.layout.layout_image_circle);
-        ButterKnife.bind(this);
-        String url=getIntent().getStringExtra("docurl");
-        url= CommonUtils.getArticalUrl(url,"photoview");
+        String url= CommonUtils.getArticalUrl(
+                getIntent().getStringExtra("docurl"),"photoview");
         initToolBar();
         initViewPager(url);
     }

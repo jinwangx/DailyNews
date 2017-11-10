@@ -17,8 +17,6 @@ import com.jw.dailyNews.utils.ThemeUtils;
 import com.jw.dailyNews.wiget.LoadingPage;
 import com.viewpagerindicator.TabPageIndicator;
 
-import butterknife.ButterKnife;
-
 /**
  * 创建时间：2017/6/21
  * 更新时间 2017/10/30 15:52
@@ -27,35 +25,57 @@ import butterknife.ButterKnife;
  * 描述：
  */
 
-public class FragmentShouye extends BaseFragment {
+public class FragmentShouye extends BaseFragment implements View.OnClickListener{
 
-    ImageButton add;
+    private ImageButton add;
     private PopupWindow popupWindow;
+    private View view;
+    private FrameLayout fl;
+    private int popWindowHeight;
+    private int popWindowWidth;
+    private Animation dropDownAnim;
+    private Animation dropUpAnim;
 
     @Override
     public View createSuccessView() {
         View view = View.inflate(getActivity(), R.layout.fragment_shouye, null);
-        final FrameLayout fl= (FrameLayout) view.findViewById(R.id.fl);
+        fl = (FrameLayout) view.findViewById(R.id.fl);
         add= (ImageButton) view.findViewById(R.id.add);
-        add.setOnClickListener(new View.OnClickListener() {
-            View view;
-            @Override
-            public void onClick(View v) {
+        add.setOnClickListener(this);
+        TabPageIndicator indicator = (TabPageIndicator) view.findViewById(R.id.indicator);
+        TabPageIndicatorAdapter adapter = new TabPageIndicatorAdapter(getChildFragmentManager());
+        ViewPager pager = (ViewPager) view.findViewById(R.id.pager);
+        pager.setAdapter(adapter);
+        indicator.setViewPager(pager);
+        popWindowHeight = ThemeUtils.getStatusBarHeight(getActivity())
+                - ThemeUtils.getStatusBarHeight(getActivity())-45-fl.getMeasuredHeight();
+        popWindowWidth = ThemeUtils.getWindowWidth(getActivity());
+        dropDownAnim = AnimationUtils.loadAnimation(getActivity(), R.anim.drop_down);
+        dropUpAnim = AnimationUtils.loadAnimation(getActivity(), R.anim.drop_up);
+        return view;
+    }
+
+    @Override
+    protected LoadingPage.LoadResult load() {
+        return LoadingPage.LoadResult.success;
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+            case R.id.add:
                 if(popupWindow==null) {
-                    int height = getActivity().getWindowManager().getDefaultDisplay()
-                            .getHeight()- ThemeUtils.getStatusBarHeight(getActivity())-45-fl.getMeasuredHeight();
-                    int width = getActivity().getWindowManager().getDefaultDisplay().getWidth();
-                    view = View.inflate(getActivity(), R.layout.layout_add, null);
-                    popupWindow = new PopupWindow(view, width, height);
-                    Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.drop_down);
-                    view.startAnimation(animation);
+                    if(view==null)
+                        view = View.inflate(getActivity(), R.layout.layout_add, null);
+                    popupWindow = new PopupWindow(view, popWindowWidth, popWindowHeight);
+                    view.startAnimation(dropDownAnim);
                     int[] location = new int[2];
                     add.getLocationOnScreen(location);
                     popupWindow.showAtLocation(add, Gravity.NO_GRAVITY, 0, location[1]+fl.getMeasuredHeight());
                 }
                 else {
-                    Animation animation2 = AnimationUtils.loadAnimation(getActivity(), R.anim.drop_up);
-                    view.startAnimation(animation2);
+                    view.startAnimation(dropUpAnim);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -64,20 +84,7 @@ public class FragmentShouye extends BaseFragment {
                         }
                     },500);
                 }
-
-            }
-        });
-        unbinder=ButterKnife.bind(this, view);
-        TabPageIndicator indicator = (TabPageIndicator) view.findViewById(R.id.indicator);
-        TabPageIndicatorAdapter adapter = new TabPageIndicatorAdapter(getChildFragmentManager());
-        ViewPager pager = (ViewPager) view.findViewById(R.id.pager);
-        pager.setAdapter(adapter);
-        indicator.setViewPager(pager);
-        return view;
-    }
-
-    @Override
-    protected LoadingPage.LoadResult load() {
-        return LoadingPage.LoadResult.success;
+                break;
+        }
     }
 }

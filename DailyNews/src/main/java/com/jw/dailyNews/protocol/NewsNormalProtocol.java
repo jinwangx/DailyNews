@@ -8,16 +8,18 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import com.jw.dailyNews.domain.NewsNormal;
+import com.jw.dailyNews.bean.NewsNormal;
 
 import java.util.List;
 
 import Lib.NewsURL;
 
 /**
- * Created by Administrator on 2017/7/18.
+ * 创建时间：2017/7/18
+ * 更新时间：2017/11/11 0011 上午 12:21
+ * 作者：Mr.jin
+ * 描述：继承了BaseProtocol,并且增加了将json数据解析成普通新闻bean对象集合的功能
  */
-
 public class NewsNormalProtocol extends BaseProtocol<List<NewsNormal>> {
     public NewsNormalProtocol(String baseUrl, String url, Context context, String type) {
         super(baseUrl,url, context, type);

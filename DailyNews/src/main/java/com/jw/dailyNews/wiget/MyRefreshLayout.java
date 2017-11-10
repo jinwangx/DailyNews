@@ -20,9 +20,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Administrator on 2017/7/31.
+ * 创建时间：2017/7/31
+ * 更新时间：2017/11/11 0011 上午 12:43
+ * 作者：Mr.jin
+ * 描述：
  */
-
 public class MyRefreshLayout<Data> extends SwipeRefreshLayout {
 
     @BindView(R.id.rl_more_loading)

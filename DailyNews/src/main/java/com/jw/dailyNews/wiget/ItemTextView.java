@@ -9,9 +9,11 @@ import android.widget.TextView;
 import com.jw.dailyNews.R;
 
 /**
- * Created by Administrator on 2017/7/28.
+ * 创建时间：2017/7/28
+ * 更新时间：2017/11/11 0011 上午 12:45
+ * 作者：Mr.jin
+ * 描述：
  */
-
 public class ItemTextView extends RelativeLayout {
 
     TextView tvTitle;

@@ -8,9 +8,11 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 
 /**
- * Created by Administrator on 2017/5/26.
+ * 创建时间：2017/5/26
+ * 更新时间：2017/11/11 0011 上午 12:46
+ * 作者：Mr.jin
+ * 描述：
  */
-
 public class ElasticTouchListener implements View.OnTouchListener {
     private View inner;
     View[] children;

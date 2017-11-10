@@ -1,4 +1,4 @@
-package com.jw.dailyNews.domain;
+package com.jw.dailyNews.bean;
 
 import java.util.List;
 

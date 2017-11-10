@@ -13,7 +13,10 @@ import com.jw.dailyNews.R;
 import Lib.ThreadManager;
 
 /**
- * Created by Administrator on 2017/7/10.
+ * 创建时间：2017/7/10
+ * 更新时间：2017/11/11 0011 上午 12:44
+ * 作者：Mr.jin
+ * 描述：
  */
 
 public abstract class LoadingPage extends FrameLayout {

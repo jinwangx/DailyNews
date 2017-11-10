@@ -33,7 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * 描述：
  */
 
-public class FragmentMe extends BaseFragment implements View.OnClickListener {
+public class FragmentMe extends BaseFragment implements View.OnClickListener, AuthManager.AuthListener {
 
     @BindView(R.id.tv_mName)
     TextView tvMName;
@@ -73,12 +73,7 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener {
                 if (AuthManager.getInstance().isValid(Sina))
                     showLoginDialog();
                 else {
-                    AuthManager.getInstance().auth(Sina,new AuthManager.AuthListener() {
-                        @Override
-                        public void onSuccess() {
-                            updateUserInfos();
-                        }
-                    });
+                    AuthManager.getInstance().auth(Sina,this);
                 }
                 break;
             case R.id.cancel_exit:
@@ -147,4 +142,8 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener {
         dialog.show();
     }
 
+    @Override
+    public void onAuthSuccess(Platform platform) {
+        updateUserInfos();
+    }
 }

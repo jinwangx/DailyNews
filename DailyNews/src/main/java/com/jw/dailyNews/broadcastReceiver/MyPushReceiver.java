@@ -15,11 +15,11 @@ import cn.jpush.android.api.JPushInterface;
 import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
 /**
- * Author: Administrator
- * Created on:  2017/8/7.
- * Description:
+ * 创建时间：2017/8/7
+ * 更新时间：2017/11/11 0011 上午 12:29
+ * 作者：Mr.jin
+ * 描述：极光推送广播接收者
  */
-
 public class MyPushReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {

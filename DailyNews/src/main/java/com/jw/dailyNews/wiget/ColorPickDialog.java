@@ -8,11 +8,11 @@ import android.view.View;
 import com.jw.dailyNews.R;
 
 /**
- * Author: Administrator
- * Created on:  2017/8/16.
- * Description:
+ * 创建时间：2017/8/16
+ * 更新时间：2017/11/11 0011 上午 12:47
+ * 作者：Mr.jin
+ * 描述：
  */
-
 public class ColorPickDialog extends Dialog{
 
     private ColorPickView mView;

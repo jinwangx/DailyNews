@@ -17,11 +17,12 @@ import Lib.ThreadManager;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
-
 /**
- * Created by Administrator on 2017/7/23.
+ * 创建时间：2017/7/23
+ * 更新时间：2017/11/11 0011 上午 12:46
+ * 作者：Mr.jin
+ * 描述：
  */
-
 public class ImageLargeDialog extends Dialog {
     ImageView ivBack;
     private String url;

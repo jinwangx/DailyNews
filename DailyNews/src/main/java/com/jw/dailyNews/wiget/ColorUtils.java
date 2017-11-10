@@ -3,9 +3,12 @@ package com.jw.dailyNews.wiget;
 import android.content.res.ColorStateList;
 
 /**
- * Generate thumb and background color state list use tintColor
- * Created by kyle on 15/11/4.
+ * 创建时间：15/11/4
+ * 更新时间：2017/11/11 0011 上午 12:46
+ * 作者：Mr.jin
+ * 描述：kyle
  */
+
 public class ColorUtils {
 	private static final int ENABLE_ATTR = android.R.attr.state_enabled;
 	private static final int CHECKED_ATTR = android.R.attr.state_checked;

@@ -4,9 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -21,17 +19,17 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.jw.dailyNews.R;
 import com.jw.dailyNews.base.BaseActivity;
-import com.jw.dailyNews.utils.CacheUtils;
 import com.jw.dailyNews.utils.CommonUtils;
 import com.jw.dailyNews.utils.StreamUtils;
-import com.jw.dailyNews.utils.ThemeUtils;
 import com.jw.dailyNews.wiget.ImageLargeDialog;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import butterknife.ButterKnife;
+
 import static com.jw.dailyNews.R.id.toolbar;
 import static com.jw.dailyNews.R.id.webView;
 
@@ -44,7 +42,7 @@ import static com.jw.dailyNews.R.id.webView;
  *       通过加载本地js代码,单独开启一个activity，使用photoView来显示网页中的图片
  */
 
-public class ArticleActivity extends BaseActivity{
+public class ArticleActivity extends BaseActivity implements View.OnClickListener{
 
     private WebView mWebView;
     private ProgressBar mProgressbar;
@@ -53,14 +51,15 @@ public class ArticleActivity extends BaseActivity{
     private TextView tvTitle;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void bindView() {
         setContentView(R.layout.activity_detail);
-        ButterKnife.bind(this);
-        mUrl=getIntent().getStringExtra("docurl");
-        Log.v("mUrl",mUrl);
-        mUrl= CommonUtils.getArticalUrl(mUrl,"article");
+    }
 
+    @Override
+    protected void initView() {
+        super.initView();
+        mUrl= CommonUtils.getArticalUrl(getIntent().getStringExtra("docurl"),"article");
+        Log.v("mUrl",mUrl);
         initAppBar();//初始化Toolbar
         initWebView();//初始化WebView
         initWebSettings();//初始化WebSettings
@@ -73,21 +72,12 @@ public class ArticleActivity extends BaseActivity{
         tvTitle = (TextView) mToolbar.findViewById(R.id.toolbar_title);
         tvTitle.setText("新闻详情");
         mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-        ThemeUtils.changeViewColor(mToolbar, CacheUtils.getCacheInt("indicatorColor", Color.RED,this));
+        //ThemeUtils.changeViewColor(mToolbar, CacheUtils.getCacheInt("indicatorColor", Color.RED,this));
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         mToolbar.setNavigationIcon(R.drawable.action_btn_back_selector);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //如果按下的是回退键且历史记录里确实还有页面
-                if (mWebView.canGoBack())
-                    mWebView.goBack();
-                else
-                    finish();
-            }
-        });
+        mToolbar.setNavigationOnClickListener(this);
     }
 
     private void initWebView() {
@@ -138,7 +128,6 @@ public class ArticleActivity extends BaseActivity{
         //设置编码格式
         settings.setDefaultTextEncodingName("UTF-8");
     }
-
 
     // js通信接口
     public class JavascriptInterface {
@@ -256,6 +245,14 @@ public class ArticleActivity extends BaseActivity{
         });
     }
 
+    @Override
+    public void onClick(View v) {
+        //如果按下的是回退键且历史记录里确实还有页面
+        if (mWebView.canGoBack())
+            mWebView.goBack();
+        else
+            finish();
+    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

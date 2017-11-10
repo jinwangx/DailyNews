@@ -23,11 +23,13 @@
         android:padding="10dp"
         android:layout_marginTop="15dp"
         android:layout_alignParentRight="true"
-        android:layout_alignBottom="@+id/nt_viewpager"
+        android:layout_alignBottom="@id/nt_viewpager"
+        />
+    <!--
         app:radius="3dp"
         app:fillColor="#00FF00"
         app:strokeWidth="1dp"
         app:pageColor="#FFFFFF"
         app:snap="true"
-        />
+    -->
 </RelativeLayout>

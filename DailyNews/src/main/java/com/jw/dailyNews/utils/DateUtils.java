@@ -8,9 +8,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by Administrator on 2017/6/15.
+ * 创建时间：2017/6/15
+ * 更新时间：2017/11/11 0011 上午 12:30
+ * 作者：Mr.jin
+ * 描述：日期时间工具类
  */
-
 public class DateUtils {
 
     /**

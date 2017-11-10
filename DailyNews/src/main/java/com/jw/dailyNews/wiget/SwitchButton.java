@@ -30,14 +30,12 @@ import android.widget.CompoundButton;
 
 import com.jw.dailyNews.R;
 
-
 /**
- * SwitchButton
- *
- * @author kyleduo
- * @since 2014-09-24
+ * 创建时间：2014-09-24
+ * 更新时间：2017/11/11 0011 上午 12:44
+ * 作者：kyleduo
+ * 描述：SwitchButton
  */
-
 public class SwitchButton extends CompoundButton {
     public static final float DEFAULT_BACK_MEASURE_RATIO = 1.8f;
     public static final int DEFAULT_THUMB_SIZE_DP = 20;

@@ -6,6 +6,12 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+/**
+ * 创建时间：
+ * 更新时间：2017/11/11 0011 上午 12:28
+ * 作者：Mr.jin
+ * 描述：图片新闻viewpager适配器
+ */
 public class ViewPagerAdapter extends PagerAdapter 
 {
 	private List<View> views;

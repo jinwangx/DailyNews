@@ -41,11 +41,11 @@ public class AuthManager {
         this.mAuthListener=listener;
         platform.setPlatformActionListener(new PlatformActionListener() {
             @Override
-            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+            public void onComplete(final Platform platform, int i, HashMap<String, Object> hashMap) {
                 new Handler().post(new Runnable() {
                     @Override
                     public void run() {
-                        listener.onSuccess();
+                        listener.onAuthSuccess(platform);
                     }
                 });
             }
@@ -63,8 +63,7 @@ public class AuthManager {
         if(!isValid(platform))
             platform.authorize();
         else {
-            Toast.makeText(MyNews.getInstance().getContext(), "已授权,过期时间:" + platform.getDb().getExpiresTime(), Toast.LENGTH_SHORT).show();
-            listener.onSuccess();
+            listener.onAuthSuccess(platform);
         }
     }
 
@@ -117,6 +116,6 @@ public class AuthManager {
     }
 
     public interface AuthListener{
-        void onSuccess();
+        void onAuthSuccess(Platform platform);
     }
 }

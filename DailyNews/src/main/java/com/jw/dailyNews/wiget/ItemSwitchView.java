@@ -22,6 +22,7 @@ public class ItemSwitchView extends RelativeLayout {
     private View divider;
     private SwitchListener mListener;
     private SwitchButton switchButton;
+    private int order;
 
     public ItemSwitchView(Context context) {
         this(context, null);
@@ -52,9 +53,9 @@ public class ItemSwitchView extends RelativeLayout {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked)
-                    mListener.onOpen();
+                    mListener.onOpen(order);
                 else
-                    mListener.onClose();
+                    mListener.onClose(order);
             }
         });
     }
@@ -68,12 +69,13 @@ public class ItemSwitchView extends RelativeLayout {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
-    public void setSwitchListener(SwitchListener listener){
+    public void setSwitchListener(SwitchListener listener,int order){
         this.mListener=listener;
+        this.order=order;
     }
 
     public interface SwitchListener{
-        void onOpen();
-        void onClose();
+        void onOpen(int order);
+        void onClose(int order);
     }
 }

@@ -7,15 +7,18 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import com.jw.dailyNews.domain.Joke;
+import com.jw.dailyNews.bean.Joke;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/7/20.
+ * 创建时间：2017/7/20
+ * 更新时间：2017/11/11 0011 上午 12:22
+ * 作者：Mr.jin
+ * 描述：继承了BaseProtocol,并且增加了将json数据解析成JokeBean对象集合的功能,而且可以将json数据分割
+ *       成数段提供给页面加载，模拟页面加载更多的效果
  */
-
 public class JokeProtocol extends BaseProtocol<List<Joke>> {
 
     public static List<Joke>[] lists;

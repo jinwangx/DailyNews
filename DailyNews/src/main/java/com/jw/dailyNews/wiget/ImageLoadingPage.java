@@ -28,9 +28,10 @@ import pl.droidsonroids.gif.GifImageView;
 import static com.jw.dailyNews.wiget.LoadingPage.STATE_UNKOWN;
 
 /**
- * Author: Administrator
- * Created on:  2017/8/14.
- * Description:
+ * 创建时间：2017/8/14
+ * 更新时间：2017/11/11 0011 上午 12:45
+ * 作者：Mr.jin
+ * 描述：
  */
 
 public class ImageLoadingPage extends FrameLayout {

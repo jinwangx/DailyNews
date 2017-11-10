@@ -1,15 +1,11 @@
 package com.jw.dailyNews.activity;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
-import android.support.v4.content.ContextCompat;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
@@ -21,51 +17,28 @@ import com.jw.dailyNews.utils.ThemeUtils;
 
 import Lib.ThreadManager;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 
 public class SplashActivity extends BaseActivity {
 
     @BindView(R.id.rl_splash)
     RelativeLayout rlSplash;
-    private Handler mHandler=new Handler(new Handler.Callback() {
-        @RequiresApi(api = Build.VERSION_CODES.M)
-        @Override
-        public boolean handleMessage(Message msg) {
-            ThemeUtils.checkPermission((Activity) SplashActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE );
-            while(true){
-                int permission = ContextCompat.checkSelfPermission(
-                        SplashActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                if(permission==android.content.pm.PackageManager.PERMISSION_GRANTED )
-                    break;
-            }
-            startActivity(new Intent(SplashActivity.this,HomeActivity.class));
-            finish();
-            return false;
-        }
-    });
+
+    @Override
+    protected void bindView() {
+        setContentView(R.layout.activity_splash);
+    }
 
     @Override
     protected void initView() {
         super.initView();
-        setContentView(R.layout.activity_splash);
-        unbinder=ButterKnife.bind(this);
-        initAnimation();
-    }
-
-
-    private void initAnimation(){
-/*      AnimatorSet animatorSet=new AnimatorSet();
-        ObjectAnimator rotation=ObjectAnimator.ofFloat(rlSplash,"rotation", 0, 360);
-        ObjectAnimator scaleX=ObjectAnimator.ofFloat(rlSplash,"scaleX", 0.1f,0.5f,0.1f,1);
-        ObjectAnimator scaleY=ObjectAnimator.ofFloat(rlSplash,"scaleY", 0.1f,0.5f,0.1f,1);
-        animatorSet.play(rotation).with(scaleX).with(scaleY);
-        animatorSet.setDuration(2000);*/
-
+        //闪屏页面渐变动画
         Animation anim_splash_in = AnimationUtils.loadAnimation(this, R.anim.splash_in);
         final long startTime= System.currentTimeMillis();
         rlSplash.startAnimation(anim_splash_in);
+        //固定停留本页面2s钟，2s钟后检查相关权限是否开启，如没开启，则弹出请求框请求用户开启
         ThreadManager.getInstance().createLongPool(3,3,2l).execute(new Runnable() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void run() {
                 try {
@@ -76,14 +49,30 @@ public class SplashActivity extends BaseActivity {
                     e.printStackTrace();
                 }
                 finally {
-                    mHandler.sendEmptyMessage(0);
+                    //检查需要系统同意的请求是否开启
+                    int hasPermission = ThemeUtils.checkPermission(
+                            SplashActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    //如果开启
+                    if(hasPermission == PackageManager.PERMISSION_GRANTED) {
+                        startActivity(new Intent(SplashActivity.this,HomeActivity.class));
+                        finish();
+                    }
+                    else {
+                        //弹出请求框请求用户开启
+                        ThemeUtils.requestPermission(SplashActivity.this,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    }
                 }
             }
         });
     }
 
-
-    //权限设置后的回调函数，判断相应设置，requestPermissions传入的参数为几个权限，则permissions和grantResults为对应权限和设置结果
+    /**
+     * 权限设置后的回调函数，判断相应设置
+     * @param requestCode
+     * @param permissions  requestPermissions传入的参数为几个权限
+     * @param grantResults 对应权限的设置结果
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -92,9 +81,11 @@ public class SplashActivity extends BaseActivity {
                 //可以遍历每个权限设置情况
                 if(grantResults[0]== PackageManager.PERMISSION_GRANTED) {
                     //这里写你需要相关权限的操作
+                    startActivity(new Intent(SplashActivity.this,HomeActivity.class));
+                    finish();
                 }else{
                     Toast.makeText(SplashActivity.this,
-                            "权限没有开启",Toast.LENGTH_SHORT).show();
+                            "权限没有开启,将无法加载图片",Toast.LENGTH_SHORT).show();
                 }
         }
         super.onRequestPermissionsResult(requestCode, permissions,

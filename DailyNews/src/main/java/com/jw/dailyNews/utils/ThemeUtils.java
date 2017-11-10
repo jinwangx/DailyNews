@@ -2,7 +2,6 @@ package com.jw.dailyNews.utils;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
@@ -15,7 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/7/10.
+ * 创建时间：2017/7/10
+ * 更新时间：2017/11/10 下午 7:23
+ * 作者：Mr.jin
+ * 描述：与系统环境相关操作
  */
 
 public class ThemeUtils {
@@ -40,10 +42,12 @@ public class ThemeUtils {
         }
     }
 
+    /**
+     * 获取状态栏高度
+     * @param context
+     * @return
+     */
     public static int getStatusBarHeight(Context context){
-        /**
-         * 获取状态栏高度——方法1
-         * */
         int statusBarHeight = -1;
         //获取status_bar_height资源的ID
         int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
@@ -84,11 +88,21 @@ public class ThemeUtils {
         return display.getHeight();
     }
 
+    /**
+     * 得到屏幕的亮度
+     * @param activity
+     * @return
+     */
     public static float getWindowBrightness(Activity activity){
         WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
         return lp.screenBrightness;
     }
 
+    /**
+     * 设置屏幕亮度
+     * @param activity
+     * @param brightness
+     */
     public static void setWindowBrightness(Activity activity,float brightness){
         WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
         lp.screenBrightness = lp.screenBrightness + brightness / 255.0f;
@@ -118,30 +132,30 @@ public class ThemeUtils {
         return (int) (pxValue / scale + 0.5f);
     }
 
+
+    /**
+     *弹出请求窗口
+     */
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public static void requestPermission(Activity activity, String permissionName){
+        List<String> permissionStrs = new ArrayList<>();
+        permissionStrs.add(permissionName);
+        String[] stringArray = permissionStrs.toArray(new String[0]);
+        if (permissionStrs.size() > 0) {
+            activity.requestPermissions(stringArray,
+                    REQUEST_CODE_ASK_PERMISSIONS);
+            return;
+        }
+    }
+
     /**
      * Android7.0以上时，不能往外部存储写数据，动态弹出权限框点击同意即可
      * @param permissionName
      * @param activity
      */
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    public static void checkPermission(Activity activity ,String permissionName) {
-        if(Build.VERSION.SDK_INT >= 23) {
-            List<String> permissionStrs = new ArrayList<>();
-            int hasWriteSdcardPermission =
-                    ContextCompat.checkSelfPermission(
-                            activity, permissionName);
-            if(hasWriteSdcardPermission !=
-                    PackageManager.PERMISSION_GRANTED) {
-                permissionStrs.add(
-                        permissionName
-                );
-            }
-            String[] stringArray = permissionStrs.toArray(new String[0]);
-            if (permissionStrs.size() > 0) {
-                activity.requestPermissions(stringArray,
-                        REQUEST_CODE_ASK_PERMISSIONS);
-                return;
-            }
-        }
+    public static int checkPermission(Activity activity ,String permissionName) {
+        int hasPermission = ContextCompat.checkSelfPermission(
+                activity, permissionName);
+        return hasPermission;
     }
 }

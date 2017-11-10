@@ -10,7 +10,7 @@ import android.view.ViewGroup;
  * 更新时间 2017/10/30 15:45
  * 版本：
  * 作者：Mr.jin
- * 描述：装饰类Adaper，可以为adaper装饰header和footer
+ * 描述：装饰类Adapter，可以为adapter装饰header和footer
  */
 
 public class HeaderAndFooterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

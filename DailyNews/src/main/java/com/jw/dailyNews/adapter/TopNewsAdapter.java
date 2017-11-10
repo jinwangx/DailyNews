@@ -12,6 +12,12 @@ import com.jw.dailyNews.activity.ImageActivity;
 
 import java.util.List;
 
+/**
+ * 创建时间：
+ * 更新时间：2017/11/11 0011 上午 12:26
+ * 作者：Mr.jin
+ * 描述：新闻首页推荐新闻部分大图轮播部分adapter
+ */
 public class TopNewsAdapter extends PagerAdapter {
 
     private List<String> links;

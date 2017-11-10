@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jw.dailyNews.R;
-import com.jw.dailyNews.domain.NewsNormal;
+import com.jw.dailyNews.bean.NewsNormal;
 import com.jw.dailyNews.utils.DateUtils;
 import com.jw.dailyNews.utils.GlideUtils;
 

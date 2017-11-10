@@ -8,7 +8,10 @@ import Lib.NewsManager;
 import Lib.callback.ObjectCallBack;
 
 /**
- * Created by Administrator on 2017/7/11.
+ * 创建时间：2017/7/11
+ * 更新时间：2017/11/11 0011 上午 12:18
+ * 作者：Mr.jin
+ * 描述：json数据三级缓存
  */
 public abstract class BaseProtocol<T> {
     private Context mContext;

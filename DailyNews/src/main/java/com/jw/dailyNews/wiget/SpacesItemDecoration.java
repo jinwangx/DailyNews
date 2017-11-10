@@ -7,9 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 /**
- * Author: Administrator
- * Created on:  2017/8/21.
- * Description:
+ * 创建时间：2017/8/21
+ * 更新时间：2017/11/11 0011 上午 12:44
+ * 作者：Mr.jin
+ * 描述：
  */
 
 public class SpacesItemDecoration extends RecyclerView.ItemDecoration {

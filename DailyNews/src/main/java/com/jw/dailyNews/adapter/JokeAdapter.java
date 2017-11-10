@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jw.dailyNews.R;
-import com.jw.dailyNews.domain.Joke;
+import com.jw.dailyNews.bean.Joke;
 import com.jw.dailyNews.utils.DateUtils;
 import com.jw.dailyNews.utils.GlideUtils;
 import com.jw.dailyNews.wiget.ImageLargeDialog;

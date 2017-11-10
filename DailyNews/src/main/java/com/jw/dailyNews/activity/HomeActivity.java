@@ -2,11 +2,11 @@ package com.jw.dailyNews.activity;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.DrawerLayout.SimpleDrawerListener;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -48,7 +48,6 @@ import java.util.List;
 import Lib.AuthManager;
 import Lib.ThreadManager;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.jpush.android.api.JPushInterface;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
@@ -60,7 +59,9 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import static com.jw.dailyNews.fragment.FragmentMe.rlMe;
 
 
-public class HomeActivity extends BaseActivity implements View.OnClickListener {
+public class HomeActivity extends BaseActivity implements View.OnClickListener,
+        RadioGroup.OnCheckedChangeListener,ColorPickView.OnColorChangedListener,
+        ItemSwitchView.SwitchListener, AuthManager.AuthListener {
     @BindView(R.id.user_icon)
     CircleImageView userIcon;
     @BindView(R.id.user_name)
@@ -99,9 +100,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     LinearLayout llLeftMenu;
     @BindView(R.id.tv_location)
     TextView tvLocation;
+
+    //调用ShareSDK进行认证所需要平台的名称
     private Platform QQ = ShareSDK.getPlatform(cn.sharesdk.tencent.qq.QQ.NAME);
     private Platform Sina = ShareSDK.getPlatform(SinaWeibo.NAME);
     private Platform WeChat = ShareSDK.getPlatform(Wechat.NAME);
+    //activity要加载的四个fragment引用
     private FragmentShouye fragmentShouye;
     private FragmentVideo fragmentVideo;
     private FragmentDireBroad fragmentDireBroad;
@@ -109,37 +113,31 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private FragmentManager ft;
     private List<Fragment> fragments = new ArrayList<>();
     private ActionBarDrawerToggle toggle;
+    //baidu地图位置管理者
     private  LocationClient mLocationClient = null;
-
-    public BDLocationListener myListener = new MyLocationListener();
     //BDAbstractLocationListener为7.2版本新增的Abstract类型的监听接口，原有BDLocationListener接口暂时同步保留。具体介绍请参考后文中的说明
+    //baidu地图位置监听
+    public BDLocationListener myListener = new MyLocationListener();
+    //左面板四个switchButton的order
+    private final static int ORDER_AUTO_PLAY=0;
+    private final static int ORDER_4G_REMIND=1;
+    private final static int ORDER_HEAD_LINE=2;
+    private final static int ORDER_DOWNLOAD_ONLY_WIFI =3;
+
+    @Override
+    protected void bindView() {
+        setContentView(R.layout.activity_home);
+    }
 
     @Override
     protected void initView() {
-        setContentView(R.layout.activity_home);
-        unbinder = ButterKnife.bind(this);
         initToolBar();
         initRadioButton();
-        initListener();
-        initLeftPanel();
     }
 
-    private void initLeftPanel() {
-        String available = NetUtils.isNetworkAvailable(this);
-        ToastUtils.show(this,available);
-        isvHeadline.setChecked(CacheUtils.getCacheBoolean("JPush",true,HomeActivity.this));
-        isvImageDownloadOnlyWifi.setChecked(CacheUtils.getCacheBoolean("isvImageDownloadOnlyWifi", true, HomeActivity.this));
-        itvStyle.setText(CacheUtils.getCacheInt("indicatorColor",Color.RED, this)+"");
-
-        mLocationClient = new LocationClient(getApplicationContext());
-        //声明LocationClient类
-        mLocationClient.registerLocationListener(myListener);
-        //注册监听函数
-        initLocation();
-        mLocationClient.start();
-    }
-
-    private void initListener() {
+    @Override
+    protected void initEvent() {
+        super.initEvent();
         llLeftMenu.setOnTouchListener(new ElasticTouchListener());
         loginQq.setOnClickListener(this);
         loginWechat.setOnClickListener(this);
@@ -149,55 +147,40 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         userIcon.setOnClickListener(this);
         userName.setOnClickListener(this);
         iavFontSize.setOnClickListener(this);
-
-        isvVideoAutoPlay.setSwitchListener(new ItemSwitchView.SwitchListener() {
-            @Override
-            public void onOpen() {
-
-            }
-
-            @Override
-            public void onClose() {
-
-            }
-        });
-        isv4gRemind.setSwitchListener(new ItemSwitchView.SwitchListener() {
-            @Override
-            public void onOpen() {
-            }
-
-            @Override
-            public void onClose() {
-            }
-        });
-        isvHeadline.setSwitchListener(new ItemSwitchView.SwitchListener() {
-            @Override
-            public void onOpen() {
-                if(JPushInterface.isPushStopped(getApplication()))
-                    JPushInterface.resumePush(getApplication());
-                CacheUtils.setCache("JPush",true,HomeActivity.this);
-            }
-
-            @Override
-            public void onClose() {
-                if(!JPushInterface.isPushStopped(getApplication()))
-                    JPushInterface.stopPush(getApplication());
-                CacheUtils.setCache("JPush",false,HomeActivity.this);
-            }
-        });
-        isvImageDownloadOnlyWifi.setSwitchListener(new ItemSwitchView.SwitchListener() {
-            @Override
-            public void onOpen() {
-                CacheUtils.setCache("isvImageDownloadOnlyWifi", true, HomeActivity.this);
-            }
-
-            @Override
-            public void onClose() {
-                CacheUtils.setCache("isvImageDownloadOnlyWifi", false, HomeActivity.this);
-            }
-        });
+        isvVideoAutoPlay.setSwitchListener(this,ORDER_AUTO_PLAY);
+        isv4gRemind.setSwitchListener(this,ORDER_4G_REMIND);
+        isvHeadline.setSwitchListener(this,ORDER_HEAD_LINE);
+        isvImageDownloadOnlyWifi.setSwitchListener(this, ORDER_DOWNLOAD_ONLY_WIFI);
+        initLeftPanel();
     }
 
+    /**
+     * 初始化左面板
+     * 1.个人头像(所在授权成功平台对应的头像)
+     * 2.调用Baidu地图Api获取当前位置信息
+     * 3.从config读取switchButton状态(有实际作用)
+     */
+    private void initLeftPanel() {
+        String type = NetUtils.isNetworkAvailable(this);
+        if(!type.equals("没联网"))
+            ToastUtils.show(this,type);
+        isvHeadline.setChecked(
+                CacheUtils.getCacheBoolean("JPush",true,HomeActivity.this));
+        isvImageDownloadOnlyWifi.setChecked(
+                CacheUtils.getCacheBoolean("isvImageDownloadOnlyWifi", true, HomeActivity.this));
+        itvStyle.setText(
+                CacheUtils.getCacheInt("indicatorColor",Color.RED, this)+"");
+        mLocationClient = new LocationClient(getApplicationContext());
+        //声明LocationClient类
+        mLocationClient.registerLocationListener(myListener);
+        //注册监听函数
+        initLocation();
+        mLocationClient.start();
+    }
+
+    /**
+     * 初始化toolbar颜色，并与左面板关联,google提供的DrawerLayout,并且设置开启关闭监听
+     */
     private void initToolBar() {
         setSupportActionBar(toolbar);
         ThemeUtils.changeViewColor(toolbar, CacheUtils.getCacheInt("indicatorColor",Color.RED, this));
@@ -207,7 +190,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+        drawerLayout.addDrawerListener(new SimpleDrawerListener() {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -216,6 +199,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         });
     }
 
+    /**
+     * 初始化radioGroup,用fragmentManager将四个fragment添加进fl_content
+     */
     private void initRadioButton() {
         fragmentShouye = new FragmentShouye();
         fragmentVideo = new FragmentVideo();
@@ -227,35 +213,18 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 add(R.id.fl_content, fragmentVideo, "视频").
                 add(R.id.fl_content, fragmentDireBroad, "直播").
                 add(R.id.fl_content, fragmentMe, "我").commit();
-
         fragments.add(fragmentShouye);
         fragments.add(fragmentVideo);
         fragments.add(fragmentDireBroad);
         fragments.add(fragmentMe);
-
         switchContent(fragmentShouye);
-
-        rbGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                switch (checkedId) {
-                    case R.id.rb_shouye:
-                        switchContent(fragmentShouye);
-                        break;
-                    case R.id.rb_video:
-                        switchContent(fragmentVideo);
-                        break;
-                    case R.id.rb_dirbroad:
-                        switchContent(fragmentDireBroad);
-                        break;
-                    case R.id.rb_me:
-                        switchContent(fragmentMe);
-                        break;
-                }
-            }
-        });
+        rbGroup.setOnCheckedChangeListener(this);
     }
 
+    /**
+     * activity切换对应fragment
+     * @param to 要显示的fragment
+     */
     public void switchContent(Fragment to) {
         FragmentTransaction transaction = ft.beginTransaction();
         for (Fragment fragment : fragments) {
@@ -280,49 +249,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_qq:
-                AuthManager.getInstance().auth(QQ, new AuthManager.AuthListener() {
-                    @Override
-                    public void onSuccess() {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(HomeActivity.this, "QQ登录成功", Toast.LENGTH_SHORT).show();
-                                userName.setText(QQ.getDb().getUserName());
-                                Glide.with(HomeActivity.this).load(QQ.getDb().getUserIcon()).into(userIcon);
-                            }
-                        });
-                    }
-                });
+                AuthManager.getInstance().auth(QQ, this);
                 break;
             case R.id.login_wechat:
-                AuthManager.getInstance().auth(WeChat, new AuthManager.AuthListener() {
-                    @Override
-                    public void onSuccess() {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(HomeActivity.this, "微信登录成功", Toast.LENGTH_SHORT).show();
-                                userName.setText(WeChat.getDb().getUserName());
-                                Glide.with(HomeActivity.this).load(WeChat.getDb().getUserIcon()).into(userIcon);
-                            }
-                        });
-                    }
-                });
+                AuthManager.getInstance().auth(WeChat, this);
                 break;
             case R.id.login_weibo:
-                AuthManager.getInstance().auth(Sina, new AuthManager.AuthListener() {
-                    @Override
-                    public void onSuccess() {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(HomeActivity.this, "新浪登录成功", Toast.LENGTH_SHORT).show();
-                                userName.setText(Sina.getDb().getUserName());
-                                Glide.with(HomeActivity.this).load(Sina.getDb().getUserIcon()).into(userIcon);
-                            }
-                        });
-                    }
-                });
+                AuthManager.getInstance().auth(Sina,this);
                 break;
             case R.id.iav_fontSize:
 
@@ -333,14 +266,20 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ThreadManager.getInstance().createLongPool(3, 3, 2l).execute(new Runnable() {
+                        ThreadManager.getInstance().createLongPool(
+                                3, 3, 2l)
+                                .execute(new Runnable() {
                             @Override
                             public void run() {
                                 CacheUtils.clear(HomeActivity.this);
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        clearCache.setText(CacheUtils.getCacheSize(HomeActivity.this, null, MyGlideModule.getCacheDirectory()) + "MB");
+                                        clearCache.setText(
+                                                CacheUtils.getCacheSize(
+                                                        HomeActivity.this,
+                                                        null,
+                                                        MyGlideModule.getCacheDirectory()) + "MB");
                                     }
                                 });
                             }
@@ -358,16 +297,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
             case R.id.itv_style:
                 ColorPickDialog dialog=new ColorPickDialog(HomeActivity.this);
                 dialog.show();
-                dialog.setOnColorChangedListener(new ColorPickView.OnColorChangedListener() {
-                    @Override
-                    public void onColorChange(int color) {
-                        CacheUtils.setCache("indicatorColor", color, HomeActivity.this);
-                        ThemeUtils.changeStatusBar(HomeActivity.this, CacheUtils.getCacheInt("indicatorColor", Color.RED, HomeActivity.this));
-                        ThemeUtils.changeViewColor(toolbar, CacheUtils.getCacheInt("indicatorColor", Color.RED, HomeActivity.this));
-                        ThemeUtils.changeViewColor(rlMe, CacheUtils.getCacheInt("indicatorColor", Color.RED, HomeActivity.this));
-                        itvStyle.setText(color+"");
-                    }
-                });
+                dialog.setOnColorChangedListener(this);
                 break;
         }
     }
@@ -415,12 +345,135 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         mLocationClient.setLocOption(option);
     }
 
+    /**
+     * radioButton点击监听，显示对应fragment,隐藏其他fragment
+     * @param group
+     * @param checkedId
+     */
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch (checkedId) {
+            case R.id.rb_shouye:
+                switchContent(fragmentShouye);
+                break;
+            case R.id.rb_video:
+                switchContent(fragmentVideo);
+                break;
+            case R.id.rb_dirbroad:
+                switchContent(fragmentDireBroad);
+                break;
+            case R.id.rb_me:
+                switchContent(fragmentMe);
+                break;
+        }
+    }
+
+    /**
+     * 主题颜色更改监听
+     * @param color color
+     */
+    @Override
+    public void onColorChange(int color) {
+        CacheUtils.setCache("indicatorColor", color, HomeActivity.this);
+        ThemeUtils.changeStatusBar(HomeActivity.this,
+                CacheUtils.getCacheInt("indicatorColor", Color.RED, HomeActivity.this));
+        ThemeUtils.changeViewColor(toolbar,
+                CacheUtils.getCacheInt("indicatorColor", Color.RED, HomeActivity.this));
+        ThemeUtils.changeViewColor(rlMe,
+                CacheUtils.getCacheInt("indicatorColor", Color.RED, HomeActivity.this));
+        itvStyle.setText(color+"");
+    }
+
+    /**
+     * SwitchButton打开监听
+     * @param order order
+     */
+    @Override
+    public void onOpen(int order) {
+        switch (order){
+            case ORDER_AUTO_PLAY:
+                isvVideoAutoPlay.setChecked(false);
+                //ToastUtils.show(this,"该功能暂未实现,敬请等候");
+                break;
+            case ORDER_4G_REMIND:
+                //ToastUtils.show(this,"4G网络下观看视频，该功能不管开启或未开启，都会提醒");
+                break;
+            case ORDER_HEAD_LINE:
+                if(JPushInterface.isPushStopped(getApplication()))
+                    JPushInterface.resumePush(getApplication());
+                CacheUtils.setCache("JPush",true,HomeActivity.this);
+                //ToastUtils.show(this,"已允许接收推送");
+                break;
+            case ORDER_DOWNLOAD_ONLY_WIFI:
+                CacheUtils.setCache("isvImageDownloadOnlyWifi", true, HomeActivity.this);
+                //ToastUtils.show(this,"非WIFI网络状态下将不加载图片");
+                break;
+        }
+    }
+
+    /**
+     * SwitchButton关闭监听
+     * @param order order
+     */
+    @Override
+    public void onClose(int order) {
+        switch (order){
+            case ORDER_AUTO_PLAY:
+
+                break;
+            case ORDER_4G_REMIND:
+
+                break;
+            case ORDER_HEAD_LINE:
+                if(!JPushInterface.isPushStopped(getApplication()))
+                    JPushInterface.stopPush(getApplication());
+                CacheUtils.setCache("JPush",false,HomeActivity.this);
+                break;
+            case ORDER_DOWNLOAD_ONLY_WIFI:
+                CacheUtils.setCache("isvImageDownloadOnlyWifi", false, HomeActivity.this);
+                break;
+        }
+    }
+
+    /**
+     * 授权成功监听
+     * @param platform 授权成功的平台
+     */
+    @Override
+    public void onAuthSuccess(final Platform platform) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                String platformName=platform.getName();
+                    if(platformName.equals("QQ")){
+                    Toast.makeText(HomeActivity.this, "QQ登录成功", Toast.LENGTH_SHORT).show();
+                    userName.setText(QQ.getDb().getUserName());
+                    Glide.with(HomeActivity.this).load(
+                            QQ.getDb().getUserIcon()).into(userIcon);
+                }else if(platformName.equals("WeChat")){
+                    Toast.makeText(HomeActivity.this, "微信登录成功", Toast.LENGTH_SHORT).show();
+                    userName.setText(WeChat.getDb().getUserName());
+                    Glide.with(HomeActivity.this).load(
+                            WeChat.getDb().getUserIcon()).into(userIcon);
+                }else if(platformName.equals("SinaWeibo")){
+                    Toast.makeText(HomeActivity.this, "新浪登录成功", Toast.LENGTH_SHORT).show();
+                    userName.setText(Sina.getDb().getUserName());
+                    Glide.with(HomeActivity.this).load(
+                            Sina.getDb().getUserIcon()).into(userIcon);
+                }else {
+
+                }
+                Toast.makeText(HomeActivity.this,
+                        "已授权,过期时间:" + platform.getDb().getExpiresTime(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     class MyLocationListener implements BDLocationListener {
 
         @Override
         public void onReceiveLocation(BDLocation location) {
 
-            mLocationClient.stop();
             //获取定位结果
             location.getTime();    //获取定位时间
             location.getLocationID();    //获取定位唯一ID，v7.2版本新增，用于排查定位问题
@@ -446,6 +499,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
             String address=location.getCountry()+location.getCity()+location.getDistrict()
                     +location.getStreet()+location.getLocationDescribe();
             Log.v("address",address);
+            if(address==null)
+                return;
+            mLocationClient.stop();
             tvLocation.setText(address);
 
             if (location.getLocType() == BDLocation.TypeGpsLocation){

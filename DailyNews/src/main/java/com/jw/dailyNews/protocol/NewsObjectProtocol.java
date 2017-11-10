@@ -7,13 +7,16 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import com.jw.dailyNews.domain.NewsObject;
+import com.jw.dailyNews.bean.NewsObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/7/12.
+ * 创建时间：2017/7/12
+ * 更新时间：2017/11/11 0011 上午 12:19
+ * 作者：Mr.jin
+ * 描述：继承了BaseProtocol,并且增加了将json数据解析成推荐新闻bean对象集合的功能
  */
 
 public class NewsObjectProtocol extends BaseProtocol<NewsObject> {
