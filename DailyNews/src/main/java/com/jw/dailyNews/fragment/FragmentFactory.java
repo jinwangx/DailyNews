@@ -34,19 +34,21 @@ public class FragmentFactory {
     private FragmentFactory(){
         if(urls==null) {
             urls=new ArrayList<>();
-            urls.add(CommonUtils.createRecommondUrl(0));
-            urls.add(NewsURL.URL_HTTP_GUONEI);
-            urls.add(NewsURL.URL_HTTP_WORLD);
-            urls.add(NewsURL.URL_HTTP_SHEHUI);
-            urls.add(NewsURL.URL_HTTP_HISTORY);
-            urls.add(NewsURL.URL_HTTP_ENTERTAINMENT);
-            urls.add(NewsURL.URL_HTTP_ECONOMIC);
 
-            urls.add(NewsURL.URL_HTTP_EDU);
-            urls.add(NewsURL.URL_HTTP_GAME);
-            urls.add(NewsURL.URL_HTTP_WAR);
-            urls.add(NewsURL.URL_HTTP_SPORTS);
-            urls.add(NewsURL.URL_HTTP_OWN);
+            //由于只作为学习用，暂时不提供更多链接，普通新闻重复第二个新闻板块
+            urls.add(CommonUtils.createRecommondUrl(0));
+            urls.add(NewsURL.URL_HTTP_WORLD);
+            urls.add(NewsURL.URL_HTTP_WORLD);
+            urls.add(NewsURL.URL_HTTP_WORLD);
+            urls.add(NewsURL.URL_HTTP_WORLD);
+            urls.add(NewsURL.URL_HTTP_WORLD);
+            urls.add(NewsURL.URL_HTTP_WORLD);
+
+            urls.add(NewsURL.URL_HTTP_WORLD);
+            urls.add(NewsURL.URL_HTTP_WORLD);
+            urls.add(NewsURL.URL_HTTP_WORLD);
+            urls.add(NewsURL.URL_HTTP_WORLD);
+            urls.add(NewsURL.URL_HTTP_WORLD);
 
 
             titles = new String[]{"推荐","国内", "国际", "社会", "历史","娱乐","财经","教育","游戏","军事","体育","独家"};
