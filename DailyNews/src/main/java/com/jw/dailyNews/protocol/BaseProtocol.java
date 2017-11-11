@@ -44,7 +44,7 @@ public abstract class BaseProtocol<T> {
 
 
     public String loadLocal(){
-        return CacheUtils.getCacheString(mUrl, null,mContext);
+        return CacheUtils.getCacheString(mUrl, null);
     }
 
     public String loadServer(){
@@ -55,7 +55,7 @@ public abstract class BaseProtocol<T> {
     }
 
     private void saveLocal(String json){
-        CacheUtils.setCache(mUrl,json,mContext);
+        CacheUtils.setCache(mUrl,json);
     }
 
     public abstract T parseJson(String json);

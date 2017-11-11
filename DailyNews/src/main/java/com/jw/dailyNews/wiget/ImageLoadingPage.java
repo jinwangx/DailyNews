@@ -185,7 +185,7 @@ public class ImageLoadingPage extends FrameLayout {
         if (state == STATE_ERROR || state == STATE_EMPTY) {
             state = STATE_LOADING;
         }
-        if(NetUtils.isNetworkAvailable(mContext).equals("MOBILE")&& CacheUtils.getCacheBoolean("isvImageDownloadOnlyWifi",true,mContext)){
+        if(NetUtils.isNetworkAvailable(mContext).equals("MOBILE")&& CacheUtils.getCacheBoolean("isvImageDownloadOnlyWifi",true)){
             tvClickLocd.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {

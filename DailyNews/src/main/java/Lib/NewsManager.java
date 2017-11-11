@@ -1,7 +1,9 @@
 package Lib;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -14,8 +16,12 @@ import com.jw.dailyNews.utils.CommonUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import Lib.callback.ObjectCallBack;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -27,13 +33,16 @@ import okhttp3.Response;
  * 更新时间 2017/10/30 15:08
  * 版本：
  * 作者：Mr.jin
- * 描述：应用管理类，这里主要用于网络管理
+ * 描述：网络管理类,平台认证以及分享等相关调用
  */
 
 public class NewsManager {
     private static NewsManager instance;
     private OkHttpClient client;
     private Context context;
+
+    private UserInfoListener mInfoListener;
+    private AuthListener mAuthListener;
 
     public static NewsManager getInstance(){
         synchronized (NewsManager.class) {
@@ -49,7 +58,97 @@ public class NewsManager {
     }
 
     /**
-     * 同步请求，首次加载数据时
+     * 平台认证
+     * @param platform
+     * @param listener
+     */
+    public void auth(Platform platform,final AuthListener listener){
+        this.mAuthListener=listener;
+        platform.setPlatformActionListener(new PlatformActionListener() {
+            @Override
+            public void onComplete(final Platform platform, int i, HashMap<String, Object> hashMap) {
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAuthListener.onAuthSuccess(platform);
+                    }
+                });
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+
+            }
+        });
+        if(!isValid(platform))
+            platform.authorize();
+        else {
+            mAuthListener.onAuthSuccess(platform);
+        }
+    }
+
+    /**
+     * 退出平台认证
+     * @param platform
+     */
+    public void exitAuth(Platform platform){
+        platform.removeAccount(true);
+    }
+
+    /**
+     * 获取授权平台用户信息
+     * @param platform
+     * @param listener
+     */
+    public void showUser(Platform platform,UserInfoListener listener){
+        this.mInfoListener =listener;
+        platform.setPlatformActionListener(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> userInfos) {
+                mInfoListener.onSuccess(userInfos);
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+                Toast.makeText(MyNews.getInstance().getContext(), "错误", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+
+            }
+        });
+        platform.showUser(null);
+    }
+
+    /**
+     * 调用分享
+     * @param title
+     * @param img 暂时不可用,设为null即可
+     * @param share_url
+     */
+    public void showShare(String title,String img,String share_url) {
+        OnekeyShare oks = new OnekeyShare();
+        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间等使用
+        oks.setTitle(title);
+        // titleUrl是标题的网络链接，QQ和QQ空间等使用
+        oks.setTitleUrl(share_url);
+        // text是分享文本，所有平台都需要这个字段
+        oks.setText("http://www.mob.com"+"\n"+"哈哈，太搞笑了");
+        //oks.setImageUrl(img);
+
+        // 启动分享GUI
+        oks.show(MyNews.getInstance().getContext());
+    }
+
+
+    /**
+     * 同步请求，首次加载页面新闻数据时
      * @param url
      * @param type
      * @return
@@ -69,9 +168,8 @@ public class NewsManager {
         return result;
     }
 
-
     /**
-     * 异步请求,主要用于加载更多数据
+     * 异步请求,用于请求更多新闻数据(加载更多数据时)
      * @param url
      * @param type
      * @param callBack
@@ -87,7 +185,7 @@ public class NewsManager {
             public void onResponse(Call call, Response response) throws IOException {
                 String str = response.body().string();
                 String result = CommonUtils.correctJson(type, str);
-                CacheUtils.setCache(url,result,context);
+                CacheUtils.setCache(url,result);
                 Log.v("json",result);
                 JsonParser parser=new JsonParser();
                 JsonObject jsonArray = parser.parse(result).getAsJsonObject();
@@ -99,5 +197,17 @@ public class NewsManager {
                 callBack.onSuccess(list);
             }
         });
+    }
+
+    public boolean isValid(Platform platform){
+        return platform.getDb().isValid();
+    }
+
+    public interface UserInfoListener{
+        void onSuccess(HashMap<String,Object> userInfos);
+    }
+
+    public interface AuthListener{
+        void onAuthSuccess(Platform platform);
     }
 }

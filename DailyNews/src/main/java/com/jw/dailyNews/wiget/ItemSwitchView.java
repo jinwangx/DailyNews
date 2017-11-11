@@ -10,11 +10,12 @@ import android.widget.TextView;
 
 import com.jw.dailyNews.R;
 
-
 /**
- * Created by Administrator on 2017/7/28.
+ * 创建时间：2017/7/28
+ * 更新时间：2017/11/11 0011 下午 6:09
+ * 作者：Mr.jin
+ * 描述：主界面结合switchButton的组合控件
  */
-
 public class ItemSwitchView extends RelativeLayout {
     TextView tvContent;
     private int dividerColor;

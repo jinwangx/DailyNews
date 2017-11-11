@@ -18,7 +18,7 @@ import com.jw.dailyNews.wiget.LoadingPage;
 
 import java.util.HashMap;
 
-import Lib.AuthManager;
+import Lib.NewsManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.sharesdk.framework.Platform;
@@ -33,7 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * 描述：
  */
 
-public class FragmentMe extends BaseFragment implements View.OnClickListener, AuthManager.AuthListener {
+public class FragmentMe extends BaseFragment implements View.OnClickListener, NewsManager.AuthListener {
 
     @BindView(R.id.tv_mName)
     TextView tvMName;
@@ -70,10 +70,10 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, Au
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ci_me:
-                if (AuthManager.getInstance().isValid(Sina))
+                if (NewsManager.getInstance().isValid(Sina))
                     showLoginDialog();
                 else {
-                    AuthManager.getInstance().auth(Sina,this);
+                    NewsManager.getInstance().auth(Sina,this);
                 }
                 break;
             case R.id.cancel_exit:
@@ -81,7 +81,7 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, Au
                 break;
             case R.id.ok_exit:
                 dialog.dismiss();
-                AuthManager.getInstance().exitAutoSina();
+                NewsManager.getInstance().exitAuth(Sina);
                 ivMe.setImageResource(R.drawable.icon_default_user);
                 tvMName.setText("");
                 tvMDesc.setText("");
@@ -106,7 +106,7 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, Au
         rlMe = (RelativeLayout) view.findViewById(R.id.rl_me);
         rlMe.setOnTouchListener(new ElasticTouchListener() {});
         ivMe.setOnClickListener(this);
-        ThemeUtils.changeViewColor(rlMe, CacheUtils.getCacheInt("indicatorColor", Color.RED,getActivity()));
+        ThemeUtils.changeViewColor(rlMe, CacheUtils.getCacheInt("indicatorColor", Color.RED));
         updateUserInfos();
         return view;
     }
@@ -115,8 +115,8 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, Au
      * 更新用户资料
      */
     private void updateUserInfos() {
-        if (AuthManager.getInstance().isValid(Sina))
-            AuthManager.getInstance().showUser(new AuthManager.UserInfoListener() {
+        if (NewsManager.getInstance().isValid(Sina))
+            NewsManager.getInstance().showUser(Sina,new NewsManager.UserInfoListener() {
                 @Override
                 public void onSuccess(HashMap<String, Object> user) {
                     userInfos = user;

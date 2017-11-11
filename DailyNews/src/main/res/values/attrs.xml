@@ -44,11 +44,6 @@
         <attr name="dividerColor" format="color" />
     </declare-styleable>
 
-    <declare-styleable name="ItemArrowView2">
-        <attr name="title_arrow" format="string" />
-        <attr name="desc" format="string" />
-    </declare-styleable>
-
     <declare-styleable name="itemCheckBoxView">
         <attr name="title_checkbox"  format="string"/>
         <attr name="desc_on"  format="string"/>

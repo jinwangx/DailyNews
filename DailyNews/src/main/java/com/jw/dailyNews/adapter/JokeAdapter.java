@@ -16,13 +16,13 @@ import com.jw.dailyNews.R;
 import com.jw.dailyNews.bean.Joke;
 import com.jw.dailyNews.utils.DateUtils;
 import com.jw.dailyNews.utils.GlideUtils;
-import com.jw.dailyNews.wiget.ImageLargeDialog;
+import com.jw.dailyNews.wiget.ImageDetailDialog;
 import com.jw.dailyNews.wiget.ImageLoadingPage;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Lib.AuthManager;
+import Lib.NewsManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -68,7 +68,7 @@ public class JokeAdapter extends DefaultAdapter<Joke> {
             ((ImageViewHolder) holder).btnLarge.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ImageLargeDialog dialog = new ImageLargeDialog(mContext, joke.getImage().getBig().get(0));
+                    ImageDetailDialog dialog = new ImageDetailDialog(mContext, joke.getImage().getBig().get(0));
                     dialog.show();
                 }
             });
@@ -82,7 +82,7 @@ public class JokeAdapter extends DefaultAdapter<Joke> {
             ((GifViewHolder) holder).lll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ImageLargeDialog dialog = new ImageLargeDialog(mContext, joke.getGif().getImages().get(0));
+                    ImageDetailDialog dialog = new ImageDetailDialog(mContext, joke.getGif().getImages().get(0));
                     dialog.show();
                 }
             });
@@ -103,7 +103,7 @@ public class JokeAdapter extends DefaultAdapter<Joke> {
         ((BaseHolder) holder).llForward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AuthManager.getInstance().showShare(joke.getText(),"",
+                NewsManager.getInstance().showShare(joke.getText(),"",
                 joke.getShare_url());
             }
         });

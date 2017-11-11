@@ -111,7 +111,7 @@ public class FragmentVideo extends BaseFragment implements SwipeRefreshLayout.On
         ThreadManager.getInstance().createLongPool(3, 3, 2l).execute(new Runnable() {
             @Override
             public void run() {
-                CacheUtils.clearCache(NewsURL.BAISIBUDEJIE_JOKE_HTTP,getContext());
+                CacheUtils.removeKey(NewsURL.BAISIBUDEJIE_JOKE_HTTP);
                 protocol = new JokeProtocol(null, NewsURL.BAISIBUDEJIE_JOKE_HTTP,getContext(),"normal");
                 protocol.load();
                 jokeList.clear();

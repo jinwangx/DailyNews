@@ -16,7 +16,8 @@ import Lib.ThreadManager;
  * 创建时间：2017/7/10
  * 更新时间：2017/11/11 0011 上午 12:44
  * 作者：Mr.jin
- * 描述：
+ * 描述：fragment的一个框架，
+ *       能够根据传入的数据自动显示加载成功、加载中、加载错误等页面
  */
 
 public abstract class LoadingPage extends FrameLayout {

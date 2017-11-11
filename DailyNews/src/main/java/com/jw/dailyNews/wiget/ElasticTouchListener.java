@@ -11,7 +11,7 @@ import android.view.animation.TranslateAnimation;
  * 创建时间：2017/5/26
  * 更新时间：2017/11/11 0011 上午 12:46
  * 作者：Mr.jin
- * 描述：
+ * 描述：使View具有弹性的监听
  */
 public class ElasticTouchListener implements View.OnTouchListener {
     private View inner;

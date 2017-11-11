@@ -29,13 +29,12 @@ import butterknife.BindView;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
-
 /**
- * Author: Administrator
- * Created on:  2017/8/20.
- * Description:
+ * 创建时间：2017/8/20
+ * 更新时间：2017/11/11 0011 下午 4:11
+ * 作者：Mr.jin
+ * 描述：
  */
-
 public class ImageActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
@@ -72,6 +71,9 @@ public class ImageActivity extends BaseActivity implements ViewPager.OnPageChang
         initViewPager(url);
     }
 
+    /**
+     * 初始化toolbar
+     */
     private void initToolBar() {
         mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         setSupportActionBar(mToolbar);
@@ -87,11 +89,16 @@ public class ImageActivity extends BaseActivity implements ViewPager.OnPageChang
         mToolbar.setBackgroundColor(Color.TRANSPARENT);
     }
 
+    /**
+     * 初始化图片viewpager
+     * @param url
+     */
     private void initViewPager(final String url) {
         imagePager.addOnPageChangeListener(this);
         ThreadManager.getInstance().createLongPool(3, 3, 2l).execute(new Runnable() {
             @Override
             public void run() {
+                //jsoup解析，耗时操作在子线程中执行
                 maps = getImages(url);
                 Log.v("size",maps.size()+"");
                 runOnUiThread(new Runnable() {
@@ -120,6 +127,11 @@ public class ImageActivity extends BaseActivity implements ViewPager.OnPageChang
     }
 
 
+    /**
+     * 用Jsoup从图片新闻网页中抓取图片信息，存入map集合中,再将map添加进List中
+     * @param url 图片新闻网页链接
+     * @return
+     */
     private List<HashMap<String,String>> getImages(String url){
         try {
             document = Jsoup.connect(url).maxBodySize(0).get();

@@ -122,7 +122,7 @@
             android:value="7ufKXVKvCYKWhKTnL1FFNqoyg2b8vuop" />
         <!--自定义GlideModule-->
         <meta-data
-            android:name="com.jw.dailyNews.utils.MyGlideModule"
+            android:name="com.jw.dailyNews.MyGlideModule"
             android:value="GlideModule" />
 
     </application>

@@ -24,6 +24,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.bumptech.glide.Glide;
+import com.jw.dailyNews.Constants;
 import com.jw.dailyNews.R;
 import com.jw.dailyNews.base.BaseActivity;
 import com.jw.dailyNews.fragment.FragmentDireBroad;
@@ -31,10 +32,9 @@ import com.jw.dailyNews.fragment.FragmentMe;
 import com.jw.dailyNews.fragment.FragmentShouye;
 import com.jw.dailyNews.fragment.FragmentVideo;
 import com.jw.dailyNews.utils.CacheUtils;
-import com.jw.dailyNews.utils.MyGlideModule;
+import com.jw.dailyNews.utils.CommonUtils;
 import com.jw.dailyNews.utils.NetUtils;
 import com.jw.dailyNews.utils.ThemeUtils;
-import com.jw.dailyNews.utils.ToastUtils;
 import com.jw.dailyNews.wiget.ColorPickDialog;
 import com.jw.dailyNews.wiget.ColorPickView;
 import com.jw.dailyNews.wiget.ElasticTouchListener;
@@ -45,7 +45,7 @@ import com.jw.dailyNews.wiget.ItemTextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import Lib.AuthManager;
+import Lib.NewsManager;
 import Lib.ThreadManager;
 import butterknife.BindView;
 import cn.jpush.android.api.JPushInterface;
@@ -61,7 +61,7 @@ import static com.jw.dailyNews.fragment.FragmentMe.rlMe;
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener,
         RadioGroup.OnCheckedChangeListener,ColorPickView.OnColorChangedListener,
-        ItemSwitchView.SwitchListener, AuthManager.AuthListener {
+        ItemSwitchView.SwitchListener, NewsManager.AuthListener {
     @BindView(R.id.user_icon)
     CircleImageView userIcon;
     @BindView(R.id.user_name)
@@ -124,6 +124,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener,
     private final static int ORDER_HEAD_LINE=2;
     private final static int ORDER_DOWNLOAD_ONLY_WIFI =3;
 
+
+
     @Override
     protected void bindView() {
         setContentView(R.layout.activity_home);
@@ -163,13 +165,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener,
     private void initLeftPanel() {
         String type = NetUtils.isNetworkAvailable(this);
         if(!type.equals("没联网"))
-            ToastUtils.show(this,type);
+            ThemeUtils.show(this,type);
         isvHeadline.setChecked(
-                CacheUtils.getCacheBoolean("JPush",true,HomeActivity.this));
+                CacheUtils.getCacheBoolean("JPush",true));
         isvImageDownloadOnlyWifi.setChecked(
-                CacheUtils.getCacheBoolean("isvImageDownloadOnlyWifi", true, HomeActivity.this));
+                CacheUtils.getCacheBoolean("isvImageDownloadOnlyWifi", true));
         itvStyle.setText(
-                CacheUtils.getCacheInt("indicatorColor",Color.RED, this)+"");
+                CacheUtils.getCacheInt("indicatorColor",Color.RED)+"");
         mLocationClient = new LocationClient(getApplicationContext());
         //声明LocationClient类
         mLocationClient.registerLocationListener(myListener);
@@ -183,7 +185,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener,
      */
     private void initToolBar() {
         setSupportActionBar(toolbar);
-        ThemeUtils.changeViewColor(toolbar, CacheUtils.getCacheInt("indicatorColor",Color.RED, this));
+        ThemeUtils.changeViewColor(toolbar, CacheUtils.getCacheInt("indicatorColor",Color.RED));
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         //Toolbar上面最左边显示三杠图标监听DrawerLayout
         toggle = new ActionBarDrawerToggle(
@@ -194,7 +196,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener,
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                clearCache.setText(CacheUtils.getCacheSize(HomeActivity.this, null, MyGlideModule.getCacheDirectory()) + "MB");
+                clearCache.setText(
+                        CommonUtils.getCacheSize(Constants.JSON_CACHE_PATH)
+                                + CommonUtils.getCacheSize(Constants.IMAGE_CACHE_PATH)
+                                + "MB");
             }
         });
     }
@@ -249,13 +254,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_qq:
-                AuthManager.getInstance().auth(QQ, this);
+                NewsManager.getInstance().auth(QQ, this);
                 break;
             case R.id.login_wechat:
-                AuthManager.getInstance().auth(WeChat, this);
+                NewsManager.getInstance().auth(WeChat, this);
                 break;
             case R.id.login_weibo:
-                AuthManager.getInstance().auth(Sina,this);
+                NewsManager.getInstance().auth(Sina,this);
                 break;
             case R.id.iav_fontSize:
 
@@ -269,21 +274,20 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener,
                         ThreadManager.getInstance().createLongPool(
                                 3, 3, 2l)
                                 .execute(new Runnable() {
-                            @Override
-                            public void run() {
-                                CacheUtils.clear(HomeActivity.this);
-                                runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        clearCache.setText(
-                                                CacheUtils.getCacheSize(
-                                                        HomeActivity.this,
-                                                        null,
-                                                        MyGlideModule.getCacheDirectory()) + "MB");
+                                        CacheUtils.clear();
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                clearCache.setText(
+                                                        CommonUtils.getCacheSize(Constants.JSON_CACHE_PATH)
+                                                        + CommonUtils.getCacheSize(Constants.IMAGE_CACHE_PATH)
+                                                        + "MB");
+                                            }
+                                        });
                                     }
                                 });
-                            }
-                        });
                     }
                 });
                 builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -374,13 +378,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener,
      */
     @Override
     public void onColorChange(int color) {
-        CacheUtils.setCache("indicatorColor", color, HomeActivity.this);
+        CacheUtils.setCache("indicatorColor", color);
         ThemeUtils.changeStatusBar(HomeActivity.this,
-                CacheUtils.getCacheInt("indicatorColor", Color.RED, HomeActivity.this));
+                CacheUtils.getCacheInt("indicatorColor", Color.RED));
         ThemeUtils.changeViewColor(toolbar,
-                CacheUtils.getCacheInt("indicatorColor", Color.RED, HomeActivity.this));
+                CacheUtils.getCacheInt("indicatorColor", Color.RED));
         ThemeUtils.changeViewColor(rlMe,
-                CacheUtils.getCacheInt("indicatorColor", Color.RED, HomeActivity.this));
+                CacheUtils.getCacheInt("indicatorColor", Color.RED));
         itvStyle.setText(color+"");
     }
 
@@ -393,20 +397,20 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener,
         switch (order){
             case ORDER_AUTO_PLAY:
                 isvVideoAutoPlay.setChecked(false);
-                //ToastUtils.show(this,"该功能暂未实现,敬请等候");
+                //ThemeUtils.show(this,"该功能暂未实现,敬请等候");
                 break;
             case ORDER_4G_REMIND:
-                //ToastUtils.show(this,"4G网络下观看视频，该功能不管开启或未开启，都会提醒");
+                //ThemeUtils.show(this,"4G网络下观看视频，该功能不管开启或未开启，都会提醒");
                 break;
             case ORDER_HEAD_LINE:
                 if(JPushInterface.isPushStopped(getApplication()))
                     JPushInterface.resumePush(getApplication());
-                CacheUtils.setCache("JPush",true,HomeActivity.this);
-                //ToastUtils.show(this,"已允许接收推送");
+                CacheUtils.setCache("JPush",true);
+                //ThemeUtils.show(this,"已允许接收推送");
                 break;
             case ORDER_DOWNLOAD_ONLY_WIFI:
-                CacheUtils.setCache("isvImageDownloadOnlyWifi", true, HomeActivity.this);
-                //ToastUtils.show(this,"非WIFI网络状态下将不加载图片");
+                CacheUtils.setCache("isvImageDownloadOnlyWifi", true);
+                //ThemeUtils.show(this,"非WIFI网络状态下将不加载图片");
                 break;
         }
     }
@@ -427,10 +431,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener,
             case ORDER_HEAD_LINE:
                 if(!JPushInterface.isPushStopped(getApplication()))
                     JPushInterface.stopPush(getApplication());
-                CacheUtils.setCache("JPush",false,HomeActivity.this);
+                CacheUtils.setCache("JPush",false);
                 break;
             case ORDER_DOWNLOAD_ONLY_WIFI:
-                CacheUtils.setCache("isvImageDownloadOnlyWifi", false, HomeActivity.this);
+                CacheUtils.setCache("isvImageDownloadOnlyWifi", false);
                 break;
         }
     }
@@ -445,7 +449,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener,
             @Override
             public void run() {
                 String platformName=platform.getName();
-                    if(platformName.equals("QQ")){
+                if(platformName.equals("QQ")){
                     Toast.makeText(HomeActivity.this, "QQ登录成功", Toast.LENGTH_SHORT).show();
                     userName.setText(QQ.getDb().getUserName());
                     Glide.with(HomeActivity.this).load(

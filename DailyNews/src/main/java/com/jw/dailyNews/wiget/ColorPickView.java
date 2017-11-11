@@ -18,7 +18,7 @@ import com.jw.dailyNews.R;
  * 创建时间：2017/8/16
  * 更新时间：2017/11/11 0011 上午 12:47
  * 作者：Mr.jin
- * 描述：
+ * 描述：颜色盘
  */
 public class ColorPickView extends View {
     private Context context;

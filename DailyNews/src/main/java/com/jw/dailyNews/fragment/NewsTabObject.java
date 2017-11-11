@@ -192,7 +192,7 @@ public class NewsTabObject extends BaseFragment implements SwipeRefreshLayout.On
             @Override
             public void run() {
                 for(int i=0;i<=count;i++)
-                    CacheUtils.clearCache(CommonUtils.createRecommondUrl(count),getContext());
+                    CacheUtils.removeKey(CommonUtils.createRecommondUrl(count));
                 NewsObjectProtocol protocol=new NewsObjectProtocol(null,
                         CommonUtils.createRecommondUrl(count=0),getContext(),"news");
                 //清空所有list中的数据然后加载刷新读到的数据

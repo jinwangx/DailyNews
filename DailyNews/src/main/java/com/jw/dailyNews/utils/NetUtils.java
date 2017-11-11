@@ -6,9 +6,10 @@ import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
 /**
- * Author: Administrator
- * Created on:  2017/8/1.
- * Description:
+ * 创建时间：2017/8/1
+ * 更新时间：2017/11/11 0011 下午 5:33
+ * 作者：Mr.jin
+ * 描述：
  */
 
 public class NetUtils {

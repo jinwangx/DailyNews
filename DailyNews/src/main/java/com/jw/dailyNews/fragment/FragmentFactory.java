@@ -1,9 +1,8 @@
-package com.jw.dailyNews.utils;
+package com.jw.dailyNews.fragment;
 
 import android.support.v4.app.Fragment;
 
-import com.jw.dailyNews.fragment.NewsTabNormal;
-import com.jw.dailyNews.fragment.NewsTabObject;
+import com.jw.dailyNews.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;

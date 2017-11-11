@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -22,9 +23,10 @@ import android.widget.TextView;
 
 import com.jw.dailyNews.R;
 import com.jw.dailyNews.base.BaseActivity;
+import com.jw.dailyNews.utils.CacheUtils;
 import com.jw.dailyNews.utils.CommonUtils;
-import com.jw.dailyNews.utils.StreamUtils;
-import com.jw.dailyNews.wiget.ImageLargeDialog;
+import com.jw.dailyNews.utils.ThemeUtils;
+import com.jw.dailyNews.wiget.ImageDetailDialog;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -72,7 +74,7 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
         tvTitle = (TextView) mToolbar.findViewById(R.id.toolbar_title);
         tvTitle.setText("新闻详情");
         mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-        //ThemeUtils.changeViewColor(mToolbar, CacheUtils.getCacheInt("indicatorColor", Color.RED,this));
+        ThemeUtils.changeViewColor(mToolbar, CacheUtils.getCacheInt("indicatorColor", Color.RED));
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -144,7 +146,7 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    ImageLargeDialog dialog=new ImageLargeDialog(ArticleActivity.this,img);
+                    ImageDetailDialog dialog=new ImageDetailDialog(ArticleActivity.this,img);
                     dialog.show();
                 }
             });
@@ -170,7 +172,7 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
                 InputStream js = null;
                 try {
                     js = getAssets().open("js.txt");
-                    result = StreamUtils.readfromStream(js);
+                    result = ThemeUtils.readFromAssetsStream(js);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -212,7 +214,7 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
                             new ByteArrayInputStream(CommonUtils.getArticleHtml(url).getBytes()));
                 }else if(url.equals("https://main.css/")){
                     return
-                            new WebResourceResponse("text/css","utf-8", StreamUtils.getAssetsInputStream("main.css"));
+                            new WebResourceResponse("text/css","utf-8", ThemeUtils.getAssetsInputStream("main.css"));
                 } else
                     return null;
             }

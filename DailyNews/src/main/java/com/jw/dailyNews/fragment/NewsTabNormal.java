@@ -128,7 +128,7 @@ public class NewsTabNormal extends BaseFragment implements SwipeRefreshLayout.On
     @Override
     public void onRefresh() {
         for (int i = 0; i <= count; i++)
-            CacheUtils.clearCache(CommonUtils.createNewsUrl(url, count), getContext());
+            CacheUtils.removeKey(CommonUtils.createNewsUrl(url, count));
         ThreadManager.getInstance().createLongPool(3, 3, 2l).execute(new Runnable() {
             @Override
             public void run() {

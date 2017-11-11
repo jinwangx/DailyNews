@@ -1,21 +1,18 @@
 package com.jw.dailyNews.utils;
 
 import android.util.Log;
-import android.view.Gravity;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONTokener;
+
+import com.bumptech.glide.Glide;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import Lib.MyNews;
 
 /**
@@ -23,15 +20,44 @@ import Lib.MyNews;
  * 更新时间 2017/10/30 15:19
  * 版本：
  * 作者：Mr.jin
- * 描述：本应用工具类
+ * 描述：本应用工具类,不能公用
  */
 
 public class CommonUtils {
-    public static String articleHtml= StreamUtils.readfromStream(StreamUtils.getAssetsInputStream("article.html"));
+    public static String articleHtml= ThemeUtils.readFromAssetsStream(
+            ThemeUtils.getAssetsInputStream("article.html"));
 
     /**
-     * @description 将拿到的json字符串进行正确检查，返回程序能识别的字符串
-     * @version
+     * 自动生成推荐新闻url
+     * @param position
+     * @return
+     */
+    public static String createRecommondUrl(int position){
+        String url;
+        if(position==0)
+            url="http://3g.163.com/touch/jsonp/sy/recommend/"+position+"-10.html";
+        else
+            url="http://3g.163.com/touch/jsonp/sy/recommend/"+position+"0-10.html?hasad=1&miss=05&refresh=A";
+        return url;
+    }
+
+    /**
+     * 自动生成普通新闻url
+     * @param position
+     * @return
+     */
+    public static String createNewsUrl(String baseUrl,int position){
+        String url;
+        url= baseUrl+position+"0-10.html";
+        return url;
+    }
+
+    /**
+     * 由于从网页拿到的新闻json数据本地api有时候会解析错误，经尝试，
+     * 将拿到的新闻json字符串进行如下替换，本地能够正确解析
+     * @param type
+     * @param str
+     * @return
      */
     public static String correctJson(String type,String str){
         String json="";
@@ -47,76 +73,11 @@ public class CommonUtils {
     }
 
     /**
-     * json结果解析类
-     * @param json
-     * @return
-     */
-    public static String parseIatResult(String json) {
-        StringBuffer ret = new StringBuffer();
-        try {
-            JSONTokener tokener = new JSONTokener(json);
-            JSONObject joResult = new JSONObject(tokener);
-
-            JSONArray words = joResult.getJSONArray("ws");
-            for (int i = 0; i < words.length(); i++) {
-                // 转写结果词，默认使用第一个结果
-                JSONArray items = words.getJSONObject(i).getJSONArray("cw");
-                JSONObject obj = items.getJSONObject(0);
-                ret.append(obj.getString("w"));
-//				如果需要多候选结果，解析数组其他字段
-//				for(int j = 0; j < items.length(); j++)
-//				{
-//					JSONObject obj = items.getJSONObject(j);
-//					ret.append(obj.getString("w"));
-//				}
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return ret.toString();
-    }
-
-    /**
-     * 重组从网页拿到的html
+     * 得到新闻文章url
      * @param url
+     * @param type
      * @return
      */
-    public static String getArticleHtml(String url){
-        Document html=null;
-        try
-        {
-            StreamUtils.getAssetsInputStream("article.html");
-            Document document = Jsoup.connect(url).maxBodySize(0).get();
-            Elements article = document.select("main").select("article");
-            Elements elements = article.select("a").select("img");
-            for(Element element:elements){
-                element.attr("src",element.attr("data-src"));
-            }
-            article.select("div.footer").remove();
-            article.select("div.page").addClass("on");
-            html = Jsoup.parse(articleHtml);
-            html.select("main").append(article.toString());
-            Log.v("main",html.toString());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return html.toString();
-    }
-
-    public static String createRecommondUrl(int position){
-        String url;
-        if(position==0)
-            url="http://3g.163.com/touch/jsonp/sy/recommend/"+position+"-10.html";
-        else
-            url="http://3g.163.com/touch/jsonp/sy/recommend/"+position+"0-10.html?hasad=1&miss=05&refresh=A";
-        return url;
-    }
-    public static String createNewsUrl(String baseUrl,int position){
-        String url;
-        url= baseUrl+position+"0-10.html";
-        return url;
-    }
     public static String getArticalUrl(String url,String type){
         if(type.equals("article")){
             String sample="http://3g.163.com/all/article/CSABRGKU0001899O_0.html";
@@ -151,22 +112,50 @@ public class CommonUtils {
         return url;
     }
 
-    public static ImageView getImageView(){
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        ImageView iv = new ImageView(MyNews.getInstance().getContext());
-        iv.setMaxHeight(300);
-        params.gravity= Gravity.CENTER_HORIZONTAL;
-        iv.setLayoutParams(params);
-        iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        return iv;
+    /**
+     * 重组从新闻详情网页拿到的html,原始html广告多
+     * 本地html模板有自己的css样式，添加了其他功能的js，实现了js调用java，将网页中图片点击事件
+     * 送到java语言处理
+     * @param url
+     * @return
+     */
+    public static String getArticleHtml(String url){
+        Document html=null;
+        try
+        {
+            ThemeUtils.getAssetsInputStream("article.html");
+            Document document = Jsoup.connect(url).maxBodySize(0).get();
+            Elements article = document.select("main").select("article");
+            Elements elements = article.select("a").select("img");
+            for(Element element:elements){
+                element.attr("src",element.attr("data-src"));
+            }
+            article.select("div.footer").remove();
+            article.select("div.page").addClass("on");
+            html = Jsoup.parse(articleHtml);
+            html.select("main").append(article.toString());
+            Log.v("main",html.toString());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return html.toString();
     }
-    public static TextView getTextView(){
-        TextView tv=new TextView(MyNews.getInstance().getContext());
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        tv.setLayoutParams(params);
-        tv.setTextSize(15);
-        return tv;
+
+    /**
+     * 获取制定目录下存储的缓存大小
+     * @param path
+     * @return
+     */
+    public static Double getCacheSize(String path){
+        return FileUtils.getFileOrFilesSize(path,3);
+    }
+
+    /**
+     * 清空Glide的图片缓存
+     */
+    public static void clearImageCache(){
+        Glide.get(MyNews.getInstance().getContext()).clearDiskCache();
+        //Glide.get(context).clearMemory();
     }
 }

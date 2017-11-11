@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
  * 创建时间：2017/7/31
  * 更新时间：2017/11/11 0011 上午 12:43
  * 作者：Mr.jin
- * 描述：
+ * 描述：具有下拉刷新和上拉加载更多功能的recycleView的refreshLayout
  */
 public class MyRefreshLayout<Data> extends SwipeRefreshLayout {
 
@@ -41,9 +41,7 @@ public class MyRefreshLayout<Data> extends SwipeRefreshLayout {
     public static final int LOAD_ERROR=1;// 加载失败
     public static final int HAS_MORE=2;//  有额外数据
     private float mDownY, mUpY;
-    private Handler mHandler=new Handler(){
-
-    };
+    private Handler mHandler=new Handler();
 
 
     public MyRefreshLayout(Context context) {

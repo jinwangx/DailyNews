@@ -1,8 +1,7 @@
-package com.jw.dailyNews.utils;
+package com.jw.dailyNews;
 
 import android.content.Context;
 import android.os.Environment;
-import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
@@ -11,9 +10,7 @@ import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.cache.DiskLruCacheFactory;
 import com.bumptech.glide.load.model.GlideUrl;
-import com.bumptech.glide.module.AppGlideModule;
 import com.bumptech.glide.module.GlideModule;
-import com.jw.dailyNews.BaseApplication;
 
 import java.io.File;
 import java.io.InputStream;

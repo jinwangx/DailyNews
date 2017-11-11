@@ -13,7 +13,7 @@ import android.view.View;
  * 创建时间：2017/8/21
  * 更新时间：2017/11/11 0011 上午 12:46
  * 作者：Mr.jin
- * 描述：
+ * 描述：recycleView各条目之间的间隔样式
  */
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 

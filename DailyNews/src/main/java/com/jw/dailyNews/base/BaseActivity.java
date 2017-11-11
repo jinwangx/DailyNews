@@ -74,7 +74,7 @@ public abstract class BaseActivity extends AppCompatActivity{
 	@Override
 	protected void onResume() {
 		super.onResume();
-		ThemeUtils.changeStatusBar(this, CacheUtils.getCacheInt("indicatorColor", Color.RED,this));
+		ThemeUtils.changeStatusBar(this, CacheUtils.getCacheInt("indicatorColor", Color.RED));
 		loadData();
 	}
 

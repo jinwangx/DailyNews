@@ -23,13 +23,13 @@ import uk.co.senab.photoview.PhotoViewAttacher;
  * 作者：Mr.jin
  * 描述：
  */
-public class ImageLargeDialog extends Dialog {
+public class ImageDetailDialog extends Dialog {
     ImageView ivBack;
     private String url;
     private Handler mHandler=new Handler(){};
     private PhotoView photoView;
 
-    public ImageLargeDialog(Context context, String url) {
+    public ImageDetailDialog(Context context, String url) {
         super(context,R.style.dialog_logout);
         setCancelable(true);
         this.url = url;

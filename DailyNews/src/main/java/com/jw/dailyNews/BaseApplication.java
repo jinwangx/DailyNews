@@ -5,7 +5,6 @@ import android.app.Application;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Process;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -35,6 +34,7 @@ public class BaseApplication extends Application {
     private static int mainTid;
     public static RequestOptions options=new RequestOptions().centerCrop()
             .priority(Priority.HIGH)
+            .placeholder(R.drawable.ic_default_news)
             .diskCacheStrategy(DiskCacheStrategy.ALL);
 
     @Override

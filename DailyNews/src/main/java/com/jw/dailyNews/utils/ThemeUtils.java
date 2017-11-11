@@ -6,12 +6,27 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import Lib.MyNews;
 
 /**
  * 创建时间：2017/7/10
@@ -23,6 +38,35 @@ import java.util.List;
 public class ThemeUtils {
     private static Window window;
     final public static int REQUEST_CODE_ASK_PERMISSIONS = 123;
+    private static Toast mToast;
+
+
+    /**
+     *  吐司，单例且保证吐司在主线程运行
+     * @param activity
+     * @param content
+     */
+    public static void show(final Activity activity,final String content) {
+        if(mToast==null)
+            mToast=new Toast(activity);
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mToast.makeText(activity, content, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public static void show(final Activity activity, final int contentId) {
+        if(mToast==null)
+            mToast=new Toast(activity);
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mToast.makeText(activity, contentId, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     /**
      *
@@ -132,6 +176,115 @@ public class ThemeUtils {
         return (int) (pxValue / scale + 0.5f);
     }
 
+    /**
+     * 释放Assets中的资源
+     * @param context
+     * @param name 资源名称
+     * @param path 释放到的路径
+     */
+    public static void mkdirsAssets(Context context,String name,String path){
+        BufferedInputStream in=null;
+        BufferedOutputStream out=null;
+        try {
+            in = new BufferedInputStream(context.getAssets().open(name));
+            File file = new File(path);
+            //释放目录
+            if(!file.getParentFile().exists())
+                file.getParentFile().mkdirs();
+            if(file.exists())
+                return;
+            out = new BufferedOutputStream(new FileOutputStream(path));
+            int len=0;
+            while((len=in.read())!=-1){
+                out.write(len);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if(in!=null)
+                    in.close();
+                if(out!=null)
+                    out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 得到资源文件的输入流
+     * @param name 文件名
+     * @return
+     */
+    public static InputStream getAssetsInputStream(String name){
+        InputStream open=null;
+        try {
+            open = MyNews.getInstance().getContext().getAssets().open(name);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return open;
+    }
+
+    /**
+     * 从资源文件输入流中读取字符串
+     * @param in
+     * @return
+     */
+    public static String readFromAssetsStream(InputStream in)
+    {
+        String result=null;
+        //字节输出流
+        ByteArrayOutputStream out=new ByteArrayOutputStream();
+        byte[] buffer=new byte[1024];
+        int len=0;
+        try {
+            while((len=in.read(buffer))!=-1)
+            {
+                out.write(buffer,0, len);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally
+        {
+            result=out.toString();
+            try {
+                in.close();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    public static ImageView getImageView(){
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        ImageView iv = new ImageView(MyNews.getInstance().getContext());
+        iv.setMaxHeight(300);
+        params.gravity= Gravity.CENTER_HORIZONTAL;
+        iv.setLayoutParams(params);
+        iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        return iv;
+    }
+
+    public static TextView getTextView(){
+        TextView tv=new TextView(MyNews.getInstance().getContext());
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        tv.setLayoutParams(params);
+        tv.setTextSize(15);
+        return tv;
+    }
 
     /**
      *弹出请求窗口
