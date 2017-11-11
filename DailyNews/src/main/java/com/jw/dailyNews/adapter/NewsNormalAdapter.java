@@ -89,7 +89,15 @@ public class NewsNormalAdapter extends DefaultAdapter<NewsNormal> {
 
     @Override
     public int getItemViewType(int position) {
-        String gtype = lists.get(position).getImgsrc3gtype();
+        NewsNormal news = lists.get(position);
+        String gtype = news.getImgsrc3gtype();
+        try {
+
+        }catch (Exception e){
+            //过滤掉网易的新闻，不过滤掉会出现问题
+            if(news.getSource().contains("网易"))
+                gtype="0";
+        }
         int ordinal = 0;
         switch (gtype) {
             case "0":
