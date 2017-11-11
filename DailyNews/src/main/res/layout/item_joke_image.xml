@@ -12,13 +12,14 @@
         />
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="300dp"
         >
         <ImageView
             android:layout_gravity="center_horizontal"
             android:id="@id/iv_image"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             />
         <TextView

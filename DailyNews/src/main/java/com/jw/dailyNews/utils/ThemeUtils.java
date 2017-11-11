@@ -57,6 +57,18 @@ public class ThemeUtils {
         });
     }
 
+    /**
+     * 吐司，单例不能保证在主线程运行
+     * @param context
+     * @param content
+     */
+    public static void show(final Context context,final String content) {
+        if(mToast==null)
+            mToast=new Toast(context);
+        mToast.makeText(context, content, Toast.LENGTH_SHORT).show();
+    }
+
+
     public static void show(final Activity activity, final int contentId) {
         if(mToast==null)
             mToast=new Toast(activity);

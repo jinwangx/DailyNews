@@ -22,7 +22,8 @@ import com.viewpagerindicator.TabPageIndicator;
  * 更新时间 2017/10/30 15:52
  * 版本：
  * 作者：Mr.jin
- * 描述：
+ * 描述：主界面的首页界面，其中内嵌多个新闻fragment，默认页面为推荐新闻页面,NewsTabObject,
+ *       其他页面类型均为NewsTabNormal
  */
 
 public class FragmentShouye extends BaseFragment implements View.OnClickListener{

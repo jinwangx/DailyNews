@@ -33,7 +33,7 @@ import uk.co.senab.photoview.PhotoViewAttacher;
  * 创建时间：2017/8/20
  * 更新时间：2017/11/11 0011 下午 4:11
  * 作者：Mr.jin
- * 描述：
+ * 描述：图片新闻详情页面，
  */
 public class ImageActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
     @BindView(R.id.toolbar_title)
@@ -67,6 +67,7 @@ public class ImageActivity extends BaseActivity implements ViewPager.OnPageChang
         super.initView();
         String url= CommonUtils.getArticalUrl(
                 getIntent().getStringExtra("docurl"),"photoview");
+        Log.v("url_image_article",url);
         initToolBar();
         initViewPager(url);
     }
@@ -100,7 +101,6 @@ public class ImageActivity extends BaseActivity implements ViewPager.OnPageChang
             public void run() {
                 //jsoup解析，耗时操作在子线程中执行
                 maps = getImages(url);
-                Log.v("size",maps.size()+"");
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

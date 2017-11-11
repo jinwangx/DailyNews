@@ -24,7 +24,6 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.bumptech.glide.Glide;
-import com.jw.dailyNews.Constants;
 import com.jw.dailyNews.R;
 import com.jw.dailyNews.base.BaseActivity;
 import com.jw.dailyNews.fragment.FragmentDireBroad;
@@ -192,16 +191,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener,
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        drawerLayout.addDrawerListener(new SimpleDrawerListener() {
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                clearCache.setText(
-                        CommonUtils.getCacheSize(Constants.JSON_CACHE_PATH)
-                                + CommonUtils.getCacheSize(Constants.IMAGE_CACHE_PATH)
-                                + "MB");
-            }
-        });
+        drawerLayout.addDrawerListener(drawerOpenListenernew);
     }
 
     /**
@@ -250,62 +240,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener,
         transaction.commit();
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.login_qq:
-                NewsManager.getInstance().auth(QQ, this);
-                break;
-            case R.id.login_wechat:
-                NewsManager.getInstance().auth(WeChat, this);
-                break;
-            case R.id.login_weibo:
-                NewsManager.getInstance().auth(Sina,this);
-                break;
-            case R.id.iav_fontSize:
-
-                break;
-            case R.id.itv_clear_cache:
-                final AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
-                builder.setMessage("确定删除所有缓存？");
-                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ThreadManager.getInstance().createLongPool(
-                                3, 3, 2l)
-                                .execute(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        CacheUtils.clear();
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                clearCache.setText(
-                                                        CommonUtils.getCacheSize(Constants.JSON_CACHE_PATH)
-                                                        + CommonUtils.getCacheSize(Constants.IMAGE_CACHE_PATH)
-                                                        + "MB");
-                                            }
-                                        });
-                                    }
-                                });
-                    }
-                });
-                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.show();
-                break;
-            case R.id.itv_style:
-                ColorPickDialog dialog=new ColorPickDialog(HomeActivity.this);
-                dialog.show();
-                dialog.setOnColorChangedListener(this);
-                break;
-        }
-    }
-
+    /**
+     * 初始化百度地图位置服务配置
+     */
     private void initLocation(){
 
         LocationClientOption option = new LocationClientOption();
@@ -347,6 +284,41 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener,
         //可选，7.2版本新增能力，如果您设置了这个接口，首次启动定位时，会先判断当前WiFi是否超出有效期，超出有效期的话，会先重新扫描WiFi，然后再定位
 
         mLocationClient.setLocOption(option);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.login_qq:
+                NewsManager.getInstance().auth(QQ, this);
+                break;
+            case R.id.login_wechat:
+                NewsManager.getInstance().auth(WeChat, this);
+                break;
+            case R.id.login_weibo:
+                NewsManager.getInstance().auth(Sina,this);
+                break;
+            case R.id.iav_fontSize:
+
+                break;
+            case R.id.itv_clear_cache:
+                final AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+                builder.setMessage("确定删除所有缓存？");
+                builder.setPositiveButton("确定", dialogOkListener);
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.show();
+                break;
+            case R.id.itv_style:
+                ColorPickDialog dialog=new ColorPickDialog(HomeActivity.this);
+                dialog.show();
+                dialog.setOnColorChangedListener(this);
+                break;
+        }
     }
 
     /**
@@ -440,6 +412,17 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener,
     }
 
     /**
+     * 窗帘拉开监听，重新加载缓存大小数据
+     */
+    private SimpleDrawerListener drawerOpenListenernew=new SimpleDrawerListener() {
+        @Override
+        public void onDrawerOpened(View drawerView) {
+            super.onDrawerOpened(drawerView);
+            clearCache.setText(CommonUtils.getCacheSize());
+        }
+    };
+
+    /**
      * 授权成功监听
      * @param platform 授权成功的平台
      */
@@ -471,6 +454,43 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener,
                         "已授权,过期时间:" + platform.getDb().getExpiresTime(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    /**
+     * 清除缓存dialog确定按钮点击监听，监听到点击事件后重新加载缓存大小数据
+     */
+    private DialogInterface.OnClickListener dialogOkListener=new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            ThreadManager.getInstance().createLongPool(
+                    3, 3, 2l).execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            CommonUtils.clearCache();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    clearCache.setText(CommonUtils.getCacheSize());
+                                }
+                            });
+                        }
+                    });
+        }
+    };
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        JCVideoPlayer.releaseAllVideos();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK){
+            JCVideoPlayer.backPress();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     class MyLocationListener implements BDLocationListener {
@@ -593,21 +613,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener,
 
             }
         }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        JCVideoPlayer.releaseAllVideos();
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode==KeyEvent.KEYCODE_BACK){
-            JCVideoPlayer.backPress();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
     }
 
 }

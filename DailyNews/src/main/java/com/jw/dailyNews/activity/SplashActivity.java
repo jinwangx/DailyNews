@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
@@ -18,7 +17,13 @@ import com.jw.dailyNews.utils.ThemeUtils;
 import Lib.ThreadManager;
 import butterknife.BindView;
 
-
+/**
+ * 创建时间：
+ * 更新时间：2017/11/11 0011 下午 9:11
+ * 作者：Mr.jin
+ * 描述：闪屏页面，translate动画完成后，检查存储卡写入权限是否开启，如未开启
+ *       弹出权限框
+ */
 public class SplashActivity extends BaseActivity {
 
     @BindView(R.id.rl_splash)
@@ -38,7 +43,6 @@ public class SplashActivity extends BaseActivity {
         rlSplash.startAnimation(anim_splash_in);
         //固定停留本页面2s钟，2s钟后检查相关权限是否开启，如没开启，则弹出请求框请求用户开启
         ThreadManager.getInstance().createLongPool(3,3,2l).execute(new Runnable() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void run() {
                 try {
@@ -59,8 +63,10 @@ public class SplashActivity extends BaseActivity {
                     }
                     else {
                         //弹出请求框请求用户开启
-                        ThemeUtils.requestPermission(SplashActivity.this,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            ThemeUtils.requestPermission(SplashActivity.this,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                        }
                     }
                 }
             }

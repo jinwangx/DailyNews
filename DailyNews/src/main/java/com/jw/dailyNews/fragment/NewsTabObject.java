@@ -38,7 +38,7 @@ import Lib.ThreadManager;
  * 更新时间 2017/10/30 15:53
  * 版本：
  * 作者：Mr.jin
- * 描述：
+ * 描述：推荐新闻页面
  */
 
 public class NewsTabObject extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener,

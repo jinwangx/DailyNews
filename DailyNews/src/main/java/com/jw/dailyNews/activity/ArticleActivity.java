@@ -3,7 +3,6 @@ package com.jw.dailyNews.activity;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.widget.Toolbar;
@@ -61,7 +60,7 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
     protected void initView() {
         super.initView();
         mUrl= CommonUtils.getArticalUrl(getIntent().getStringExtra("docurl"),"article");
-        Log.v("mUrl",mUrl);
+        Log.v("url_article",mUrl);
         initAppBar();//初始化Toolbar
         initWebView();//初始化WebView
         initWebSettings();//初始化WebSettings
@@ -142,7 +141,7 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
 
         @android.webkit.JavascriptInterface
         public void openImage(final String img) {
-            Log.v("imagg",img);
+            Log.v("uri_article_img",img);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -183,8 +182,9 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
             //是否在WebView内加载新页面
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                //如果url不为图片链接,webView直接内部加载网页
                 if(!url.contains("imageView")&&!url.contains("jpg")&&
-                        !url.contains("jpeg"))
+                        !url.contains("jpeg")&&!url.contains("png"))
                     view.loadUrl(url);
                 return true;
             }
@@ -236,12 +236,12 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
 
             @Override
             public Bitmap getDefaultVideoPoster() {
-                if (mDefaultVideoPoster == null) {
+/*                if (mDefaultVideoPoster == null) {
                     mDefaultVideoPoster = BitmapFactory.decodeResource(
                             getResources(), R.drawable.launcher
                     );
                     return mDefaultVideoPoster;
-                }
+                }*/
                 return super.getDefaultVideoPoster();
             }
         });

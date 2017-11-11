@@ -1,7 +1,6 @@
 package Lib;
 
 import android.content.Context;
-import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -41,13 +40,13 @@ public class NewsManager {
     private OkHttpClient client;
     private Context context;
 
-    private UserInfoListener mInfoListener;
+    private ShowUserListener mInfoListener;
     private AuthListener mAuthListener;
 
     public static NewsManager getInstance(){
         synchronized (NewsManager.class) {
             if(instance==null)
-            instance=new NewsManager();
+                instance=new NewsManager();
         }
         return instance;
     }
@@ -62,17 +61,12 @@ public class NewsManager {
      * @param platform
      * @param listener
      */
-    public void auth(Platform platform,final AuthListener listener){
+    public void auth(Platform platform,AuthListener listener){
         this.mAuthListener=listener;
         platform.setPlatformActionListener(new PlatformActionListener() {
             @Override
             public void onComplete(final Platform platform, int i, HashMap<String, Object> hashMap) {
-                new Handler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mAuthListener.onAuthSuccess(platform);
-                    }
-                });
+                mAuthListener.onAuthSuccess(platform);
             }
 
             @Override
@@ -105,12 +99,12 @@ public class NewsManager {
      * @param platform
      * @param listener
      */
-    public void showUser(Platform platform,UserInfoListener listener){
+    public void showUser(Platform platform,ShowUserListener listener){
         this.mInfoListener =listener;
         platform.setPlatformActionListener(new PlatformActionListener() {
             @Override
             public void onComplete(Platform platform, int i, HashMap<String, Object> userInfos) {
-                mInfoListener.onSuccess(userInfos);
+                mInfoListener.onShowUserSuccess(userInfos);
             }
 
             @Override
@@ -129,7 +123,7 @@ public class NewsManager {
     /**
      * 调用分享
      * @param title
-     * @param img 暂时不可用,设为null即可
+     * @param img
      * @param share_url
      */
     public void showShare(String title,String img,String share_url) {
@@ -140,7 +134,8 @@ public class NewsManager {
         oks.setTitleUrl(share_url);
         // text是分享文本，所有平台都需要这个字段
         oks.setText("http://www.mob.com"+"\n"+"哈哈，太搞笑了");
-        //oks.setImageUrl(img);
+        if(img!=null)
+            oks.setImageUrl(img);
 
         // 启动分享GUI
         oks.show(MyNews.getInstance().getContext());
@@ -203,8 +198,8 @@ public class NewsManager {
         return platform.getDb().isValid();
     }
 
-    public interface UserInfoListener{
-        void onSuccess(HashMap<String,Object> userInfos);
+    public interface ShowUserListener {
+        void onShowUserSuccess(HashMap<String,Object> userInfos);
     }
 
     public interface AuthListener{

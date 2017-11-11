@@ -64,7 +64,7 @@ public class JokeAdapter extends DefaultAdapter<Joke> {
         if (holder instanceof TextViewHolder) {
 
         } else if (holder instanceof ImageViewHolder) {
-            GlideUtils.load(mContext,joke.getImage().getThumbnail_small().get(0),((ImageViewHolder) holder).ivImage);
+            GlideUtils.load(mContext,joke.getImage().getBig().get(0),((ImageViewHolder) holder).ivImage);
             ((ImageViewHolder) holder).btnLarge.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

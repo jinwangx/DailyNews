@@ -33,7 +33,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * 描述：
  */
 
-public class FragmentMe extends BaseFragment implements View.OnClickListener, NewsManager.AuthListener {
+public class FragmentMe extends BaseFragment implements View.OnClickListener,
+        NewsManager.AuthListener, NewsManager.ShowUserListener {
 
     @BindView(R.id.tv_mName)
     TextView tvMName;
@@ -71,7 +72,7 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, Ne
         switch (v.getId()) {
             case R.id.ci_me:
                 if (NewsManager.getInstance().isValid(Sina))
-                    showLoginDialog();
+                    showExitDialog();
                 else {
                     NewsManager.getInstance().auth(Sina,this);
                 }
@@ -115,21 +116,17 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, Ne
      * 更新用户资料
      */
     private void updateUserInfos() {
-        if (NewsManager.getInstance().isValid(Sina))
-            NewsManager.getInstance().showUser(Sina,new NewsManager.UserInfoListener() {
-                @Override
-                public void onSuccess(HashMap<String, Object> user) {
-                    userInfos = user;
-                    mHandler.sendEmptyMessage(0);
-                }
-            });
+        if (NewsManager.getInstance().isValid(Sina)) {
+            //ThemeUtils.show(getActivity(),"正在获取用户信息");
+            NewsManager.getInstance().showUser(Sina, this);
+        }
     }
 
 
     /**
      * 退出登录dialog
      */
-    private void showLoginDialog() {
+    private void showExitDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         //自定义对话框
         dialog = builder.create();
@@ -144,6 +141,14 @@ public class FragmentMe extends BaseFragment implements View.OnClickListener, Ne
 
     @Override
     public void onAuthSuccess(Platform platform) {
+        //ThemeUtils.show(getActivity(),"授权成功");
         updateUserInfos();
+    }
+
+    @Override
+    public void onShowUserSuccess(HashMap<String, Object> userInfos) {
+        this.userInfos = userInfos;
+        //ThemeUtils.show(getActivity(),"获取用户信息成功");
+        mHandler.sendEmptyMessage(0);
     }
 }

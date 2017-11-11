@@ -3,6 +3,7 @@ package com.jw.dailyNews.utils;
 import android.util.Log;
 
 import com.bumptech.glide.Glide;
+import com.jw.dailyNews.Constants;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -144,18 +145,21 @@ public class CommonUtils {
 
     /**
      * 获取制定目录下存储的缓存大小
-     * @param path
      * @return
      */
-    public static Double getCacheSize(String path){
-        return FileUtils.getFileOrFilesSize(path,3);
+    public static String getCacheSize() {
+        return (int)(FileUtils.getFileOrFilesSize(Constants.JSON_CACHE_PATH,3)+
+                FileUtils.getFileOrFilesSize(Constants.IMAGE_CACHE_PATH,3))+"MB";
     }
 
     /**
      * 清空Glide的图片缓存
      */
-    public static void clearImageCache(){
+    public static void clearCache(){
         Glide.get(MyNews.getInstance().getContext()).clearDiskCache();
+        CacheUtils.clear();
         //Glide.get(context).clearMemory();
     }
+
+
 }

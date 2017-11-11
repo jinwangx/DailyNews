@@ -21,32 +21,14 @@ public class NewsURL {
     public static String URL_HTTP_WORLD=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BD29MJTVwangning/";         //国际
     public static String URL_HTTP_SHEHUI=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BCR1UC1Qwangning/";        //社会
     public static String URL_HTTP_HISTORY=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/C275ML7Gwangning/";      //历史
-
     public static String URL_HTTP_ENTERTAINMENT=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BA10TA81wangning/";  //娱乐
     public static String URL_HTTP_SPORTS=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BA8E6OEOwangning/";    //体育
     public static String URL_HTTP_ECONOMIC=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BA8EE5GMwangning/";   //财经
     public static String URL_HTTP_CAR=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BA8EE5GMwangning/";   //汽车。。
     public static String URL_HTTP_WAR=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BAI67OGGwangning/";    //军事
-/*    public static String URL_HTTP_WAR=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BAI67OGGwangning/";    //直播..
-    public static String URL_HTTP_WAR=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BAI67OGGwangning/";    //视频..
-    public static String URL_HTTP_WAR=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BAI67OGGwangning/";    //段子..
-    public static String URL_HTTP_WAR=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BAI67OGGwangning/";    //时尚..
-    public static String URL_HTTP_WAR=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BAI67OGGwangning/";    //本地..
-    public static String URL_HTTP_WAR=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BAI67OGGwangning/";    //网易号..
-    public static String URL_HTTP_WAR=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BAI67OGGwangning/";    //手机..
-    public static String URL_HTTP_WAR=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BAI67OGGwangning/";    //科技..
-    public static String URL_HTTP_WAR=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BAI67OGGwangning/";    //跟帖..*/
     public static String URL_HTTP_GAME=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BAI6RHDKwangning/";    //游戏
-/*    public static String URL_HTTP_WAR=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BAI67OGGwangning/";    //数码..*/
     public static String URL_HTTP_EDU=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BA8FF5PRwangning/";    //教育
-/*    public static String URL_HTTP_WAR=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BAI67OGGwangning/";    //健康..*/
     public static String URL_HTTP_OWN=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BAI5E21Owangning/";    //独家
-/*    public static String URL_HTTP_WAR=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BAI67OGGwangning/";    //航空..
-    public static String URL_HTTP_WAR=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BAI67OGGwangning/";    //旅游..
-    public static String URL_HTTP_WAR=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BAI67OGGwangning/";    //亲子..
-    public static String URL_HTTP_WAR=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BAI67OGGwangning/";    //艺术..
-    public static String URL_HTTP_WAR=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BAI67OGGwangning/";    //酒香..*/
-/*    public static String URL_HTTP_WAR=WANGYI_BASE_HTTP+"/touch/reconstruct/article/list/BAI67OGGwangning/";    //彩票..*/
 
 
     /**
