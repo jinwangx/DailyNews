@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -43,9 +42,8 @@ public class ImageDetailDialog extends Dialog {
         WindowManager.LayoutParams attributes = getWindow().getAttributes();
         setContentView(R.layout.dialog_image_large);
         photoView = (PhotoView) findViewById(R.id.dialog_photoView);
-        attributes.height= LinearLayout.LayoutParams.WRAP_CONTENT;
+        attributes.height= LinearLayout.LayoutParams.MATCH_PARENT;
         attributes.width= LinearLayout.LayoutParams.MATCH_PARENT;
-        attributes.gravity= Gravity.CENTER;
         PhotoViewAttacher mAttacher = new PhotoViewAttacher(photoView);
         mAttacher.update();
         mAttacher.onGlobalLayout();
