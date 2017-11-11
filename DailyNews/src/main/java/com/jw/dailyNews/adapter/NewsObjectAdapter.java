@@ -18,9 +18,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Administrator on 2017/7/31.
+ * 创建时间：2017/7/31
+ * 更新时间：2017/11/12 0012 上午 2:34
+ * 作者：Mr.jin
+ * 描述：
  */
-
 public class NewsObjectAdapter extends DefaultAdapter<NewsObject.News> {
 
     public NewsObjectAdapter(Context context, List<NewsObject.News> mNewsList) {
@@ -86,15 +88,7 @@ public class NewsObjectAdapter extends DefaultAdapter<NewsObject.News> {
 
     @Override
     public int getItemViewType(int position) {
-        NewsObject.News news = lists.get(position);
-        int gtype = news.getImgsrc3gtype();
-        try {
-            //过滤掉网易的新闻，不过滤掉会出现问题
-            if(news.getSource().contains("网易"))
-                gtype=0;
-        }catch (Exception e){
-
-        }
+        int gtype = lists.get(position).getImgsrc3gtype();
         int ordinal = 0;
         switch (gtype) {
             case 0:

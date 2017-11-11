@@ -7,9 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.jw.dailyNews.fragment.FragmentFactory;
 
 /**
- * Created by Administrator on .
- */
-/**
  * 创建时间：2017/7/27
  * 更新时间：2017/11/11 0011 上午 12:24
  * 作者：Mr.jin

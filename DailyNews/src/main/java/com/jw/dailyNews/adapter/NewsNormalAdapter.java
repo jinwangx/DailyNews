@@ -17,11 +17,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
 /**
- * Created by Administrator on 2017/7/31.
+ * 创建时间：2017/7/31
+ * 更新时间：2017/11/12 0012 上午 2:33
+ * 作者：Mr.jin
+ * 描述：
  */
-
 public class NewsNormalAdapter extends DefaultAdapter<NewsNormal> {
 
 
@@ -89,15 +90,7 @@ public class NewsNormalAdapter extends DefaultAdapter<NewsNormal> {
 
     @Override
     public int getItemViewType(int position) {
-        NewsNormal news = lists.get(position);
-        String gtype = news.getImgsrc3gtype();
-        try {
-
-        }catch (Exception e){
-            //过滤掉网易的新闻，不过滤掉会出现问题
-            if(news.getSource().contains("网易"))
-                gtype="0";
-        }
+        String gtype = lists.get(position).getImgsrc3gtype();
         int ordinal = 0;
         switch (gtype) {
             case "0":
