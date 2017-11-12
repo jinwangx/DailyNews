@@ -11,7 +11,7 @@ DailyNews是一款模仿网易新闻客户端的移动端Android应用，新闻�
 1.本应用有四个acitivity
 (1)SplashActivity闪屏页面：translate动画，释放资源，如果系统版本在7.0以上，还会在动画结束后弹出权限请求dialog.
 （2）HomeActivity应用主界面：采用了比较流行的类似于新浪微博，新浪新闻，网易新闻的布局。结构图如下：
-         ![image](/image/)
+         ![image](/instruction/主页面结构.png)
 （3）ArticleActivity新闻详情页面:toolbar+FramLayout(progressBar+webView）
      由于新闻文章原网页含广告等冗余，还要实现本地的一些功能。所以重写了WebViewClient中对网页加载过程中的监听：
      1.网页开始加载时，progressBar可见
