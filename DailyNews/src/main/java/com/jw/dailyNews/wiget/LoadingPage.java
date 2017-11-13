@@ -132,7 +132,7 @@ public abstract class LoadingPage extends FrameLayout {
      * @return
      */
     private View createLoadingView() {
-        View view = View.inflate(mContext, R.layout.loadpage_loading, null);
+        View view = View.inflate(mContext, R.layout.loadingpage_loading, null);
         return view;
     }
 

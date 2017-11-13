@@ -11,15 +11,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.jw.dailyNews.BaseApplication;
 import com.jw.dailyNews.R;
 import com.jw.dailyNews.utils.CacheUtils;
 import com.jw.dailyNews.utils.NetUtils;
+
 import me.jessyan.progressmanager.ProgressListener;
 import me.jessyan.progressmanager.ProgressManager;
 import me.jessyan.progressmanager.body.ProgressInfo;
@@ -160,7 +161,7 @@ public class ImageLoadingPage extends FrameLayout {
      * @return
      */
     private View createLoadingView(Context context) {
-        View view = View.inflate(context, R.layout.loadpage_loading, null);
+        View view = View.inflate(context, R.layout.loadingpage_loading_img, null);
         return view;
     }
 
@@ -234,6 +235,6 @@ public class ImageLoadingPage extends FrameLayout {
             public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                 return false;
             }
-        }).apply(BaseApplication.options).into(ivSuccess);
+        }).into(ivSuccess);
     }
 }

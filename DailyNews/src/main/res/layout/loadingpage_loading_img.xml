@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.jw.dailyNews.wiget.RoundProgressBar
+        android:visibility="visible"
+        android:layout_gravity="center"
+        android:id="@+id/roundProgressBar2"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:roundColor="@android:color/white"
+        app:roundProgressColor="@android:color/holo_green_light"
+        app:roundWidth="10dp"
+        android:max="100"
+        android:progress="0"
+        />
+
+</LinearLayout>
