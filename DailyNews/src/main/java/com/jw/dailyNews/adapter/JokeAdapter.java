@@ -72,6 +72,13 @@ public class JokeAdapter extends DefaultAdapter<Joke> {
                     dialog.show();
                 }
             });
+            ((BaseHolder) holder).llForward.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NewsManager.getInstance().showShare(joke.getText(),joke.getImage().getThumbnail_small().get(0),
+                            joke.getShare_url());
+                }
+            });
         } else if (holder instanceof GifViewHolder) {
             String url=joke.getGif().getImages().get(0);
             Log.v("gifurl",url);
@@ -87,10 +94,23 @@ public class JokeAdapter extends DefaultAdapter<Joke> {
                 }
             });
             imageLoadingPage.setImageUrl(url);
+            ((GifViewHolder) holder).llForward.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NewsManager.getInstance().showShare(joke.getText(),joke.getGif().getGif_thumbnail().get(0), joke.getShare_url());
+                }
+            });
 
         } else if (holder instanceof VideoViewHolder) {
             ((VideoViewHolder) holder).jcPlayer.setUp(joke.getVideo().getVideo().get(0), JCVideoPlayer.SCREEN_LAYOUT_LIST, joke.getText());
             GlideUtils.load(mContext,joke.getVideo().getThumbnail().get(0),((VideoViewHolder) holder).jcPlayer.thumbImageView);
+            ((BaseHolder) holder).llForward.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NewsManager.getInstance().showShare(joke.getText(),joke.getVideo().getThumbnail().get(0),
+                            joke.getShare_url());
+                }
+            });
         }
         GlideUtils.load(mContext,joke.getU().getHeader().get(0),((BaseHolder) holder).ivIconPublisher);
         ((BaseHolder) holder).tvNamePublisher.setText(joke.getU().getName());
@@ -100,13 +120,6 @@ public class JokeAdapter extends DefaultAdapter<Joke> {
         ((BaseHolder) holder).tvDown.setText(joke.getDown() + "");
         ((BaseHolder) holder).tvForward.setText(joke.getForwrard() + "");
         ((BaseHolder) holder).tvCommentCount.setText(joke.getComment() + "");
-        ((BaseHolder) holder).llForward.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NewsManager.getInstance().showShare(joke.getText(),"",
-                joke.getShare_url());
-            }
-        });
         ArrayList<Joke.TopComments> top_comments = joke.getTop_comments();
         if (top_comments != null && top_comments.size() != 0) {
             ((BaseHolder) holder).topComments.removeAllViews();

@@ -34,7 +34,7 @@ public class MyGlideModule implements GlideModule {
         if(!parentFile.exists())
             parentFile.mkdirs();
         //设置缓存的大小为100M
-        int cacheSize = 100*1000*1000;
+        int cacheSize = 200*1000*1000;
         builder.setDiskCache( new DiskLruCacheFactory(downloadDirectoryPath, cacheSize));
 
     }

@@ -10,9 +10,10 @@ package cn.sharesdk.onekeyshare.themes.classic;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.widget.ImageView;
 
 /** 在At好友页面中，下拉刷新列表头部的旋转箭头 */
-public class RotateImageView extends android.support.v7.widget.AppCompatImageView {
+public class RotateImageView extends ImageView {
 	private float rotation;
 
 	public RotateImageView(Context context) {

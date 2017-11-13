@@ -35,6 +35,7 @@ public class BaseApplication extends Application {
     public static RequestOptions options=new RequestOptions().centerCrop()
             .priority(Priority.HIGH)
             .placeholder(R.drawable.ic_default_news)
+            .error(R.drawable.ic_default_news)
             .diskCacheStrategy(DiskCacheStrategy.ALL);
 
     @Override

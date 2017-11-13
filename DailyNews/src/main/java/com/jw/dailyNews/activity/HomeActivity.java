@@ -290,7 +290,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_qq:
-                NewsManager.getInstance().auth(QQ, this);
+                //NewsManager.getInstance().auth(QQ, this);
+                ThemeUtils.show(this,"QQ登录暂未开放");
                 break;
             case R.id.login_wechat:
                 NewsManager.getInstance().auth(WeChat, this);

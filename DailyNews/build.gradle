@@ -40,17 +40,6 @@ android {
 }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile files('libs/ShareSDK-QQ-3.0.0.jar')
-    compile files('libs/MobCommons-2017.0608.1618.jar')
-    compile files('libs/MobTools-2017.0608.1618.jar')
-    compile files('libs/ShareSDK-Core-3.0.0.jar')
-    compile files('libs/ShareSDK-QZone-3.0.0.jar')
-    compile files('libs/ShareSDK-ShortMessage-3.0.0.jar')
-    compile files('libs/ShareSDK-SinaWeibo-3.0.0.jar')
-    compile files('libs/ShareSDK-Wechat-3.0.0.jar')
-    compile files('libs/ShareSDK-Wechat-Core-3.0.0.jar')
-    compile files('libs/ShareSDK-Wechat-Favorite-3.0.0.jar')
-    compile files('libs/ShareSDK-Wechat-Moments-3.0.0.jar')
     compile 'fm.jiecao:jiecaovideoplayer:5.7'
     //noinspection GradleCompatible
     compile 'com.android.support:recyclerview-v7:24.2.1'
@@ -73,4 +62,14 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.squareup.okhttp3:okhttp:3.9.0'
     implementation 'fr.baloomba:viewpagerindicator:2.4.2'
+    implementation files('libs/MobCommons-2017.1024.1907.jar')
+    implementation files('libs/MobTools-2017.1024.1907.jar')
+    implementation files('libs/ShareSDK-Core-3.1.1.jar')
+    implementation files('libs/ShareSDK-QQ-3.1.1.jar')
+    implementation files('libs/ShareSDK-QZone-3.1.1.jar')
+    implementation files('libs/ShareSDK-ShortMessage-3.1.1.jar')
+    implementation files('libs/ShareSDK-SinaWeibo-3.1.1.jar')
+    implementation files('libs/ShareSDK-Wechat-3.1.1.jar')
+    implementation files('libs/ShareSDK-Wechat-Moments-3.1.1.jar')
+    implementation files('libs/ShareSDK-Wechat-Core-3.1.1.jar')
 }
