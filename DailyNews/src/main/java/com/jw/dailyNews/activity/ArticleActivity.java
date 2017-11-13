@@ -184,8 +184,10 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 //如果url不为图片链接,webView直接内部加载网页
                 if(!url.contains("imageView")&&!url.contains("jpg")&&
-                        !url.contains("jpeg")&&!url.contains("png"))
+                        !url.contains("jpeg")&&!url.contains("png")&&
+                        !url.contains("bmp")&&!url.contains("gif"))
                     view.loadUrl(url);
+                Log.v("urlllllllll",url);
                 return true;
             }
 

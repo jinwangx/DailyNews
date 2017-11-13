@@ -88,7 +88,11 @@ public class NewsObjectAdapter extends DefaultAdapter<NewsObject.News> {
 
     @Override
     public int getItemViewType(int position) {
-        int gtype = lists.get(position).getImgsrc3gtype();
+        NewsObject.News news = lists.get(position);
+        int gtype=news.getImgsrc3gtype();
+        String source=lists.get(position).getSource()+"";
+        if(source.contains("网易")||source.contains("编辑"))
+            gtype=ITEM_TYPE.ITEM_TYPE_0.ordinal();
         int ordinal = 0;
         switch (gtype) {
             case 0:
