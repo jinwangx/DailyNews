@@ -52,20 +52,20 @@ DailyNews是一款模仿网易新闻客户端的移动端Android应用，新闻�
 
    * loadingPage
    
-          本应用各页面用到的fragment都是继承自BaseFragment,BaseFragment的onCreateView中返回的是一个loadingPage.
+        本应用各页面用到的fragment都是继承自BaseFragment,BaseFragment的onCreateView中返回的是一个loadingPage.
       loadingPage是封装的一个继承自FramLayout的View框架，是一个抽象类，loadingPage保证不会被重复创建，并且
       可以根据fragment请求数据的状态，自动加载loading、success、error、empty画面。
       
 
    * HeaderAndFooterAdapter
    
-         继承自RecycleView默认Adaper，其构造方法传入RecycleView默认Adapter，其实就是一个Adaper装饰类，通过修饰Adaper,recycleView
+        继承自RecycleView默认Adaper，其构造方法传入RecycleView默认Adapter，其实就是一个Adaper装饰类，通过修饰Adaper,recycleView
      具有可添加多个header、footer功能
      
 
    * MyRefreshLayout
     
-         继承自RecycleView的RefreshLayout，RefreshLayout本来就具有下拉刷新的功能，这里通过进行拓展，使recycleView具有上拉加载更多
+        继承自RecycleView的RefreshLayout，RefreshLayout本来就具有下拉刷新的功能，这里通过进行拓展，使recycleView具有上拉加载更多
      数据的功能。
      
      
