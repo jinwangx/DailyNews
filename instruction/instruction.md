@@ -17,35 +17,54 @@ DailyNews是一款模仿网易新闻客户端的移动端Android应用，新闻�
 5. ImageLoadingPage View框架(和loadingPage异曲同工，只不过修改了其loading视图，添加了图片加载进度显示)
 
 6. 封装了
+
     * 网络工具类（网络是否连接、获取手机联网类型、获取手机卡类型）
+    
     * 文件工具类（删除某个文件夹或者文件、获取指定文件大小、路径对路径文件复制）
+    
     * 日期工具类(获取传入时间与当前时间差值、得到自定义格式的当前时间、格式化video时长)
+    
     * 缓存工具类（设置对应key缓存、获取对应key缓存、移除对应key的缓存、判断缓存中是否存在某key）
+    
     * Glide工具类(可在不同网络状态下根据配置文件自行选择加载或者不加载图片)
+    
     * 系统工具类（吐司单例且保证吐司在主线程运行、改变状态栏颜色、获取状态栏宽高、获取屏幕宽高、
              更改指定view背景颜色、释放Assets中的资源到指定目录、判断服务是否运行、检查权限
              是否开启、弹出权限请求dialog、对字符串进行MD5加密）
 
 #### 用到的控件及其拓展类、自定义View（README.md中都有gif图展示）:
+
 1. ToolBar添加标题并居中，并与DrawerLayout关联，可随着应用主题的更改，和TabPageIndicator、系统状态栏同步更改颜色
+
 2. RecycleView经拓展,能够添加多个header、footer，并具有上拉加载更多功能，还能够响应Item点击事件
    基于低耦合的理念:
     * 添加多个header、footer的功能在其默认adapter修饰类中实现；
     * 上拉加载更多的功能在RefreshLayout的拓展类中实现(泛型)；
     * 点击事件在adapter具体类中实现。
+    
 3. 多种形式的自定义View、dialog、组合控件。
+
 4. style中AppTheme中activity进出动画以及其他属性主题的定制
 
 
 #### 用到的开源框架
+
 * Glide
+
 * ViewPagerIndicator
+
 * PhotoView
+
 * gif-drawable
+
 * Butterknife
+
 * JcPlayer
 
 #### 集成的第三方开放平台
+
 * ShareSDK
+
 * Jpush极光推送
+
 * baidu地图定位API
