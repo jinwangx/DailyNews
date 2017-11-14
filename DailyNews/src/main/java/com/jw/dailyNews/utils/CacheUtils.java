@@ -20,7 +20,7 @@ public class CacheUtils {
 			mContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
 
 	/**
-	 * 设置缓存
+	 * 设置对应key缓存
 	 * @param key url
 	 * @param value json
 	 */
@@ -42,7 +42,7 @@ public class CacheUtils {
 
 
 	/**
-	 * 获取缓存
+	 * 获取对应key缓存
 	 * @param key
 	 * @return
 	 */
