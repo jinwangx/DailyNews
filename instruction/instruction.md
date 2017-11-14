@@ -1,65 +1,36 @@
 # DailyNews
 DailyNews是一款模仿网易新闻客户端的移动端Android应用，新闻抓取于网页，数据可实时刷新
 
-### 本应用用到的控件、框架以及集成的开放平台API:
-1. 运用了drawerLayout,recyleView、toolbar等控件
-2. 运用了开源的Glide、viewpagerindicator、photoView、gif-drawable、jcPlayer、butterknife、等框架
-3. 运用了Joup，这个是网页解析重组用到的
-4. 集成了多个开放平台API，ShareSDK、Jpush、baidu地图API
+### 用到的主要技术及封装的框架
+1. 前端与移动端的交互，在新闻详情页面，由于网页源码太多冗余，通过Jsoup解析，将拿到的div.article与本地html
+    模板重组，同时加载本地css样式、js,并屏蔽网页图片点击事件，通过本地js传递事件到本地响应图片点击事件。
+2. 正则表达式的的大量应用，由于新闻列表数据以及新闻文章网页均来自于fiddler抓取，就算同种Item类型的数据也
+    存在目标url或者html结构差异，这里根据自己查找到的规律，运用正则表达式对url进行修正或过滤。
+2. 实现了新闻列表数据三级缓存，图片缓存机制由Glide自行控制，通过自定义GlideModule设置
+    缓存路径、最大缓存等，所有缓存数据可由封装缓存工具类CacheUtils一键清除
+3. loadingPage View框架（可根据页面加载数据状态切换不同视图，如loading、error、success、empty。）
+4. ImageLoadingPage View框架(和loadingPage异曲同工，只不过修改了其loading视图，添加了图片加载进度显示)
+5. Glide封装工具类GlideUtils可在不同网络状态下根据配置文件自行选择加载或者不加载图片
+
+### 用到的控件及其拓展类、自定义View（README.md中都有gif图展示）:
+1. ToolBar添加标题并居中，并与DrawerLayout关联，可随着应用主题的更改，和TabPageIndicator、系统状态栏同步更改颜色
+2. RecycleView经拓展,能够添加多个header、footer，并具有上拉加载更多功能，还能够响应Item点击事件
+   基于低耦合的理念，添加多个header、footer的功能在其默认adapter修饰类中实现；
+                     上拉加载更多的功能在RefreshLayout的拓展类中实现(泛型)；
+                     点击事件在adapter具体类中实现。
+3. 多种形式的自定义View、dialog、组合控件。
+4. style中AppTheme中activity进出动画以及其他属性主题的定制
 
 
-### 本应用结构说明:
+### 用到的开源框架
+* Glide
+* ViewPagerIndicator
+* PhotoView
+* gif-drawable
+* Butterknife
+* JcPlayer
 
-##### 1. SplashActivity闪屏页面:
-
-   * translate动画
-   * 释放资源
-   * 如果系统版本在7.0以上，还会在动画结束后弹出权限请求dialog
-
-##### 2. HomeActivity应用主界面： 
-   
-   * 百度api定位
-   * ShareSDK第三方登录分享
-   * 极光消息推送
-   * 是否仅wifi加载图片
-   * 视频静默播放
-   * 新闻正文字号
-   * 缓存清理
-   * app主题更改
-   * 新闻list
-    
-##### 3. ArticleActivity新闻详情页面:
-      
- **解析新闻文章原html并与本地article模板重组，并加载本地css样式、js,实现前端与移动端页面的交互** </br>  
- 
-   网页开始加载时，progressBar可见
-      
-   1. 在shouldInterceptRequest()中，当请求的时整个新闻网页url的时候，拿到网页的html，运用Jsoup抓取html中的article,然后与本地资源目录               Assets中的article.html进行重组，并加载本地css样式
-   2. 当页面加载完成后，加载本地js，使点击网页中的图片时，屏蔽网页中的事件处理，调用本地java代码，将图片url调给本地处理，弹出一个覆盖含             photoView控件的图片详情dialog 
-      
-#### 4. ImageActivity图片新闻页面:
-
-   * 运用Jsoup进行各种抓取，获取到图片信息,将图片加载到viewpager中，但viewpager容器中放的是photoView
- 
-
-### 拓展的重要控件、框架：
-   * loadingPage
-   
-        本应用各页面用到的fragment都是继承自BaseFragment,BaseFragment的onCreateView中返回的是一个loadingPage.
-      loadingPage是封装的一个继承自FramLayout的View框架，是一个抽象类，loadingPage保证不会被重复创建，并且
-      可以根据fragment请求数据的状态，自动加载loading、success、error、empty画面。
-      
-   * HeaderAndFooterAdapter
-   
-        继承自RecycleView默认Adaper，其构造方法传入RecycleView默认Adapter，其实就是一个Adaper装饰类，通过修饰Adaper,recycleView
-     具有可添加多个header、footer功能
-     
-   * MyRefreshLayout
-    
-        继承自RecycleView的RefreshLayout，RefreshLayout本来就具有下拉刷新的功能，这里通过进行拓展，使recycleView具有上拉加载更多
-     数据的功能。
-     
-    
-     
-     
- 
+### 集成的第三方开放平台
+1. ShareSDK
+2. Jpush极光推送
+3. baidu地图定位API
