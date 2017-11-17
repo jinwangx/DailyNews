@@ -8,7 +8,6 @@ import android.os.Build;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
@@ -268,11 +267,5 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
         }
 
         return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_home, menu);
-        return true;
     }
 }
