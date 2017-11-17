@@ -1,7 +1,7 @@
 # DailyNews
 项目展示：
 
-                     1.闪屏页面及主页面展示
+                      1.闪屏页面及主页面展示
                                            
 ![image](/image_running/1_闪屏页面及主页面展示.gif)
 
