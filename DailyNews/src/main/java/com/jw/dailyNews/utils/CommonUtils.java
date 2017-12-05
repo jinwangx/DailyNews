@@ -11,8 +11,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import Lib.MyNews;
 
@@ -80,6 +78,7 @@ public class CommonUtils {
      * @return
      */
     public static String getArticalUrl(String url,String type){
+        /*Log.v("url_article",url);
         if(type.equals("article")){
             String sample="http://3g.163.com/all/article/CSABRGKU0001899O_0.html";
             Pattern pattern1 = Pattern.compile("(?<=http://3g\\.163\\.com/all/article/).*(?=\\.html)");
@@ -109,7 +108,7 @@ public class CommonUtils {
             matcher.find();
             url=sample2.replace(matcher.group(), channelid+"/"+setid);
         }
-        Log.v("mUrl",url);
+        Log.v("mUrl",url);*/
         return url;
     }
 
