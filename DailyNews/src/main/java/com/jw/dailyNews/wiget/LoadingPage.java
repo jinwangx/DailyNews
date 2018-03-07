@@ -10,8 +10,6 @@ import android.widget.FrameLayout;
 
 import com.jw.dailyNews.R;
 
-import Lib.ThreadManager;
-
 /**
  * 创建时间：2017/7/10
  * 更新时间：2017/11/11 0011 上午 12:44
@@ -159,10 +157,10 @@ public abstract class LoadingPage extends FrameLayout {
         }
         // 请求服务器 获取服务器上数据 进行判断
         // 请求服务器 返回一个结果
-        ThreadManager.getInstance().createLongPool(3,3,2l).execute(new Runnable() {
-
+        new Thread(){
             @Override
             public void run() {
+                super.run();
                 SystemClock.sleep(500);
                 final LoadResult result = load();
                 mHandler.post(new Runnable() {
@@ -176,7 +174,7 @@ public abstract class LoadingPage extends FrameLayout {
                     }
                 });
             }
-        });
+        }.start();
         showPage();
     }
 

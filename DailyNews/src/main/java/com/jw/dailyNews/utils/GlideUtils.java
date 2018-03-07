@@ -17,7 +17,7 @@ import Lib.MyNews;
 public class GlideUtils {
     private static boolean isvImageDownloadOnlyWifi=CacheUtils.getCacheBoolean(
             "isvImageDownloadOnlyWifi",true);
-    private static boolean isWIFI=NetUtils.isNetworkAvailable(MyNews.getInstance().getContext()).equals("WIFI");
+    private static boolean isWIFI=NetUtils.isNetworkAvailable(MyNews.Companion.get().getContext()).equals("WIFI");
 
     /**
      * 如果当前网络环境不为wifi，且应用配置为只在wifi下加载图片，则不加载传入链接的图片
@@ -27,6 +27,6 @@ public class GlideUtils {
      */
     public static void load(Context context, String url, ImageView view){
         if((isvImageDownloadOnlyWifi&&isWIFI)||!isvImageDownloadOnlyWifi)
-            Glide.with(context).load(url).apply(BaseApplication.options).into(view);
+            Glide.with(context).load(url).apply(BaseApplication.Companion.getOptions()).into(view);
     }
 }

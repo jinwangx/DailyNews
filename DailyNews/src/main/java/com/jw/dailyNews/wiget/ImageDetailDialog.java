@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import com.bumptech.glide.Glide;
 import com.jw.dailyNews.R;
 
-import Lib.ThreadManager;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -80,9 +79,10 @@ public class ImageDetailDialog extends Dialog {
                 offsetX=(endX-startX)*(endX-startX);
                 offsetY=(endY-startY)*(endY-startY);
                 if(count<3) {
-                    ThreadManager.getInstance().createLongPool(3, 3, 2l).execute(new Runnable() {
+                    new Thread(){
                         @Override
                         public void run() {
+                            super.run();
                             if (count == 1 && (Math.sqrt(offsetX + offsetY) < 3))
                                 mHandler.postDelayed(new Runnable() {
                                     @Override
@@ -92,7 +92,7 @@ public class ImageDetailDialog extends Dialog {
                                     }
                                 }, 300);
                         }
-                    });
+                    }.start();
                 }
                 break;
         }

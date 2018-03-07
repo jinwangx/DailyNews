@@ -89,7 +89,7 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">8sp</item>
-        <item name="android:drawableLeft">@drawable/icon_comment</item>
+        <item name="android:drawableLeft">@drawable/ic_comment</item>
         <item name="android:textColor">@android:color/black</item>
     </style>
 

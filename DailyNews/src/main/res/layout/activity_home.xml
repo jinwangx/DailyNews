@@ -8,7 +8,7 @@
     <include layout="@layout/tool_bar" />
 
     <android.support.v4.widget.DrawerLayout
-        android:id="@id/drawer_layout"
+        android:id="@id/dl"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

@@ -7,7 +7,7 @@
     >
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/image_pager"
+        android:id="@+id/vpImageArticle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
@@ -32,14 +32,14 @@
                 android:layout_height="wrap_content"
                 >
                 <TextView
-                    android:id="@+id/tv_image_title"
+                    android:id="@+id/tvImageTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="标题"
                     android:textColor="@android:color/white"
                     />
                 <TextView
-                    android:id="@+id/tv_currentItem"
+                    android:id="@+id/tvCurrentItem"
                     android:layout_toLeftOf="@+id/divide"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -48,14 +48,14 @@
                     />
                 <TextView
                     android:id="@+id/divide"
-                    android:layout_toLeftOf="@+id/totalItem"
+                    android:layout_toLeftOf="@+id/tvTotalItem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="/"
                     android:textColor="@android:color/white"
                     />
                 <TextView
-                    android:id="@+id/totalItem"
+                    android:id="@+id/tvTotalItem"
                     android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
                     />
             </RelativeLayout>
             <TextView
-                android:id="@+id/tv_node"
+                android:id="@+id/tvNode"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:textColor="@android:color/white"/>

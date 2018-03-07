@@ -47,8 +47,8 @@ public class ItemArrowView extends RelativeLayout {
 
     private void initView() {
         View view = View.inflate(getContext(), R.layout.wight_arrow_view, this);
-        ivIcon = (ImageView) view.findViewById(R.id.iv_icon);
-        tvContent = (TextView) view.findViewById(R.id.tv_content);
+        ivIcon = (ImageView) view.findViewById(R.id.ivIconWav);
+        tvContent = (TextView) view.findViewById(R.id.tvContentWav);
         dividerLine = view.findViewById(R.id.divider_line);
         ivIcon.setImageResource(iconResource);
         tvContent.setText(desc);

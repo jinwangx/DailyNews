@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/rl_me"
+        android:id="@id/rlMef"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:background="@android:color/holo_red_light"
@@ -20,15 +20,15 @@
             android:gravity="center"
             >
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@id/ci_me"
-                android:src="@drawable/icon_default_user"
+                android:id="@id/civMef"
+                android:src="@drawable/ic_default_user"
                 android:layout_height="70dp"
                 android:layout_width="70dp"
                 app:civ_border_color="@android:color/holo_orange_light"
                 app:civ_border_width="2dp"
                 />
             <TextView
-                android:id="@id/tv_mName"
+                android:id="@id/tvNamef"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
@@ -36,7 +36,7 @@
                 android:textSize="17sp"
                 />
             <TextView
-                android:id="@id/tv_mDesc"
+                android:id="@id/tvDescf"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
@@ -71,7 +71,7 @@
                 android:gravity="center"
                 >
                 <TextView
-                    android:id="@id/tv_mWeibo"
+                    android:id="@id/tvWeibo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
@@ -90,7 +90,7 @@
                 android:gravity="center"
                 >
                 <TextView
-                    android:id="@id/tv_mFans"
+                    android:id="@id/tvNumFans"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
@@ -109,7 +109,7 @@
                 android:gravity="center"
                 >
                 <TextView
-                    android:id="@id/tv_mConcerns"
+                    android:id="@id/tvNumConcerns"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""

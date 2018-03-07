@@ -14,8 +14,8 @@ import Lib.MyNews;
  * 描述：缓存工具类
  */
 public class CacheUtils {
-	public static String PREF_NAME= Constants.PREF_NAME;
-	private static final Context mContext=MyNews.getInstance().getContext();
+	public static String PREF_NAME= Constants.Companion.getPREF_NAME();
+	private static final Context mContext= MyNews.Companion.get().getContext();
 	private static SharedPreferences sp =
 			mContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
 

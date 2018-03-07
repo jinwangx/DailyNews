@@ -18,13 +18,13 @@
             >
 
             <ImageButton
-                android:id="@id/ib_up"
+                android:id="@id/ibUp"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:background="@drawable/action_btn_comment_up_selector"
                 />
             <TextView
-                android:id="@id/tv_up"
+                android:id="@id/tvUp"
                 android:text="顶起"
                 android:gravity="center"
                 android:layout_width="wrap_content"
@@ -42,13 +42,13 @@
             >
 
             <ImageButton
-                android:id="@id/ib_down"
+                android:id="@id/ibDown"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@drawable/action_btn_comment_down_selector"
                 />
             <TextView
-                android:id="@id/tv_down"
+                android:id="@id/tvDown"
                 android:padding="0dp"
                 android:text="鄙视"
                 android:gravity="center"
@@ -58,7 +58,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_forward"
+            android:id="@+id/llForward"
             android:layout_weight="1"
             android:gravity="center"
             android:layout_width="0dp"
@@ -67,13 +67,13 @@
             >
 
             <ImageView
-                android:id="@id/ib_forward"
+                android:id="@id/ibForward"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:background="@drawable/action_btn_share_selector"
                 />
             <TextView
-                android:id="@id/tv_forward"
+                android:id="@id/tvForward"
                 android:text="转发"
                 android:gravity="center"
                 android:layout_width="wrap_content"
@@ -91,14 +91,14 @@
             >
 
             <ImageButton
-                android:id="@id/ib_comment"
+                android:id="@id/ibComment"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:background="@drawable/action_btn_comment_selector"
 
                 />
             <TextView
-                android:id="@id/tv_commentCount"
+                android:id="@id/tvNumComment"
                 android:text="评论"
                 android:gravity="center"
                 android:layout_width="wrap_content"
@@ -109,7 +109,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@id/top_comments"
+        android:id="@id/topComments"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" />

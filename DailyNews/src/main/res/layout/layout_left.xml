@@ -23,15 +23,15 @@
             android:padding="20dp"
             >
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@id/user_icon"
+                android:id="@id/civMeLeft"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/icon_default_user"
+                android:src="@drawable/ic_default_user"
                 app:civ_border_color="@android:color/holo_orange_light"
                 app:civ_border_width="2dp"
                 />
             <TextView
-                android:id="@id/user_name"
+                android:id="@id/tvNameLeft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="阿旺"
@@ -41,7 +41,7 @@
                 />
         </LinearLayout>
         <TextView
-            android:id="@+id/tv_location"
+            android:id="@+id/tvLocationLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
@@ -53,23 +53,23 @@
             android:gravity="center">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@id/login_qq"
+                android:id="@id/civLoginQQ"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/icon_login_qq" />
+                android:src="@drawable/ic_login_qq" />
 
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@id/login_wechat"
+                android:id="@id/civLoginWechat"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/icon_login_wechat" />
+                android:src="@drawable/ic_login_wechat" />
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@id/login_weibo"
+                android:id="@id/civLoginWeibo"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/icon_login_weibo" />
+                android:src="@drawable/ic_login_weibo" />
         </LinearLayout>
 
             <View
@@ -78,13 +78,13 @@
                 android:background="@android:color/holo_orange_light" />
 
         <LinearLayout
-            android:id="@+id/ll_left_menu"
+            android:id="@+id/llLeftPanel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             >
             <com.jw.dailyNews.wiget.ItemSwitchView
-                android:id="@+id/isv_headline"
+                android:id="@+id/isvHeadline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:content2="头条推送"
@@ -93,7 +93,7 @@
 
 
             <com.jw.dailyNews.wiget.ItemSwitchView
-                android:id="@+id/isv_4gRemind"
+                android:id="@+id/isv4gRemind"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:content2="移动网络视频播放提醒"
@@ -101,7 +101,7 @@
                 />
 
             <com.jw.dailyNews.wiget.ItemSwitchView
-                android:id="@+id/isv_image_download_only_wifi"
+                android:id="@+id/isvImageDownloadOnlyWifi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:content2="仅WIFI下载图片"
@@ -109,28 +109,28 @@
                 />
 
             <com.jw.dailyNews.wiget.ItemSwitchView
-                android:id="@+id/isv_video_auto_play"
+                android:id="@+id/isvVideoAutoPlay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:content2="自动播放视频"
                 app:dividerColor2="@android:color/darker_gray" />
 
             <com.jw.dailyNews.wiget.ItemArrowView
-                android:id="@+id/iav_fontSize"
+                android:id="@+id/iavFontSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:content="正文字号"
                 app:dividerColor="@android:color/darker_gray" />
 
             <com.jw.dailyNews.wiget.ItemTextView
-                android:id="@+id/itv_clear_cache"
+                android:id="@+id/itvClearCache"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title3="清除缓存"
                 app:dividerColor3="@android:color/darker_gray" />
 
             <com.jw.dailyNews.wiget.ItemTextView
-                android:id="@+id/itv_style"
+                android:id="@+id/itvStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title3="主题风格"

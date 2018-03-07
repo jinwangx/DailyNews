@@ -5,20 +5,20 @@
     android:layout_height="match_parent">
 
     <FrameLayout
-        android:id="@id/fl_content"
+        android:id="@id/flHome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
     <RadioGroup
-        android:id="@id/rb_group"
+        android:id="@id/rbGroup"
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@id/rb_shouye"
+            android:id="@id/rbShouye"
             style="@style/radioButton"
             android:checked="true"
             android:drawableTop="@drawable/action_btn_tab_dirbroad_selector"
@@ -26,21 +26,21 @@
             android:layout_height="wrap_content" />
 
         <RadioButton
-            android:id="@id/rb_video"
+            android:id="@id/rbVideo"
             style="@style/radioButton"
             android:drawableTop="@drawable/action_btn_tab_video_selector"
             android:text="视频"
             android:layout_height="wrap_content" />
 
         <RadioButton
-            android:id="@id/rb_dirbroad"
+            android:id="@id/rbDirbroad"
             style="@style/radioButton"
             android:drawableTop="@drawable/action_btn_tab_dirbroad_selector"
             android:text="直播"
             android:layout_height="wrap_content" />
 
         <RadioButton
-            android:id="@id/rb_me"
+            android:id="@id/rbMe"
             style="@style/radioButton"
             android:drawableTop="@drawable/action_btn_tab_me_selector"
             android:text="我"

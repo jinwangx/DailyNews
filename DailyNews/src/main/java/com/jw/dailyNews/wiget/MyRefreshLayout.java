@@ -15,10 +15,6 @@ import com.jw.dailyNews.adapter.HeaderAndFooterAdapter;
 
 import java.util.List;
 
-import Lib.ThreadManager;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * 创建时间：2017/7/31
  * 更新时间：2017/11/11 0011 上午 12:43
@@ -27,12 +23,6 @@ import butterknife.ButterKnife;
  */
 public class MyRefreshLayout<Data> extends SwipeRefreshLayout {
 
-    @BindView(R.id.rl_more_loading)
-    RelativeLayout rlMoreLoading;
-    @BindView(R.id.rl_more_error)
-    RelativeLayout rlMoreError;
-    @BindView(R.id.rl_no_more)
-    RelativeLayout rlNoMore;
     private RecyclerView mRecyclerView;
     private PullToUpRefreshListener mListener;
     private boolean isLoading;
@@ -42,6 +32,9 @@ public class MyRefreshLayout<Data> extends SwipeRefreshLayout {
     public static final int HAS_MORE=2;//  有额外数据
     private float mDownY, mUpY;
     private Handler mHandler=new Handler();
+    private RelativeLayout rlMoreLoading;
+    private RelativeLayout rlMoreError;
+    private RelativeLayout rlNoMore;
 
 
     public MyRefreshLayout(Context context) {
@@ -156,9 +149,10 @@ public class MyRefreshLayout<Data> extends SwipeRefreshLayout {
             // 设置加载状态，让布局显示出来
             setLoading(true);
             //异步请求数据，并根据请求数据的分析,回到主线程处理相关事件
-            ThreadManager.getInstance().createLongPool(3,3,2l).execute(new Runnable() {
+            new Thread(){
                 @Override
                 public void run() {
+                    super.run();
                     //请求数据
                     final List<Data> newData = mListener.onLoad();
                     //回到主线程中处理相关事件
@@ -177,7 +171,7 @@ public class MyRefreshLayout<Data> extends SwipeRefreshLayout {
                         }
                     });
                 }
-            });
+            }.start();
         }
 
     }
@@ -195,7 +189,9 @@ public class MyRefreshLayout<Data> extends SwipeRefreshLayout {
             // 显示布局
             if (view == null) {
                 view = View.inflate(getContext(), R.layout.layout_load_more, null);
-                ButterKnife.bind(this,view);
+                rlMoreLoading = view.findViewById(R.id.rl_more_loading);
+                rlMoreError = view.findViewById(R.id.rl_more_error);
+                rlNoMore = view.findViewById(R.id.rl_no_more);
                 RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
                 view.setLayoutParams(params);
                 ((HeaderAndFooterAdapter) (mRecyclerView.getAdapter())).addFootView(view);

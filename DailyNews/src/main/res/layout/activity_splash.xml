@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context="com.jw.dailyNews.activity.SplashActivity"
     android:background="@drawable/logo"
-    android:id="@id/rl_splash"
+    android:id="@id/rlSplash"
     >
 
 </RelativeLayout>

@@ -236,7 +236,7 @@ public class ThemeUtils {
     public static InputStream getAssetsInputStream(String name){
         InputStream open=null;
         try {
-            open = MyNews.getInstance().getContext().getAssets().open(name);
+            open = MyNews.Companion.get().getContext().getAssets().open(name);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -284,7 +284,7 @@ public class ThemeUtils {
     public static ImageView getImageView(){
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        ImageView iv = new ImageView(MyNews.getInstance().getContext());
+        ImageView iv = new ImageView(MyNews.Companion.get().getContext());
         iv.setMaxHeight(300);
         params.gravity= Gravity.CENTER_HORIZONTAL;
         iv.setLayoutParams(params);
@@ -293,7 +293,7 @@ public class ThemeUtils {
     }
 
     public static TextView getTextView(){
-        TextView tv=new TextView(MyNews.getInstance().getContext());
+        TextView tv=new TextView(MyNews.Companion.get().getContext());
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         tv.setLayoutParams(params);

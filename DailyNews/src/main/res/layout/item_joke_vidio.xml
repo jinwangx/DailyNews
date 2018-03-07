@@ -10,7 +10,7 @@
         layout="@layout/item_joke_header"
         />
     <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
-        android:id="@id/jc_player"
+        android:id="@id/jcPlayer"
         android:layout_width="match_parent"
         android:layout_height="200dp"/>
     <include

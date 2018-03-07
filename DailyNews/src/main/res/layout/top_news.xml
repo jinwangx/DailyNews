@@ -5,25 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="200dp">
     <android.support.v4.view.ViewPager
-        android:id="@id/nt_viewpager"
+        android:id="@id/vpTopNews"
         android:layout_width="match_parent"
         android:layout_height="200dp"/>
     <TextView
-        android:id="@id/news_top_title"
+        android:id="@id/tvTopNews"
         android:layout_width="match_parent"
         android:layout_height="25dp"
-        android:layout_alignBottom="@id/nt_viewpager"
+        android:layout_alignBottom="@id/vpTopNews"
         android:background="#89E0E5"
         android:gravity="center_vertical"
         />
     <com.viewpagerindicator.CirclePageIndicator
-        android:id="@id/cp_indicator"
+        android:id="@id/cpiTopNews"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
         android:padding="10dp"
         android:layout_marginTop="15dp"
         android:layout_alignParentRight="true"
-        android:layout_alignBottom="@id/nt_viewpager"
+        android:layout_alignBottom="@id/vpTopNews"
         />
     <!--
         app:radius="3dp"

@@ -57,4 +57,8 @@ public class JokeProtocol extends BaseProtocol<List<Joke>> {
         else
             return null;
     }
+
+    public  List<Joke>[] getList(){
+        return lists;
+    }
 }

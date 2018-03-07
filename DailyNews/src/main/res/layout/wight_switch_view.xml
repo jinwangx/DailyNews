@@ -12,16 +12,16 @@
         android:gravity="center_vertical">
 
         <ImageView
-            android:id="@+id/iv_icon2"
+            android:id="@+id/ivIconWsv"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
 
         <TextView
-            android:id="@+id/tv_content2"
+            android:id="@+id/tvContentWsv"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/iv_icon2"
+            android:layout_toRightOf="@id/ivIconWsv"
             android:paddingLeft="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
             />
 
         <com.jw.dailyNews.wiget.SwitchButton
-            android:id="@+id/switch_button"
+            android:id="@+id/switchButton"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

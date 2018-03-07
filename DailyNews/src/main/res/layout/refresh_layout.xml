@@ -3,11 +3,11 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <com.jw.dailyNews.wiget.MyRefreshLayout
-        android:id="@id/swipe_refresh_layout"
+        android:id="@id/srl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <android.support.v7.widget.RecyclerView
-            android:id="@id/recycle_view"
+            android:id="@id/rv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.jw.dailyNews.wiget.MyRefreshLayout>

@@ -147,15 +147,15 @@ public class CommonUtils {
      * @return
      */
     public static String getCacheSize() {
-        return (int)(FileUtils.getFileOrFilesSize(Constants.JSON_CACHE_PATH,3)+
-                FileUtils.getFileOrFilesSize(Constants.IMAGE_CACHE_PATH,3))+"MB";
+        return (int)(FileUtils.getFileOrFilesSize(Constants.Companion.getJSON_CACHE_PATH(),3)+
+                FileUtils.getFileOrFilesSize(Constants.Companion.getIMAGE_CACHE_PATH(),3))+"MB";
     }
 
     /**
      * 清空Glide的图片缓存
      */
     public static void clearCache(){
-        Glide.get(MyNews.getInstance().getContext()).clearDiskCache();
+        Glide.get(MyNews.Companion.get().getContext()).clearDiskCache();
         CacheUtils.clear();
         //Glide.get(context).clearMemory();
     }
