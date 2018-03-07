@@ -48,7 +48,7 @@ import java.util.*
 
 
 class HomeActivity : BaseActivity(), 
-        View.OnClickListener, RadioGroup.OnCheckedChangeListener, 
+        View.OnClickListener, RadioGroup.OnCheckedChangeListener,
         ColorPickView.OnColorChangedListener, ItemSwitchView.SwitchListener, NewsManager.AuthListener {
     
     //调用ShareSDK进行认证所需要平台的名称
