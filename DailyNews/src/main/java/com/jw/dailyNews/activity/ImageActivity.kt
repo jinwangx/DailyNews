@@ -15,6 +15,11 @@ import kotlinx.android.synthetic.main.layout_image_circle.*
 import kotlinx.android.synthetic.main.tool_bar.*
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import rx.Observable
+import rx.Subscriber
+import rx.android.schedulers.AndroidSchedulers
+import rx.internal.operators.OperatorReplay.observeOn
+import rx.schedulers.Schedulers
 import uk.co.senab.photoview.PhotoView
 import uk.co.senab.photoview.PhotoViewAttacher
 import java.io.IOException
@@ -67,31 +72,44 @@ class ImageActivity : BaseActivity(), ViewPager.OnPageChangeListener {
      */
     private fun initViewPager(url: String) {
         vpImageArticle!!.addOnPageChangeListener(this)
-        object : Thread() {
-            override fun run() {
-                super.run()
-                //jsoup解析，耗时操作在子线程中执行
+
+        (Observable.create(object : Observable.OnSubscribe<List<HashMap<String, String>>> {
+            override fun call(subscriber: Subscriber<in List<HashMap<String, String>>>){
+                //jsoup解析，耗时操作在io线程中执行
                 maps = getImages(url)
-                runOnUiThread {
-                    val views = ArrayList<View>()
-                    for (i in maps.indices) {
-                        val map = maps[i]
-                        val iv = PhotoView(this@ImageActivity)
-                        val mAttacher = PhotoViewAttacher(iv)
-                        mAttacher.update()
-                        mAttacher.onGlobalLayout()
-                        iv.adjustViewBounds = true
-                        Glide.with(this@ImageActivity).load(map["image"]).into(iv)
-                        views.add(iv)
-                        adapter = ViewPagerAdapter(views)
-                    }
-                    vpImageArticle!!.adapter = adapter
-                    tvImageTitle!!.text = document!!.title().replace("_手机网易网", "")
-                    tvTotalItem!!.text = maps.size.toString() + ""
-                    tvNode!!.text = "          " + maps[0]["node"]
-                }
+                subscriber.onNext(maps)
+                subscriber.onCompleted()
             }
-        }.start()
+        })).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Subscriber<List<HashMap<String, String>>>() {
+                    override fun onNext(s: List<HashMap<String, String>>) {
+                        val views = ArrayList<View>()
+                        for (i in s.indices) {
+                            val map = s[i]
+                            val iv = PhotoView(this@ImageActivity)
+                            val mAttacher = PhotoViewAttacher(iv)
+                            mAttacher.update()
+                            mAttacher.onGlobalLayout()
+                            iv.adjustViewBounds = true
+                            Glide.with(this@ImageActivity).load(map["image"]).into(iv)
+                            views.add(iv)
+                            adapter = ViewPagerAdapter(views)
+                        }
+                        vpImageArticle!!.adapter = adapter
+                        tvImageTitle!!.text = document!!.title().replace("_手机网易网", "")
+                        tvTotalItem!!.text = s.size.toString() + ""
+                        tvNode!!.text = "          " + s[0]["node"]
+                    }
+
+                    override fun onCompleted() {
+
+                    }
+
+                    override fun onError(e: Throwable) {
+
+                    }
+                })
     }
 
 

@@ -1,0 +1,10 @@
+# Created by .ignore support plugin (hsz.mobi)
+MyDailyNews.iml
+.gradle
+local.properties
+.idea
+.DS_Store
+build
+
+/captures
+.externalNativeBuild
