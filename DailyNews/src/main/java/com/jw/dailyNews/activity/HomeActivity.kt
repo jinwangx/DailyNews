@@ -2,6 +2,7 @@ package com.jw.dailyNews.activity
 
 import Lib.NewsManager
 import android.content.DialogInterface
+import android.databinding.DataBindingUtil
 import android.graphics.Color
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -26,6 +27,7 @@ import com.baidu.location.LocationClientOption
 import com.bumptech.glide.Glide
 import com.jw.dailyNews.R
 import com.jw.dailyNews.base.BaseActivity
+import com.jw.dailyNews.databinding.ActivityHomeBinding
 import com.jw.dailyNews.fragment.FragmentDireBroad
 import com.jw.dailyNews.fragment.FragmentMe
 import com.jw.dailyNews.fragment.FragmentMe.Companion.rlMe
@@ -63,6 +65,7 @@ class HomeActivity : BaseActivity(),
     private lateinit var ft: FragmentManager
     private val fragments = ArrayList<Fragment>()
     private lateinit var toggle: ActionBarDrawerToggle
+    private lateinit var mBinding:ActivityHomeBinding
     //baidu地图位置管理者
     private var mLocationClient: LocationClient? = null
     //BDAbstractLocationListener为7.2版本新增的Abstract类型的监听接口，原有BDLocationListener接口暂时同步保留。具体介绍请参考后文中的说明
@@ -94,7 +97,7 @@ class HomeActivity : BaseActivity(),
 
 
     override fun bindView() {
-        setContentView(R.layout.activity_home)
+        val mBinding:ActivityHomeBinding=DataBindingUtil.setContentView(this,R.layout.activity_home)
     }
 
     override fun initView() {
@@ -360,6 +363,7 @@ class HomeActivity : BaseActivity(),
             } else if (platformName == "SinaWeibo") {
                 Toast.makeText(this@HomeActivity, "新浪登录成功", Toast.LENGTH_SHORT).show()
                 tvNameLeft!!.text = Sina.db.userName
+                //mBinding.name=WeChat.db.userName
                 Glide.with(this@HomeActivity).load(
                         Sina.db.userIcon).into(civMeLeft!!)
             } else {
@@ -415,7 +419,8 @@ class HomeActivity : BaseActivity(),
             if (address == null)
                 return
             mLocationClient!!.stop()
-            tvLocationLeft.text = address
+            mBinding.location=address
+            //tvLocationLeft.text = address
 
             if (location.locType == BDLocation.TypeGpsLocation) {
 

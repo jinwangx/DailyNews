@@ -1,141 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="300dp"
-    android:layout_height="match_parent"
-    android:layout_gravity="left"
-    android:orientation="vertical"
-    tools:context=".activity.HomeActivity"
-    android:background="@drawable/bg">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <data>
+        <variable
+            name="location"
+            type="String"/>
+        <variable
+            name="name"
+            type="String"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="300dp"
         android:layout_height="match_parent"
+        android:layout_gravity="left"
         android:orientation="vertical"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        tools:context=".activity.HomeActivity"
+        android:background="@drawable/bg">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="20dp"
-            >
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@id/civMeLeft"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_default_user"
-                app:civ_border_color="@android:color/holo_orange_light"
-                app:civ_border_width="2dp"
-                />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="20dp"
+                >
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@id/civMeLeft"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_default_user"
+                    app:civ_border_color="@android:color/holo_orange_light"
+                    app:civ_border_width="2dp"
+                    />
+                <TextView
+                    android:id="@id/tvNameLeft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{name}"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@android:color/black"
+                    />
+            </LinearLayout>
             <TextView
-                android:id="@id/tvNameLeft"
+                android:id="@+id/tvLocationLeft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="阿旺"
-                android:textSize="16sp"
-                android:layout_marginLeft="10dp"
-                android:textColor="@android:color/black"
+                android:text="@{location}"
                 />
-        </LinearLayout>
-        <TextView
-            android:id="@+id/tvLocationLeft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
-        <LinearLayout
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@id/civLoginQQ"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_login_qq" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@id/civLoginQQ"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_login_qq" />
 
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@id/civLoginWechat"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_login_wechat" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@id/civLoginWechat"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_login_wechat" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@id/civLoginWeibo"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_login_weibo" />
-        </LinearLayout>
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@id/civLoginWeibo"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_login_weibo" />
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@android:color/holo_orange_light" />
 
-        <LinearLayout
-            android:id="@+id/llLeftPanel"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-            <com.jw.dailyNews.wiget.ItemSwitchView
-                android:id="@+id/isvHeadline"
+            <LinearLayout
+                android:id="@+id/llLeftPanel"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:content2="头条推送"
-                app:dividerColor="@android:color/darker_gray"
-                />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+                <com.jw.dailyNews.wiget.ItemSwitchView
+                    android:id="@+id/isvHeadline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:content2="头条推送"
+                    app:dividerColor="@android:color/darker_gray"
+                    />
 
 
-            <com.jw.dailyNews.wiget.ItemSwitchView
-                android:id="@+id/isv4gRemind"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:content2="移动网络视频播放提醒"
-                app:dividerColor2="@android:color/darker_gray"
-                />
+                <com.jw.dailyNews.wiget.ItemSwitchView
+                    android:id="@+id/isv4gRemind"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:content2="移动网络视频播放提醒"
+                    app:dividerColor2="@android:color/darker_gray"
+                    />
 
-            <com.jw.dailyNews.wiget.ItemSwitchView
-                android:id="@+id/isvImageDownloadOnlyWifi"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:content2="仅WIFI下载图片"
-                app:dividerColor2="@android:color/darker_gray"
-                />
+                <com.jw.dailyNews.wiget.ItemSwitchView
+                    android:id="@+id/isvImageDownloadOnlyWifi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:content2="仅WIFI下载图片"
+                    app:dividerColor2="@android:color/darker_gray"
+                    />
 
-            <com.jw.dailyNews.wiget.ItemSwitchView
-                android:id="@+id/isvVideoAutoPlay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:content2="自动播放视频"
-                app:dividerColor2="@android:color/darker_gray" />
+                <com.jw.dailyNews.wiget.ItemSwitchView
+                    android:id="@+id/isvVideoAutoPlay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:content2="自动播放视频"
+                    app:dividerColor2="@android:color/darker_gray" />
 
-            <com.jw.dailyNews.wiget.ItemArrowView
-                android:id="@+id/iavFontSize"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:content="正文字号"
-                app:dividerColor="@android:color/darker_gray" />
+                <com.jw.dailyNews.wiget.ItemArrowView
+                    android:id="@+id/iavFontSize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:content="正文字号"
+                    app:dividerColor="@android:color/darker_gray" />
 
-            <com.jw.dailyNews.wiget.ItemTextView
-                android:id="@+id/itvClearCache"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:title3="清除缓存"
-                app:dividerColor3="@android:color/darker_gray" />
+                <com.jw.dailyNews.wiget.ItemTextView
+                    android:id="@+id/itvClearCache"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title3="清除缓存"
+                    app:dividerColor3="@android:color/darker_gray" />
 
-            <com.jw.dailyNews.wiget.ItemTextView
-                android:id="@+id/itvStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:title3="主题风格"
-                app:desc3="中国红"
-                />
+                <com.jw.dailyNews.wiget.ItemTextView
+                    android:id="@+id/itvStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title3="主题风格"
+                    app:desc3="中国红"
+                    />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-</RelativeLayout>
+    </RelativeLayout>
+</layout>

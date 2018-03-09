@@ -1,20 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
-    <include layout="@layout/tool_bar" />
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.v4.widget.DrawerLayout
-        android:id="@id/dl"
+    <data>
+        <variable
+            name="location"
+            type="String"/>
+
+        <variable
+            name="name"
+            type="String"/>
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <include layout="@layout/layout_home"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <include layout="@layout/tool_bar"
             />
 
-        <include layout="@layout/layout_left" />
-    </android.support.v4.widget.DrawerLayout>
-</LinearLayout>
+        <android.support.v4.widget.DrawerLayout
+            android:id="@id/dl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include layout="@layout/layout_home"
+                />
+
+            <include layout="@layout/layout_left"
+                app:location="@{location}"
+                app:name="@{name}"
+                />
+        </android.support.v4.widget.DrawerLayout>
+    </LinearLayout>
+</layout>

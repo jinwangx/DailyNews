@@ -6,6 +6,14 @@ android {
     compileSdkVersion 27
     buildToolsVersion '27.0.3'
 
+    dataBinding {
+        enabled = true
+    }
+
+    kapt {
+        generateStubs = true
+    }
+
     defaultConfig {
         multiDexEnabled true
         applicationId "com.jw.dailyNews"
@@ -62,6 +70,7 @@ dependencies {
     compile 'com.github.chrisbanes.photoview:library:1.2.4'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
     compile 'de.hdodenhof:circleimageview:2.2.0'
+    kapt "com.android.databinding:compiler:$android_plugin_version"
     implementation 'com.squareup.okhttp3:okhttp:3.9.0'
     implementation 'fr.baloomba:viewpagerindicator:2.4.2'
     implementation files('libs/MobCommons-2017.1024.1907.jar')
