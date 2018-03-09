@@ -15,6 +15,13 @@ import com.jw.dailyNews.adapter.HeaderAndFooterAdapter;
 
 import java.util.List;
 
+import rx.Observable;
+import rx.Observer;
+import rx.Scheduler;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 /**
  * 创建时间：2017/7/31
  * 更新时间：2017/11/11 0011 上午 12:43
@@ -31,7 +38,6 @@ public class MyRefreshLayout<Data> extends SwipeRefreshLayout {
     public static final int LOAD_ERROR=1;// 加载失败
     public static final int HAS_MORE=2;//  有额外数据
     private float mDownY, mUpY;
-    private Handler mHandler=new Handler();
     private RelativeLayout rlMoreLoading;
     private RelativeLayout rlMoreError;
     private RelativeLayout rlNoMore;
@@ -149,16 +155,29 @@ public class MyRefreshLayout<Data> extends SwipeRefreshLayout {
             // 设置加载状态，让布局显示出来
             setLoading(true);
             //异步请求数据，并根据请求数据的分析,回到主线程处理相关事件
-            new Thread(){
+            Observable.create(new Observable.OnSubscribe<List<Data>>() {
+
                 @Override
-                public void run() {
-                    super.run();
+                public void call(Subscriber<? super List<Data>> subscriber) {
                     //请求数据
                     final List<Data> newData = mListener.onLoad();
-                    //回到主线程中处理相关事件
-                    mHandler.post(new Runnable() {
+                    subscriber.onNext(newData);
+                }
+            }).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<List<Data>>() {
                         @Override
-                        public void run() {
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(List<Data> newData) {
                             if(newData==null){
                                 refreshFootView(LOAD_ERROR);
                             }else if(newData.size()==0){
@@ -170,8 +189,6 @@ public class MyRefreshLayout<Data> extends SwipeRefreshLayout {
                             setLoading(false);
                         }
                     });
-                }
-            }.start();
         }
 
     }
