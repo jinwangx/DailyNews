@@ -58,7 +58,7 @@ class HomeActivity : BaseActivity(),
     private val WeChat = ShareSDK.getPlatform(Wechat.NAME)
     //activity要加载的四个fragment引用
     private lateinit var fragmentShouye: FragmentShouye
-    private lateinit var fragmentVideo: FragmentVideo
+    private lateinit var fragmentVideo: Fragment
     private lateinit var fragmentDireBroad: FragmentDireBroad
     private lateinit var fragmentMe: FragmentMe
     private lateinit var ft: FragmentManager
@@ -165,7 +165,7 @@ class HomeActivity : BaseActivity(),
      */
     private fun initRadioButton() {
         fragmentShouye = FragmentShouye()
-        fragmentVideo = FragmentVideo()
+        fragmentVideo = Fragment()
         fragmentDireBroad = FragmentDireBroad()
         fragmentMe = FragmentMe()
         ft = supportFragmentManager

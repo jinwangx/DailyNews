@@ -1,5 +1,9 @@
 package com.jw.dailyNews.broadcastReceiver
 
+import android.app.Notification
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.TaskStackBuilder
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -7,7 +11,9 @@ import android.util.Log
 import cn.jpush.android.api.JPushInterface
 import com.bumptech.glide.gifdecoder.GifHeaderParser.TAG
 import com.google.gson.JsonParser
+import com.jw.dailyNews.R
 import com.jw.dailyNews.activity.ArticleActivity
+import com.jw.dailyNews.activity.HomeActivity
 
 /**
  * 创建时间：2017/8/7
@@ -35,11 +41,17 @@ class MyPushReceiver : BroadcastReceiver() {
             val parser = JsonParser()
             val root = parser.parse(extras).asJsonObject
             val url = root.get("url").asString
-            // 在这里可以自己写代码去定义用户点击后的行为
-            val i = Intent(context, ArticleActivity::class.java)  //自定义打开的界面
-            i.putExtra("docurl", url)
-            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            context.startActivity(i)
+            //创建点跳转的Intent(这个跳转是跳转到通知详情页)
+            val intent = Intent(context,ArticleActivity::class.java)
+            intent.putExtra("docurl",url)
+            //创建通知详情页的栈
+            val stackBulider = TaskStackBuilder.create(context);
+            //为其添加父栈 当从通知详情页回退时，将退到添加的父栈中
+            stackBulider.addParentStack(HomeActivity::class.java)
+            stackBulider.addNextIntent(intent)
+
+            context.startActivity(intent)
+
         } else {
             Log.d(TAG, "Unhandled intent - " + intent.action!!)
         }

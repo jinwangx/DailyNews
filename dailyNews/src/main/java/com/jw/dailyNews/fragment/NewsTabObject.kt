@@ -26,6 +26,7 @@ import com.jw.dailyNews.utils.CommonUtils
 import com.jw.dailyNews.wiget.LoadingPage
 import com.jw.dailyNews.wiget.MyRefreshLayout
 import com.viewpagerindicator.CirclePageIndicator
+import java.util.*
 
 /**
  * 创建时间：2017/3/25
@@ -59,49 +60,59 @@ class NewsTabObject : BaseFragment(), SwipeRefreshLayout.OnRefreshListener,
             STATE_PULL_TO_DOWM_REFRESH -> {
                 /*                    topNewsAdapter = new TopNewsAdapter(getContext(),links, descs, urls);
                     viewpager.setAdapter(topNewsAdapter);*/
-                topNewsAdapter!!.notifyDataSetChanged()
-                indicator!!.setCurrentItem(currentPosition)
-                mAdapter!!.notifyDataSetChanged()
-                swipeRefreshLayout!!.setRefreshing(false)
+                topNewsAdapter.notifyDataSetChanged()
+                indicator.setCurrentItem(currentPosition)
+                mAdapter.notifyDataSetChanged()
+                swipeRefreshLayout.setRefreshing(false)
             }
         //上拉加载更多，数据更新完毕，界面开始更新
             STATE_PULL_TO_UP_REFRESH -> {
-                mAdapter!!.notifyDataSetChanged()
-                swipeRefreshLayout!!.setLoading(false)
+                mAdapter.notifyDataSetChanged()
+                swipeRefreshLayout.setLoading(false)
             }
         //轮播图开始滚动
-            /*STATE_IMAGE_CIRCLE -> mHandler.postDelayed(Runnable {
-                currentPosition++
-                if (currentPosition == descs.size) {
-                    currentPosition = 0
-                }
-                indicator!!.setCurrentItem(currentPosition)
-                //自循环
-                val message = Message.obtain()
-                message.what = STATE_IMAGE_CIRCLE
-                mHandler.sendMessage(message)
-            }, 4000)*/
+            STATE_IMAGE_CIRCLE -> {
+                val task = MyTimerTask()
+                val timer = Timer()
+                timer.schedule(task, 4000)
+            }
+        //
+            STATE_ITEM_CURRENT -> {
+                indicator.setCurrentItem(currentPosition)
+            }
         }
         false
     })
+
+    inner class MyTimerTask:TimerTask(){
+        override fun run() {
+            currentPosition++
+            if (currentPosition == descs.size) {
+                currentPosition = 0
+            }
+            val message = Message.obtain()
+            message.what = STATE_ITEM_CURRENT
+            mHandler.sendMessage(message)
+        }
+    }
 
     override fun createSuccessView(): View {
         val view = View.inflate(activity, R.layout.refresh_layout, null)
         //自己封装的带有下拉刷新和下拉加载更多功能的SwipeRefreshLayout
         swipeRefreshLayout = view.findViewById<MyRefreshLayout<*>>(R.id.srl)
         val recycleView = view.findViewById<RecyclerView>(R.id.rv)
-        val recycleAdapter = NewsObjectAdapter(this!!.activity!!, newsList)
+        val recycleAdapter = NewsObjectAdapter(this.activity!!, newsList)
         //RecycleAdapter的装饰类，使recycleView能够添加多个headView和footView
         mAdapter = HeaderAndFooterAdapter(recycleAdapter)
-        mAdapter!!.addHeaderView(initHeaderView())
+        mAdapter.addHeaderView(initHeaderView())
         recycleView.layoutManager = LinearLayoutManager(context)
         recycleView.adapter = mAdapter
         recycleAdapter.setOnItemClickListener(this)
         //给swipeRefreshLayout设置下拉刷新progressBar颜色效果
-        swipeRefreshLayout!!.setColorSchemeColors(Color.BLUE,
+        swipeRefreshLayout.setColorSchemeColors(Color.BLUE,
                 Color.GREEN, Color.YELLOW, Color.RED)
-        swipeRefreshLayout!!.setOnRefreshListener(this)
-        swipeRefreshLayout!!.setPullToUpRefreshListener(this)
+        swipeRefreshLayout.setOnRefreshListener(this)
+        swipeRefreshLayout.setPullToUpRefreshListener(this)
         return view
     }
 
@@ -112,7 +123,7 @@ class NewsTabObject : BaseFragment(), SwipeRefreshLayout.OnRefreshListener,
         val protocol = NewsObjectProtocol("",
                 CommonUtils.createRecommondUrl(count), context, "news")
         if (protocol.load() != null) {
-            newsList = protocol.newsList!!
+            newsList = protocol.newsList
             focus = protocol.focus!!
         }
         return checkData(newsList) // 检查数据 有三种结果  成功, 错误,空
@@ -126,7 +137,7 @@ class NewsTabObject : BaseFragment(), SwipeRefreshLayout.OnRefreshListener,
         topTitle = headerView.findViewById<TextView>(R.id.tvTopNews)
 
         for (news in focus!!) {
-            if (news.imgsrc3gtype == 2) {
+            if (news.imgsrc3gtype == 3) {
                 links.add(news.picInfo!![0].url!!)
                 descs.add(news.title!!)
                 urls.add(news.link!!)
@@ -137,7 +148,7 @@ class NewsTabObject : BaseFragment(), SwipeRefreshLayout.OnRefreshListener,
         viewpager!!.addOnPageChangeListener(this)
         indicator!!.setViewPager(viewpager)
         indicator!!.setCurrentItem(currentPosition)
-        //        topTitle.setText(descs.get(currentPosition));
+        topTitle.text = descs[currentPosition]
         val message = Message.obtain()
         message.what = STATE_IMAGE_CIRCLE
         mHandler.sendMessage(message)
@@ -232,5 +243,6 @@ class NewsTabObject : BaseFragment(), SwipeRefreshLayout.OnRefreshListener,
         private val STATE_PULL_TO_UP_REFRESH = 1
         //轮播图开始滚动状态
         private val STATE_IMAGE_CIRCLE = 2
+        private val STATE_ITEM_CURRENT = 3
     }
 }

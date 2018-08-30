@@ -114,7 +114,7 @@ class NewsTabNormal : BaseFragment(), SwipeRefreshLayout.OnRefreshListener,
             val message = Message.obtain()
             message.what = STATE_PULL_TO_DOWM_REFRESH
             mHandler.sendMessage(message)
-        } }
+        } }.start()
     }
 
     /**

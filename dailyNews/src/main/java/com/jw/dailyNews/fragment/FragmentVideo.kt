@@ -73,7 +73,7 @@ class FragmentVideo : BaseFragment(), SwipeRefreshLayout.OnRefreshListener
     }
 
     override fun load(): LoadingPage.LoadResult {
-        protocol = JokeProtocol("", NewsURL.BAISIBUDEJIE_JOKE_HTTP, context, "normal")
+        protocol = JokeProtocol("", NewsURL.getVideoUrl(), context, "normal")
         val jokeList = protocol!!.load()
         return checkData(jokeList)
     }
@@ -89,7 +89,7 @@ class FragmentVideo : BaseFragment(), SwipeRefreshLayout.OnRefreshListener
     override fun onRefresh() {
         Thread{ run {
             CacheUtils.removeKey(NewsURL.BAISIBUDEJIE_JOKE_HTTP)
-            protocol = JokeProtocol("", NewsURL.BAISIBUDEJIE_JOKE_HTTP, context, "normal")
+            protocol = JokeProtocol("", NewsURL.getVideoUrl(), context, "normal")
             protocol!!.load()
             jokeList!!.clear()
             jokeList!!.addAll(protocol!!.getList(0)!!)

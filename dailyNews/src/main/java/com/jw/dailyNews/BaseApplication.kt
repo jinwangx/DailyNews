@@ -11,6 +11,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.facebook.stetho.Stetho
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.mob.MobSDK
 import me.jessyan.progressmanager.ProgressManager
 import okhttp3.OkHttpClient
@@ -30,7 +32,8 @@ class BaseApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        okHttpClient = ProgressManager.getInstance().with(OkHttpClient.Builder()).build()
+        Stetho.initializeWithDefaults(this)
+        okHttpClient = ProgressManager.getInstance().with(OkHttpClient.Builder().addNetworkInterceptor(StethoInterceptor())).build()
         mainTid = android.os.Process.myTid()
         MyNews.get().init(this)
         MobSDK.init(this, "1fb3a5b2acfd0", "75bcfbefe27ffb97b280f550d3a1fe68")

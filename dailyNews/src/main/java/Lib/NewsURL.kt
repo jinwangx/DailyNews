@@ -1,5 +1,7 @@
 package Lib
 
+import java.util.*
+
 /**
  * 创建时间：2017/6/15
  * 更新时间 2017/10/30 15:11
@@ -12,7 +14,7 @@ object NewsURL {
     //网易新闻
     var WANGYI_BASE_HTTP = "http://3g.163.com"
     //百思不得姐笑话链接,一次获取80条数据
-    var BAISIBUDEJIE_JOKE_HTTP = "http://s.budejie.com/topic/list/jingxuan/1/budejie-android-6.2.8/0-80.json"
+    var BAISIBUDEJIE_JOKE_HTTP = "http://s.budejie.com/topic/list/jingxuan/1/budejie-android-"+Random().nextInt(10)+"."+Random().nextInt(10)+"."+Random().nextInt(10)+"/0-80.json"
 
     /**
      * 新闻板块
@@ -30,6 +32,9 @@ object NewsURL {
     var URL_HTTP_EDU = WANGYI_BASE_HTTP + "/touch/reconstruct/article/list/BA8FF5PRwangning/"    //教育
     var URL_HTTP_OWN = WANGYI_BASE_HTTP + "/touch/reconstruct/article/list/BAI5E21Owangning/"    //独家
 
+    fun getVideoUrl():String{
+        return "http://s.budejie.com/topic/list/jingxuan/1/budejie-android-"+Random().nextInt(10)+"."+Random().nextInt(10)+"."+Random().nextInt(10)+"/0-80.json"
+    }
 
     /**
      * 方便格式工厂根据tag造fragment

@@ -48,7 +48,8 @@
         <activity
             android:name=".activity.HomeActivity"
             />
-        <activity android:name=".activity.ArticleActivity" />
+        <activity android:name=".activity.ArticleActivity"
+            android:parentActivityName=".activity.HomeActivity"/>
 
         <activity android:name=".activity.ImageActivity" />
 
