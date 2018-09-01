@@ -13,7 +13,6 @@ import java.util.*
 object NewsURL {
     //网易新闻
     var WANGYI_BASE_HTTP = "http://3g.163.com"
-    val BAISIBUDEJIE_JOKE_HTTP="http://s.budejie.com/topic/list/jingxuan/1/budejie-android-"+(Random().nextInt(18)+4)+"."+(Random().nextInt(18)+4)+"."+(Random().nextInt(18)+4)+"/0-80.json"
 
     /**
      * 新闻板块
@@ -31,7 +30,7 @@ object NewsURL {
     var URL_HTTP_EDU = WANGYI_BASE_HTTP + "/touch/reconstruct/article/list/BA8FF5PRwangning/"    //教育
     var URL_HTTP_OWN = WANGYI_BASE_HTTP + "/touch/reconstruct/article/list/BAI5E21Owangning/"    //独家
     //百思不得姐笑话链接,一次获取80条数据
-    fun getVideoUrl() ="http://s.budejie.com/topic/list/jingxuan/1/budejie-android-20/0-80.json"
+    fun getVideoUrl() ="http://s.budejie.com/topic/list/jingxuan/1/budejie-android-"+Random().nextInt(20)+"/0-80.json"
 
     /**
      * 方便格式工厂根据tag造fragment

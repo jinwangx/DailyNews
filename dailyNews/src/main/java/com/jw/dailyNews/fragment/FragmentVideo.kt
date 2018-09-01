@@ -47,6 +47,7 @@ class FragmentVideo : BaseFragment(), SwipeRefreshLayout.OnRefreshListener
                 mSwipeRefreshLayout!!.setRefreshing(false)
             }
             STATE_PULL_TO_UP_REFRESH -> mAdapter!!.notifyDataSetChanged()
+            STATE_PULL_TO_UP_REFRESH_ERROR -> mSwipeRefreshLayout!!.setRefreshing(false)
         }
         false
     })
@@ -73,13 +74,17 @@ class FragmentVideo : BaseFragment(), SwipeRefreshLayout.OnRefreshListener
         return view
     }
 
-    override fun load(): LoadingPage.LoadResult {
+    override fun load(): LoadingPage.LoadResult{
         val url=NewsURL.getVideoUrl()
         Log.v("aaaaaaaaaaaa",url)
         System.out.print(url)
-        protocol = JokeProtocol("",url , context, "normal")
-        val jokeList = protocol!!.load()
-        return checkData(jokeList)
+        try{
+            protocol = JokeProtocol("",url , context, "normal")
+            val jokeList = protocol!!.load()
+            return checkData(jokeList)
+        }catch (e:Exception){
+            return checkData(null)
+        }
     }
 
     override fun onPause() {
@@ -92,16 +97,23 @@ class FragmentVideo : BaseFragment(), SwipeRefreshLayout.OnRefreshListener
      */
     override fun onRefresh() {
         Thread{ run {
-            CacheUtils.removeKey(NewsURL.BAISIBUDEJIE_JOKE_HTTP)
+            //CacheUtils.removeKey(NewsURL.BAISIBUDEJIE_JOKE_HTTP)
             val url=NewsURL.getVideoUrl()
             System.out.print(url)
-            protocol = JokeProtocol("", url, context, "normal")
-            protocol!!.load()
-            jokeList!!.clear()
-            jokeList!!.addAll(protocol!!.getList(0)!!)
-            val message = Message.obtain()
-            message.what = STATE_PULL_TO_DOWM_REFRESH
-            mHandler.sendMessage(message)
+            try{
+                protocol = JokeProtocol("", url, context, "normal")
+                protocol!!.load()
+                jokeList!!.clear()
+                jokeList!!.addAll(protocol!!.getList(0)!!)
+                val message = Message.obtain()
+                message.what = STATE_PULL_TO_DOWM_REFRESH
+                mHandler.sendMessage(message)
+            }catch (e:Exception){
+                val message = Message.obtain()
+                message.what = STATE_PULL_TO_UP_REFRESH_ERROR
+                mHandler.sendMessage(message)
+            }
+
         } }.start()
     }
 
@@ -130,5 +142,7 @@ class FragmentVideo : BaseFragment(), SwipeRefreshLayout.OnRefreshListener
     companion object {
         private val STATE_PULL_TO_DOWM_REFRESH = 0
         private val STATE_PULL_TO_UP_REFRESH = 1
+        private val STATE_PULL_TO_UP_REFRESH_ERROR = 2
+
     }
 }
