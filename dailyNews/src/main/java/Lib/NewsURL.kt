@@ -31,7 +31,7 @@ object NewsURL {
     var URL_HTTP_EDU = WANGYI_BASE_HTTP + "/touch/reconstruct/article/list/BA8FF5PRwangning/"    //教育
     var URL_HTTP_OWN = WANGYI_BASE_HTTP + "/touch/reconstruct/article/list/BAI5E21Owangning/"    //独家
     //百思不得姐笑话链接,一次获取80条数据
-    fun getVideoUrl() ="http://s.budejie.com/topic/list/jingxuan/1/budejie-android-19/0-80.json"
+    fun getVideoUrl() ="http://s.budejie.com/topic/list/jingxuan/1/budejie-android-20/0-80.json"
 
     /**
      * 方便格式工厂根据tag造fragment
