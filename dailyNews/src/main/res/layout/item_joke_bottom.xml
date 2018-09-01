@@ -1,116 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-        <LinearLayout
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-            android:layout_weight="1"
-            android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:orientation="horizontal"
-            >
+    <data>
 
-            <ImageButton
-                android:id="@id/ibUp"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:background="@drawable/action_btn_comment_up_selector"
-                />
-            <TextView
-                android:id="@id/tvUp"
-                android:text="顶起"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+        <variable
+            name="joke"
+            type="com.jw.dailyNews.bean.Joke" />
 
-                />
-        </LinearLayout>
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
 
-        <LinearLayout
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center"
-            >
+    </data>
 
-            <ImageButton
-                android:id="@id/ibDown"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/action_btn_comment_down_selector"
-                />
-            <TextView
-                android:id="@id/tvDown"
-                android:padding="0dp"
-                android:text="鄙视"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llForward"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            >
-
-            <ImageView
-                android:id="@id/ibForward"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:background="@drawable/action_btn_share_selector"
-                />
-            <TextView
-                android:id="@id/tvForward"
-                android:text="转发"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_weight="1"
-            android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            >
-
-            <ImageButton
-                android:id="@id/ibComment"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:background="@drawable/action_btn_comment_selector"
-
-                />
-            <TextView
-                android:id="@id/tvNumComment"
-                android:text="评论"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-
-                />
-        </LinearLayout>
-    </LinearLayout>
 
     <LinearLayout
-        android:id="@id/topComments"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" />
-</LinearLayout>
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@id/ibUp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/action_btn_comment_up_selector" />
+
+                <TextView
+                    android:id="@id/tvUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@{joke.up}"
+
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@id/ibDown"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/action_btn_comment_down_selector" />
+
+                <TextView
+                    android:id="@id/tvDown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:text='@{joke.down + ""}' />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llForward"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:onClick="@{clickListener}">
+
+                <ImageView
+                    android:id="@id/ibForward"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/action_btn_share_selector" />
+
+                <TextView
+                    android:id="@id/tvForward"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="转发"
+
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@id/ibComment"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/action_btn_comment_selector"
+
+                    />
+
+                <TextView
+                    android:id="@id/tvNumComment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text='@{joke.comment + ""}'
+
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@id/topComments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </LinearLayout>
+</layout>

@@ -7,8 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.android.databinding.library.baseAdapters.BR
 import com.jw.dailyNews.R
 import com.jw.dailyNews.bean.NewsNormal
+import com.jw.dailyNews.databinding.ItemListImgType1Binding
+import com.jw.dailyNews.databinding.ItemListImgType2Binding
+import com.jw.dailyNews.databinding.ItemListImgType3Binding
 import com.jw.dailyNews.utils.DateUtils
 import com.jw.dailyNews.utils.GlideUtils
 
@@ -47,29 +51,22 @@ class NewsNormalAdapter(context: Context, lists: List<NewsNormal>) : DefaultAdap
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         super.onBindViewHolder(holder, position)
         val news = lists[position]
-        if (holder is Holder0) {
+        when (holder) {
+            is Holder0 -> {
 
-        } else if (holder is Holder1) {
-            holder.titleType1.text = news.title
-            GlideUtils.load(mContext, news.imgsrc, holder.imageType1)
-            holder.categoryType1.text = news.source
-            holder.timeType1.text = news.ptime
-            holder.tcountType1.text = news.commentCount.toString() + ""
-        } else if (holder is Holder2) {
-            holder.titleType2.text = news.title
-            GlideUtils.load(mContext, news.imgsrc, holder.image1Type2)
-            GlideUtils.load(mContext, news.imgextra!![0].imgsrc, holder.image2Type2)
-            GlideUtils.load(mContext, news.imgextra!![1].imgsrc, holder.image3Type2)
-
-            holder.categoryType2.text = news.source
-            holder.timeType2.text = DateUtils.fromNow("yyyy-MM-dd HH:mm:ss", news.ptime)
-            holder.tcountType2.text = news.commentCount.toString() + ""
-        } else if (holder is Holder3) {
-            holder.titleType3.text = news.title
-            GlideUtils.load(mContext, news.imgsrc, holder.imageType3)
-            holder.categoryType3.text = news.source
-            holder.timeType3.text = DateUtils.fromNow("yyyy-MM-dd HH:mm:ss", news.ptime)
-            holder.tcountType3.text = news.commentCount.toString() + ""
+            }
+            is Holder1 -> {
+                val binding = DataBindingUtil.bind<ItemListImgType1Binding>(holder.itemView)
+                binding!!.setVariable(BR.news,news)
+            }
+            is Holder2 -> {
+                val binding = DataBindingUtil.bind<ItemListImgType2Binding>(holder.itemView)
+                binding!!.setVariable(BR.news,news)
+            }
+            is Holder3 -> {
+                val binding = DataBindingUtil.bind<ItemListImgType3Binding>(holder.itemView)
+                binding!!.setVariable(BR.news,news)
+            }
         }
     }
 
@@ -96,29 +93,12 @@ class NewsNormalAdapter(context: Context, lists: List<NewsNormal>) : DefaultAdap
     }
 
     class Holder1(itemView: View) : BaseHolder(itemView) {
-        internal var imageType1 = itemView.findViewById<ImageView>(R.id.image_type1)
-        internal var titleType1 = itemView.findViewById<TextView>(R.id.title_type1)
-        internal var categoryType1 = itemView.findViewById<TextView>(R.id.category_type1)
-        internal var timeType1 = itemView.findViewById<TextView>(R.id.time_type1)
-        internal var tcountType1 = itemView.findViewById<TextView>(R.id.tcount_type1)
     }
 
     class Holder2(itemView: View) : BaseHolder(itemView) {
-        internal var titleType2 = itemView.findViewById<TextView>(R.id.title_type2)
-        internal var image1Type2 = itemView.findViewById<ImageView>(R.id.image1_type2)
-        internal var image2Type2 = itemView.findViewById<ImageView>(R.id.image2_type2)
-        internal var image3Type2 = itemView.findViewById<ImageView>(R.id.image3_type2)
-        internal var categoryType2 = itemView.findViewById<TextView>(R.id.category_type2)
-        internal var timeType2 = itemView.findViewById<TextView>(R.id.time_type2)
-        internal var tcountType2 = itemView.findViewById<TextView>(R.id.tcount_type2)
     }
 
     class Holder3(itemView: View) : BaseHolder(itemView) {
-        internal var titleType3 = itemView.findViewById<TextView>(R.id.title_type3)
-        internal var imageType3 = itemView.findViewById<ImageView>(R.id.image_type3)
-        internal var categoryType3 = itemView.findViewById<TextView>(R.id.category_type3)
-        internal var timeType3 = itemView.findViewById<TextView>(R.id.time_type3)
-        internal var tcountType3 = itemView.findViewById<TextView>(R.id.tcount_type3)
     }
 
     open class BaseHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -21,6 +21,11 @@ import kotlinx.android.synthetic.main.tool_bar.*
 import java.io.ByteArrayInputStream
 import java.io.IOException
 import java.io.InputStream
+import android.icu.util.ULocale.getCountry
+import com.baidu.location.BDLocation
+import com.baidu.location.BDAbstractLocationListener
+
+
 
 /**
  * 创建时间：
@@ -99,11 +104,7 @@ class ArticleActivity : BaseActivity(), View.OnClickListener {
         //当webview调用requestFocus时为webview设置节点
         settings.setNeedInitialFocus(true)
         //支持自动加载图片
-        if (Build.VERSION.SDK_INT >= 19) {
-            settings.loadsImagesAutomatically = true
-        } else {
-            settings.loadsImagesAutomatically = false
-        }
+        settings.loadsImagesAutomatically = Build.VERSION.SDK_INT >= 19
         settings.setNeedInitialFocus(true)
         //设置编码格式
         settings.defaultTextEncodingName = "UTF-8"

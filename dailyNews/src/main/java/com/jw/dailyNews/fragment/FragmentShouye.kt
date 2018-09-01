@@ -1,6 +1,9 @@
 package com.jw.dailyNews.fragment
 
 import android.os.Handler
+import android.support.design.widget.TabLayout
+import android.support.v4.content.ContextCompat
+import android.support.v4.view.ViewCompat
 import android.support.v4.view.ViewPager
 import android.view.Gravity
 import android.view.View
@@ -41,10 +44,15 @@ class FragmentShouye : BaseFragment(), View.OnClickListener {
         ibAdd.setOnClickListener(this)
         val adapter = TabPageIndicatorAdapter(childFragmentManager)
         val vpShouye = view.findViewById<ViewPager>(R.id.vpShouye)
-        val tpiShouye = view.findViewById<TabPageIndicator>(R.id.tpiShouye)
+        val tpiShouye = view.findViewById<TabLayout>(R.id.tpiShouye)
         val flShouye = view.findViewById<FrameLayout>(R.id.flShouye)
         vpShouye.adapter=adapter
-        tpiShouye.setViewPager(vpShouye)
+        tpiShouye.tabMode = TabLayout.MODE_SCROLLABLE;
+        tpiShouye.setTabTextColors(ContextCompat.getColor(activity!!, R.color.gray), ContextCompat.getColor(activity!!, R.color.red))
+        tpiShouye.setSelectedTabIndicatorColor(ContextCompat.getColor(activity!!, R.color.white))
+        ViewCompat.setElevation(tpiShouye, 10f)
+        tpiShouye.setupWithViewPager(vpShouye)
+
         popWindowHeight = (ThemeUtils.getStatusBarHeight(activity)
                 - ThemeUtils.getStatusBarHeight(activity) - 45 - flShouye.measuredHeight)
         popWindowWidth = ThemeUtils.getWindowWidth(activity)

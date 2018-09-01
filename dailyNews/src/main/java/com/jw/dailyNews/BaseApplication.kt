@@ -6,7 +6,6 @@ import android.app.Application
 import android.app.Service
 import android.content.Intent
 import android.os.Process
-import cn.jpush.android.api.JPushInterface
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -36,9 +35,9 @@ class BaseApplication : Application() {
         okHttpClient = ProgressManager.getInstance().with(OkHttpClient.Builder().addNetworkInterceptor(StethoInterceptor())).build()
         mainTid = android.os.Process.myTid()
         MyNews.get().init(this)
-        MobSDK.init(this, "1fb3a5b2acfd0", "75bcfbefe27ffb97b280f550d3a1fe68")
-        JPushInterface.setDebugMode(true)
-        JPushInterface.init(this)
+        MobSDK.init(this)
+        //JPushInterface.setDebugMode(true)
+        //JPushInterface.init(this)
         Glide.with(this)
     }
 

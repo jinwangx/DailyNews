@@ -9,6 +9,7 @@ import android.support.annotation.RequiresApi
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import com.jw.dailyNews.R
 import com.jw.dailyNews.adapter.HeaderAndFooterAdapter
@@ -73,7 +74,10 @@ class FragmentVideo : BaseFragment(), SwipeRefreshLayout.OnRefreshListener
     }
 
     override fun load(): LoadingPage.LoadResult {
-        protocol = JokeProtocol("", NewsURL.getVideoUrl(), context, "normal")
+        val url=NewsURL.getVideoUrl()
+        Log.v("aaaaaaaaaaaa",url)
+        System.out.print(url)
+        protocol = JokeProtocol("",url , context, "normal")
         val jokeList = protocol!!.load()
         return checkData(jokeList)
     }
@@ -89,7 +93,9 @@ class FragmentVideo : BaseFragment(), SwipeRefreshLayout.OnRefreshListener
     override fun onRefresh() {
         Thread{ run {
             CacheUtils.removeKey(NewsURL.BAISIBUDEJIE_JOKE_HTTP)
-            protocol = JokeProtocol("", NewsURL.getVideoUrl(), context, "normal")
+            val url=NewsURL.getVideoUrl()
+            System.out.print(url)
+            protocol = JokeProtocol("", url, context, "normal")
             protocol!!.load()
             jokeList!!.clear()
             jokeList!!.addAll(protocol!!.getList(0)!!)

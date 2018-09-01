@@ -2,7 +2,6 @@ package com.jw.dailyNews.activity
 
 import Lib.NewsManager
 import android.content.DialogInterface
-import android.databinding.DataBindingUtil
 import android.graphics.Color
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -15,15 +14,10 @@ import android.view.KeyEvent
 import android.view.View
 import android.widget.RadioGroup
 import android.widget.Toast
-import cn.jpush.android.api.JPushInterface
 import cn.sharesdk.framework.Platform
 import cn.sharesdk.framework.ShareSDK
 import cn.sharesdk.sina.weibo.SinaWeibo
-import cn.sharesdk.wechat.friends.Wechat
-import com.baidu.location.BDLocation
-import com.baidu.location.BDLocationListener
-import com.baidu.location.LocationClient
-import com.baidu.location.LocationClientOption
+import com.baidu.location.*
 import com.bumptech.glide.Glide
 import com.jw.dailyNews.R
 import com.jw.dailyNews.base.BaseActivity
@@ -48,27 +42,26 @@ import kotlinx.android.synthetic.main.tool_bar.*
 import java.util.*
 
 
-class HomeActivity : BaseActivity(), 
+class HomeActivity : BaseActivity(),
         View.OnClickListener, RadioGroup.OnCheckedChangeListener,
         ColorPickView.OnColorChangedListener, ItemSwitchView.SwitchListener, NewsManager.AuthListener {
-    
+
     //调用ShareSDK进行认证所需要平台的名称
-    private val QQ = ShareSDK.getPlatform(cn.sharesdk.tencent.qq.QQ.NAME)
+    private val QQ = ShareSDK.getPlatform("")
     private val Sina = ShareSDK.getPlatform(SinaWeibo.NAME)
-    private val WeChat = ShareSDK.getPlatform(Wechat.NAME)
+    private val WeChat = ShareSDK.getPlatform("")
     //activity要加载的四个fragment引用
     private lateinit var fragmentShouye: FragmentShouye
-    private lateinit var fragmentVideo: Fragment
+    private lateinit var fragmentVideo: FragmentVideo
     private lateinit var fragmentDireBroad: FragmentDireBroad
     private lateinit var fragmentMe: FragmentMe
     private lateinit var ft: FragmentManager
     private val fragments = ArrayList<Fragment>()
     private lateinit var toggle: ActionBarDrawerToggle
-    //baidu地图位置管理者
     private var mLocationClient: LocationClient? = null
-    //BDAbstractLocationListener为7.2版本新增的Abstract类型的监听接口，原有BDLocationListener接口暂时同步保留。具体介绍请参考后文中的说明
-    //baidu地图位置监听
-    var myListener: BDLocationListener = MyLocationListener()
+    private var myListener: MyLocationListener? = null
+//BDAbstractLocationListener为7.2版本新增的Abstract类型的监听接口
+//原有BDLocationListener接口暂时同步保留。具体介绍请参考后文中的说明
 
     /**
      * 窗帘拉开监听，重新加载缓存大小数据
@@ -84,12 +77,13 @@ class HomeActivity : BaseActivity(),
      * 清除缓存dialog确定按钮点击监听，监听到点击事件后重新加载缓存大小数据
      */
     private val dialogOkListener = DialogInterface.OnClickListener { dialog, which ->
-        Thread{
-                run {
-                    CommonUtils.clearCache()
-                    runOnUiThread {
-                        itvClearCache!!.setText(CommonUtils.getCacheSize()) }
+        Thread {
+            run {
+                CommonUtils.clearCache()
+                runOnUiThread {
+                    itvClearCache!!.setText(CommonUtils.getCacheSize())
                 }
+            }
         }.start()
     }
 
@@ -137,12 +131,22 @@ class HomeActivity : BaseActivity(),
                 CacheUtils.getCacheBoolean("isvImageDownloadOnlyWifi", true))
         itvStyle!!.setText(
                 CacheUtils.getCacheInt("indicatorColor", Color.RED).toString() + "")
-        mLocationClient = LocationClient(applicationContext)
+        mLocationClient = LocationClient(applicationContext);
+        myListener=MyLocationListener()
         //声明LocationClient类
         mLocationClient!!.registerLocationListener(myListener)
         //注册监听函数
-        initLocation()
+        val option = LocationClientOption()
+
+        option.setIsNeedAddress(true);
+//可选，是否需要地址信息，默认为不需要，即参数为false
+//如果开发者需要获得当前点的地址信息，此处必须为true
+
+        mLocationClient!!.locOption = option
         mLocationClient!!.start()
+//mLocationClient为第二步初始化过的LocationClient对象
+//需将配置好的LocationClientOption对象，通过setLocOption方法传递给LocationClient对象使用
+//更多LocationClientOption的配置，请参照类参考中LocationClientOption类的详细说明
     }
 
     /**
@@ -165,7 +169,7 @@ class HomeActivity : BaseActivity(),
      */
     private fun initRadioButton() {
         fragmentShouye = FragmentShouye()
-        fragmentVideo = Fragment()
+        fragmentVideo = FragmentVideo()
         fragmentDireBroad = FragmentDireBroad()
         fragmentMe = FragmentMe()
         ft = supportFragmentManager
@@ -202,59 +206,12 @@ class HomeActivity : BaseActivity(),
         transaction.commit()
     }
 
-    /**
-     * 初始化百度地图位置服务配置
-     */
-    private fun initLocation() {
-
-        val option = LocationClientOption()
-        option.locationMode = LocationClientOption.LocationMode.Hight_Accuracy
-        //可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
-
-        option.setCoorType("bd09ll")
-        //可选，默认gcj02，设置返回的定位结果坐标系
-
-        val span = 1000
-        option.setScanSpan(span)
-        //可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
-
-        option.setIsNeedAddress(true)
-        //可选，设置是否需要地址信息，默认不需要
-
-        option.isOpenGps = true
-        //可选，默认false,设置是否使用gps
-
-        option.isLocationNotify = true
-        //可选，默认false，设置是否当GPS有效时按照1S/1次频率输出GPS结果
-
-        option.setIsNeedLocationDescribe(true)
-        //可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
-
-        option.setIsNeedLocationPoiList(true)
-        //可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
-
-        option.setIgnoreKillProcess(false)
-        //可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
-
-        //option.setIgnoreCacheException(false);
-        //可选，默认false，设置是否收集CRASH信息，默认收集
-
-        option.setEnableSimulateGps(false)
-        //可选，默认false，设置是否需要过滤GPS仿真结果，默认需要
-
-        //option.setWifiValidTime(5*60*1000);
-        //可选，7.2版本新增能力，如果您设置了这个接口，首次启动定位时，会先判断当前WiFi是否超出有效期，超出有效期的话，会先重新扫描WiFi，然后再定位
-
-        mLocationClient!!.locOption = option
-    }
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.civLoginQQ ->
-                //NewsManager.getInstance().auth(QQ, this);
-                ThemeUtils.show(this, "QQ登录暂未开放")
-            R.id.civLoginWechat -> NewsManager.Companion.get().auth(WeChat, this)
-            R.id.civLoginWeibo -> NewsManager.Companion.get().auth(Sina, this)
+        //R.id.civLoginQQ -> ThemeUtils.show(this, "QQ登录暂未开放")
+        //R.id.civLoginWechat -> NewsManager.Companion.get().auth(WeChat, this)
+            R.id.civLoginWeibo -> NewsManager.get().auth(Sina, this)
             R.id.iavFontSize -> {
             }
             R.id.itvClearCache -> {
@@ -311,8 +268,8 @@ class HomeActivity : BaseActivity(),
             ORDER_4G_REMIND -> {
             }
             ORDER_HEAD_LINE -> {
-                if (JPushInterface.isPushStopped(application))
-                    JPushInterface.resumePush(application)
+/*                if (JPushInterface.isPushStopped(application))
+                    JPushInterface.resumePush(application)*/
                 CacheUtils.setCache("JPush", true)
             }
             ORDER_DOWNLOAD_ONLY_WIFI -> CacheUtils.setCache("isvImageDownloadOnlyWifi", true)
@@ -333,8 +290,8 @@ class HomeActivity : BaseActivity(),
             ORDER_4G_REMIND -> {
             }
             ORDER_HEAD_LINE -> {
-                if (!JPushInterface.isPushStopped(application))
-                    JPushInterface.stopPush(application)
+/*                if (!JPushInterface.isPushStopped(application))
+                    JPushInterface.stopPush(application)*/
                 CacheUtils.setCache("JPush", false)
             }
             ORDER_DOWNLOAD_ONLY_WIFI -> CacheUtils.setCache("isvImageDownloadOnlyWifi", false)
@@ -385,125 +342,19 @@ class HomeActivity : BaseActivity(),
         return super.onKeyDown(keyCode, event)
     }
 
-    internal inner class MyLocationListener : BDLocationListener {
-
+    inner class MyLocationListener : BDAbstractLocationListener() {
         override fun onReceiveLocation(location: BDLocation) {
+            //此处的BDLocation为定位结果信息类，通过它的各种get方法可获取定位相关的全部结果
+            //以下只列举部分获取地址相关的结果信息
+            //更多结果信息获取说明，请参照类参考中BDLocation类中的说明
 
-            //获取定位结果
-            location.time    //获取定位时间
-            location.locationID    //获取定位唯一ID，v7.2版本新增，用于排查定位问题
-            location.locType    //获取定位类型
-            location.latitude    //获取纬度信息
-            location.longitude    //获取经度信息
-            location.radius    //获取定位精准度
-            location.addrStr    //获取地址信息
-            location.country    //获取国家信息
-            location.countryCode    //获取国家码
-            location.city    //获取城市信息
-            location.cityCode    //获取城市码
-            location.district    //获取区县信息
-            location.street    //获取街道信息
-            location.streetNumber    //获取街道码
-            location.locationDescribe    //获取当前位置描述信息
-            location.poiList    //获取当前位置周边POI信息
-
-            location.buildingID    //室内精准定位下，获取楼宇ID
-            location.buildingName    //室内精准定位下，获取楼宇名称
-            location.floor    //室内精准定位下，获取当前位置所处的楼层信息
-
-            val address = (location.country + location.city + location.district
-                    + location.street + location.locationDescribe)
-            Log.v("address", address)
-            if (address == null)
-                return
-            mLocationClient!!.stop()
-            //mBinding.location=address
-            //tvLocationLeft.text = address
-
-            if (location.locType == BDLocation.TypeGpsLocation) {
-
-                //当前为GPS定位结果，可获取以下信息
-                location.speed    //获取当前速度，单位：公里每小时
-                location.satelliteNumber    //获取当前卫星数
-                location.altitude    //获取海拔高度信息，单位米
-                location.direction    //获取方向信息，单位度
-
-            } else if (location.locType == BDLocation.TypeNetWorkLocation) {
-                Toast.makeText(this@HomeActivity, location.operators, Toast.LENGTH_SHORT).show()
-                //当前为网络定位结果，可获取以下信息
-                location.operators    //获取运营商信息
-
-            } else if (location.locType == BDLocation.TypeOffLineLocation) {
-                Toast.makeText(this@HomeActivity, location.city, Toast.LENGTH_SHORT).show()
-                //当前为网络定位结果
-
-            } else if (location.locType == BDLocation.TypeServerError) {
-                Toast.makeText(this@HomeActivity, "当前网络定位失败", Toast.LENGTH_SHORT).show()
-                //当前网络定位失败
-                //可将定位唯一ID、IMEI、定位失败时间反馈至loc-bugs@baidu.com
-
-            } else if (location.locType == BDLocation.TypeNetWorkException) {
-                Toast.makeText(this@HomeActivity, "当前网络不通", Toast.LENGTH_SHORT).show()
-                //当前网络不通
-
-            } else if (location.locType == BDLocation.TypeCriteriaException) {
-                Toast.makeText(this@HomeActivity, "当前缺少定位依据，可能是用户没有授权，建议弹出提示框让用户开启权限", Toast.LENGTH_SHORT).show()
-                //当前缺少定位依据，可能是用户没有授权，建议弹出提示框让用户开启权限
-                //可进一步参考onLocDiagnosticMessage中的错误返回码
-
-            }
-        }
-
-        /**
-         * 回调定位诊断信息，开发者可以根据相关信息解决定位遇到的一些问题
-         * 自动回调，相同的diagnosticType只会回调一次
-         *
-         * @param locType           当前定位类型
-         * @param diagnosticType    诊断类型（1~9）
-         * @param diagnosticMessage 具体的诊断信息释义
-         */
-        fun onLocDiagnosticMessage(locType: Int, diagnosticType: Int, diagnosticMessage: String) {
-
-            if (diagnosticType == LocationClient.LOC_DIAGNOSTIC_TYPE_BETTER_OPEN_GPS) {
-
-                //建议打开GPS
-
-            } else if (diagnosticType == LocationClient.LOC_DIAGNOSTIC_TYPE_BETTER_OPEN_WIFI) {
-
-                //建议打开wifi，不必连接，这样有助于提高网络定位精度！
-
-            } else if (diagnosticType == LocationClient.LOC_DIAGNOSTIC_TYPE_NEED_CHECK_LOC_PERMISSION) {
-
-                //定位权限受限，建议提示用户授予APP定位权限！
-
-            } else if (diagnosticType == LocationClient.LOC_DIAGNOSTIC_TYPE_NEED_CHECK_NET) {
-
-                //网络异常造成定位失败，建议用户确认网络状态是否异常！
-
-            } else if (diagnosticType == LocationClient.LOC_DIAGNOSTIC_TYPE_NEED_CLOSE_FLYMODE) {
-
-                //手机飞行模式造成定位失败，建议用户关闭飞行模式后再重试定位！
-
-            } else if (diagnosticType == LocationClient.LOC_DIAGNOSTIC_TYPE_NEED_INSERT_SIMCARD_OR_OPEN_WIFI) {
-
-                //无法获取任何定位依据，建议用户打开wifi或者插入sim卡重试！
-
-            } else if (diagnosticType == LocationClient.LOC_DIAGNOSTIC_TYPE_NEED_OPEN_PHONE_LOC_SWITCH) {
-
-                //无法获取有效定位依据，建议用户打开手机设置里的定位开关后重试！
-
-            } else if (diagnosticType == LocationClient.LOC_DIAGNOSTIC_TYPE_SERVER_FAIL) {
-
-                //百度定位服务端定位失败
-                //建议反馈location.getLocationID()和大体定位时间到loc-bugs@baidu.com
-
-            } else if (diagnosticType == LocationClient.LOC_DIAGNOSTIC_TYPE_FAIL_UNKNOWN) {
-
-                //无法获取有效定位依据，但无法确定具体原因
-                //建议检查是否有安全软件屏蔽相关定位权限
-                //或调用LocationClient.restart()重新启动后重试！
-
-            }
+            val addr = location.addrStr    //获取详细地址信息
+            val country = location.country    //获取国家
+            val province = location.province    //获取省份
+            val city = location.city    //获取城市
+            val district = location.district    //获取区县
+            val street = location.street    //获取街道信息
+            tvLocationLeft.text = addr
         }
     }
 

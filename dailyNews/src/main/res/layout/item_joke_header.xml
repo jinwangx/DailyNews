@@ -1,45 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="joke"
+            type="com.jw.dailyNews.bean.Joke" />
+
+        <import type="com.jw.dailyNews.utils.DateUtils" />
+
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener"/>
+
+    </data>
+
+<LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
 
-    <LinearLayout  android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="40dp">
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@id/ivIconPublisher"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center_vertical"
-            />
+            app:uri="@{joke.u.header[0]}"/>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+
             <TextView
-                android:gravity="center_vertical"
                 android:id="@id/tvNamePublisher"
-                android:text="步步高升"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:textColor="@android:color/holo_blue_light"
-                />
-            <TextView
                 android:gravity="center_vertical"
+                android:text="@{joke.u.name}"
+                android:textColor="@android:color/holo_blue_light" />
+
+            <TextView
                 android:id="@id/tvTimePublish"
-                android:text="2017-07-20"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp" />
+                android:layout_height="20dp"
+                android:gravity="center_vertical"
+                android:text='@{DateUtils.fromNow("yyyy-MM-dd HH:mm:ss", joke.passtime)}' />
         </LinearLayout>
     </LinearLayout>
+
     <TextView
         android:id="@id/tvtTitleWcv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="10"
-        android:textColor="@android:color/black"
-        />
+        android:text="@{joke.text}"
+        android:textColor="@android:color/black" />
 </LinearLayout>
+</layout>

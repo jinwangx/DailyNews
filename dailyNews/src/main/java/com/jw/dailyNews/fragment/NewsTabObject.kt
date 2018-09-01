@@ -143,11 +143,11 @@ class NewsTabObject : BaseFragment(), SwipeRefreshLayout.OnRefreshListener,
                 urls.add(news.link!!)
             }
         }
-        topNewsAdapter = TopNewsAdapter(this!!.context!!, links, descs, urls)
-        viewpager!!.adapter = topNewsAdapter
-        viewpager!!.addOnPageChangeListener(this)
-        indicator!!.setViewPager(viewpager)
-        indicator!!.setCurrentItem(currentPosition)
+        topNewsAdapter = TopNewsAdapter(context!!, links, descs, urls)
+        viewpager.adapter = topNewsAdapter
+        viewpager.addOnPageChangeListener(this)
+        indicator.setViewPager(viewpager)
+        indicator.setCurrentItem(currentPosition)
         topTitle.text = descs[currentPosition]
         val message = Message.obtain()
         message.what = STATE_IMAGE_CIRCLE

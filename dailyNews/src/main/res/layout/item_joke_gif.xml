@@ -1,24 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    >
+    <data>
 
-    <include
-        layout="@layout/item_joke_header"
-        />
+        <variable
+            name="joke"
+            type="com.jw.dailyNews.bean.Joke" />
+
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
+
+
+    </data>
+
     <LinearLayout
-        android:id="@+id/llGif"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:orientation="vertical"
-        >
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/item_joke_header"
+            app:joke="@{joke}" />
+
+
+        <LinearLayout
+            android:id="@+id/llGif"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:onClick="@{clickListener}"
+            android:orientation="vertical" />
+
+        <include
+            android:id="@+id/bottom"
+            layout="@layout/item_joke_bottom"
+            app:joke="@{joke}"
+            app:clickListener="@{clickListener}"/>
     </LinearLayout>
-    <include
-        layout="@layout/item_joke_bottom"
-        />
-</LinearLayout>
+</layout>

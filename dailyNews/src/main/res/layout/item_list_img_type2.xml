@@ -1,73 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="170dp"
-    android:padding="5dp"
-    >
-    <TextView
-        android:id="@id/title_type2"
-        style="@style/news_title"
-        android:layout_height="wrap_content"
-        android:text="宁乡水灾：一家5人靠冰箱残食熬了三天三夜"
-        />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal"
-        >
-        <ImageView
-            android:padding="2dp"
-            android:layout_weight="1"
-            android:id="@id/image1_type2"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:scaleType="fitXY"
-            />
-        <ImageView
-            android:padding="2dp"
-            android:layout_weight="1"
-            android:id="@id/image2_type2"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:scaleType="fitXY"
-            />
-        <ImageView
-            android:padding="2dp"
-            android:layout_weight="1"
-            android:id="@id/image3_type2"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:scaleType="fitXY"
-            />
-    </LinearLayout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="news"
+            type="com.jw.dailyNews.bean.NewsNormal" />
+
+        <import type="com.jw.dailyNews.utils.DateUtils" />
+
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="22dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        >
-        <TextView
-            android:layout_weight="12"
-            android:id="@id/category_type2"
-            style="@style/news_category"
-            android:text="新闻"
-            />
-
-        <View
-            style="@style/news_line"/>
+        android:layout_height="170dp"
+        android:orientation="vertical"
+        android:padding="5dp">
 
         <TextView
-            style="@style/news_time"
-            android:id="@id/time_type2"
-            android:layout_weight="2"
-            android:gravity="center"
-            />
-        <TextView
-            style="@style/news_tcount"
-            android:layout_weight="2"
-            android:id="@id/tcount_type2"
-            android:text="1.3万"
-            />
+            style="@style/news_title"
+            android:layout_height="wrap_content"
+            android:text="@{news.title}" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:padding="2dp"
+                android:scaleType="fitXY"
+                app:uri="@{news.imgextra[0].imgsrc}" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:padding="2dp"
+                android:scaleType="fitXY"
+                app:uri="@{news.imgextra[1].imgsrc}" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:padding="2dp"
+                android:scaleType="fitXY"
+                app:uri="@{news.imgextra[2].imgsrc}" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="22dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/news_category"
+                android:layout_weight="12"
+                android:text="@{news.source}" />
+
+            <View style="@style/news_line" />
+
+            <TextView
+                style="@style/news_time"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text='@{DateUtils.fromNow("yyyy-MM-dd HH:mm:ss", news.ptime)}' />
+
+            <TextView
+                style="@style/news_tcount"
+                android:layout_weight="2"
+                android:text='@{news.commentCount+""}' />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</layout>

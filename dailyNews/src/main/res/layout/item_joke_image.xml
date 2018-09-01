@@ -1,38 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    >
-    <include
-        layout="@layout/item_joke_header"
-        />
-    <FrameLayout
+    <data>
+
+        <variable
+            name="joke"
+            type="com.jw.dailyNews.bean.Joke" />
+
+
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
+
+    </data>
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        >
-        <ImageView
-            android:layout_gravity="center_horizontal"
-            android:id="@id/ivImage"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            />
-        <TextView
-            android:layout_gravity="bottom"
-            android:gravity="center"
-            android:id="@id/tvLarge"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/item_joke_header"
+            app:joke="@{joke}" />
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="点击查看大图"
-            android:textSize="20sp"
-            />
-    </FrameLayout>
-    <include
-        layout="@layout/item_joke_bottom"
-        />
-</LinearLayout>
+            android:layout_height="300dp">
+
+            <ImageView
+                android:id="@id/ivImage"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                app:uri="@{joke.image.big[0]}" />
+
+            <TextView
+                android:id="@id/tvLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:gravity="center"
+                android:onClick="@{clickListener}"
+                android:text="点击查看大图"
+                android:textSize="20sp" />
+        </FrameLayout>
+
+        <include
+            android:id="@+id/bottom"
+            layout="@layout/item_joke_bottom"
+            app:joke="@{joke}"
+            app:clickListener="@{clickListener}"/>
+
+    </LinearLayout>
+
+</layout>

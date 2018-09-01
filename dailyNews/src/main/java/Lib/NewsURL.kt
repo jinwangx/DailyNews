@@ -13,8 +13,7 @@ import java.util.*
 object NewsURL {
     //网易新闻
     var WANGYI_BASE_HTTP = "http://3g.163.com"
-    //百思不得姐笑话链接,一次获取80条数据
-    var BAISIBUDEJIE_JOKE_HTTP = "http://s.budejie.com/topic/list/jingxuan/1/budejie-android-"+Random().nextInt(10)+"."+Random().nextInt(10)+"."+Random().nextInt(10)+"/0-80.json"
+    val BAISIBUDEJIE_JOKE_HTTP="http://s.budejie.com/topic/list/jingxuan/1/budejie-android-"+(Random().nextInt(18)+4)+"."+(Random().nextInt(18)+4)+"."+(Random().nextInt(18)+4)+"/0-80.json"
 
     /**
      * 新闻板块
@@ -31,10 +30,8 @@ object NewsURL {
     var URL_HTTP_GAME = WANGYI_BASE_HTTP + "/touch/reconstruct/article/list/BAI6RHDKwangning/"    //游戏
     var URL_HTTP_EDU = WANGYI_BASE_HTTP + "/touch/reconstruct/article/list/BA8FF5PRwangning/"    //教育
     var URL_HTTP_OWN = WANGYI_BASE_HTTP + "/touch/reconstruct/article/list/BAI5E21Owangning/"    //独家
-
-    fun getVideoUrl():String{
-        return "http://s.budejie.com/topic/list/jingxuan/1/budejie-android-"+Random().nextInt(10)+"."+Random().nextInt(10)+"."+Random().nextInt(10)+"/0-80.json"
-    }
+    //百思不得姐笑话链接,一次获取80条数据
+    fun getVideoUrl() ="http://s.budejie.com/topic/list/jingxuan/1/budejie-android-19/0-80.json"
 
     /**
      * 方便格式工厂根据tag造fragment
