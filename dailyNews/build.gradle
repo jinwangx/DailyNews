@@ -30,7 +30,7 @@ android {
         multiDexEnabled true
 
         ndk {
-            abiFilters 'armeabi'
+            abiFilters 'armeabi','x86'
         }
 
         javaCompileOptions {
@@ -104,7 +104,6 @@ dependencies {
     implementation dependencies.viewpagerindicator
     implementation dependencies.sththo
     implementation dependencies.sththoOkhttp
-    kapt dependencies.databinding
 
 }
 repositories {

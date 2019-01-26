@@ -1,103 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--webView-->
-    <item type="id" name="webView">false</item>
+    <item type="id" name="webView"/>
 
     <!--HomeActivity-->
-    <item type="id" name="dl">false</item>
-    <item type="id" name="flHome">false</item>
-    <item type="id" name="rbGroup">false</item>
-    <item type="id" name="rbShouye">false</item>
-    <item type="id" name="rbVideo">false</item>
-    <item type="id" name="rbDirbroad">false</item>
-    <item type="id" name="rbMe">false</item>
-    <item type="id" name="civMeLeft">false</item>
-    <item type="id" name="tvNameLeft">false</item>
-    <item type="id" name="civLoginQQ">false</item>
-    <item type="id" name="civLoginWechat">false</item>
-    <item type="id" name="civLoginWeibo">false</item>
+    <item type="id" name="dl"/>
+    <item type="id" name="flHome"/>
+    <item type="id" name="rbGroup"/>
+    <item type="id" name="rbShouye"/>
+    <item type="id" name="rbVideo"/>
+    <item type="id" name="rbDirbroad"/>
+    <item type="id" name="rbMe"/>
+    <item type="id" name="civMeLeft"/>
+    <item type="id" name="tvNameLeft"/>
+    <item type="id" name="civLoginQQ"/>
+    <item type="id" name="civLoginWechat"/>
+    <item type="id" name="civLoginWeibo"/>
 
     <!--MeFragment-->
-    <item type="id" name="rlMef">false</item>
-    <item type="id" name="civMef">false</item>
-    <item type="id" name="tvNamef">false</item>
-    <item type="id" name="tvDescf">false</item>
-    <item type="id" name="tvWeibo">false</item>
-    <item type="id" name="tvNumFans">false</item>
-    <item type="id" name="tvNumConcerns">false</item>
+    <item type="id" name="rlMef"/>
+    <item type="id" name="civMef"/>
+    <item type="id" name="tvNamef"/>
+    <item type="id" name="tvDescf"/>
+    <item type="id" name="tvWeibo"/>
+    <item type="id" name="tvNumFans"/>
+    <item type="id" name="tvNumConcerns"/>
 
     <!--SettingActivity-->
-    <item type="id" name="siv_style">false</item>
+    <item type="id" name="siv_style"/>
 
     <!--loginDialog-->
-    <item type="id" name="tvCancelExit">false</item>
-    <item type="id" name="tvOkExit">false</item>
+    <item type="id" name="tvCancelExit"/>
+    <item type="id" name="tvOkExit"/>
 
 
-    <item type="id" name="rlSplash">false</item>
+    <item type="id" name="rlSplash"/>
 
 
-    <item type="id" name="tpiShouye">false</item>
-    <item type="id" name="vpShouye">false</item>
-    <item type="id" name="iv_back">false</item>
-    <item type="id" name="image_large">false</item>
+    <item type="id" name="tpiShouye"/>
+    <item type="id" name="vpShouye"/>
+    <item type="id" name="iv_back"/>
+    <item type="id" name="image_large"/>
 
     <!--item_bottom-->
-    <item type="id" name="ibUp">false</item>
-    <item type="id" name="tvUp">false</item>
-    <item type="id" name="ibDown">false</item>
-    <item type="id" name="tvDown">false</item>
-    <item type="id" name="ibForward">false</item>
-    <item type="id" name="tvForward">false</item>
-    <item type="id" name="ibComment">false</item>
-    <item type="id" name="tvNumComment">false</item>
-    <item type="id" name="topComments">false</item>
+    <item type="id" name="ibUp"/>
+    <item type="id" name="tvUp"/>
+    <item type="id" name="ibDown"/>
+    <item type="id" name="tvDown"/>
+    <item type="id" name="ibForward"/>
+    <item type="id" name="tvForward"/>
+    <item type="id" name="ibComment"/>
+    <item type="id" name="tvNumComment"/>
+    <item type="id" name="topComments"/>
 
     <!--item_header-->
-    <item type="id" name="ivIconPublisher">false</item>
-    <item type="id" name="tvNamePublisher">false</item>
-    <item type="id" name="tvTimePublish">false</item>
-    <item type="id" name="tvTitle">false</item>
+    <item type="id" name="ivIconPublisher"/>
+    <item type="id" name="tvNamePublisher"/>
+    <item type="id" name="tvTimePublish"/>
+    <item type="id" name="tvTitle"/>
 
     <!--item_middle-->
-    <item type="id" name="ivImage">false</item>
-    <item type="id" name="tvLarge">false</item>
-    <item type="id" name="jcPlayer">false</item>
-    <item type="id" name="gif">false</item>
+    <item type="id" name="ivImage"/>
+    <item type="id" name="tvLarge"/>
+    <item type="id" name="jcPlayer"/>
+    <item type="id" name="gif"/>
 
     <!--news_type-->
-    <item type="id" name="image_type1">false</item>
-    <item type="id" name="title_type1">false</item>
-    <item type="id" name="category_type1">false</item>
-    <item type="id" name="time_type1">false</item>
-    <item type="id" name="tcount_type1">false</item>
-    <item type="id" name="title_type2">false</item>
-    <item type="id" name="image1_type2">false</item>
-    <item type="id" name="image2_type2">false</item>
-    <item type="id" name="image3_type2">false</item>
-    <item type="id" name="category_type2">false</item>
-    <item type="id" name="time_type2">false</item>
-    <item type="id" name="tcount_type2">false</item>
-    <item type="id" name="title_type3">false</item>
-    <item type="id" name="image_type3">false</item>
-    <item type="id" name="category_type3">false</item>
-    <item type="id" name="time_type3">false</item>
-    <item type="id" name="tcount_type3">false</item>
+    <item type="id" name="image_type1"/>
+    <item type="id" name="title_type1"/>
+    <item type="id" name="category_type1"/>
+    <item type="id" name="time_type1"/>
+    <item type="id" name="tcount_type1"/>
+    <item type="id" name="title_type2"/>
+    <item type="id" name="image1_type2"/>
+    <item type="id" name="image2_type2"/>
+    <item type="id" name="image3_type2"/>
+    <item type="id" name="category_type2"/>
+    <item type="id" name="time_type2"/>
+    <item type="id" name="tcount_type2"/>
+    <item type="id" name="title_type3"/>
+    <item type="id" name="image_type3"/>
+    <item type="id" name="category_type3"/>
+    <item type="id" name="time_type3"/>
+    <item type="id" name="tcount_type3"/>
 
     <!--item_load_more-->
-    <item type="id" name="rl_more_loading">false</item>
-    <item type="id" name="rl_more_error">false</item>
-    <item type="id" name="rl_no_more">false</item>
+    <item type="id" name="rl_more_loading"/>
+    <item type="id" name="rl_more_error"/>
+    <item type="id" name="rl_no_more"/>
 
     <!--swipe_refresh_layout-->
-    <item type="id" name="srl">false</item>
-    <item type="id" name="rv">false</item>
+    <item type="id" name="srl"/>
+    <item type="id" name="rv"/>
     <!--toolBar-->
-    <item type="id" name="tb">false</item>
-    <item type="id" name="tbTitle">false</item>
+    <item type="id" name="tb"/>
+    <item type="id" name="tbTitle"/>
 
     <!--top_news-->
-    <item type="id" name="vpTopNews">false</item>
-    <item type="id" name="tvTopNews">false</item>
-    <item type="id" name="cpiTopNews">false</item>
+    <item type="id" name="vpTopNews"/>
+    <item type="id" name="tvTopNews"/>
+    <item type="id" name="cpiTopNews"/>
 </resources>
