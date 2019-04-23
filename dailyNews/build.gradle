@@ -81,7 +81,7 @@ dependencies {
     implementation files('libs/BaiduLBS_Android.jar')
     //noinspection GradleCompatible
     annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
-    implementation 'fm.jiecao:jiecaovideoplayer:5.7'
+    implementation 'fm.jiecao:jiecaovideoplayer:5.8.1'
 
     def dependencies = rootProject.ext.compileDependencies
     implementation dependencies.supportV7
@@ -94,16 +94,16 @@ dependencies {
     implementation dependencies.photoView
     implementation dependencies.rxjava
     implementation dependencies.rxandroid
-    implementation dependencies.jsoup
-    implementation dependencies.gson
-    implementation dependencies.glideOkhttp3Integration
+    implementation 'org.jsoup:jsoup:1.11.3'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.github.bumptech.glide:okhttp3-integration:4.9.0'
     implementation dependencies.progressmanager
-    implementation dependencies.gifDrawable
-    implementation dependencies.circleimageview
-    implementation dependencies.okhttp
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.16'
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.14.1'
     implementation dependencies.viewpagerindicator
-    implementation dependencies.sththo
-    implementation dependencies.sththoOkhttp
+    implementation 'com.facebook.stetho:stetho:1.5.1'
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
 
 }
 repositories {
