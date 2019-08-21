@@ -26,7 +26,7 @@ public class GlideUtils {
      * @param view 加载图片的view
      */
     public static void load(Context context, String url, ImageView view){
-        if((isvImageDownloadOnlyWifi&&isWIFI)||!isvImageDownloadOnlyWifi)
+        if(!isvImageDownloadOnlyWifi || isWIFI)
             Glide.with(context).load(url).apply(BaseApplication.Companion.getOptions()).into(view);
     }
 }

@@ -28,16 +28,11 @@ import java.util.*
  */
 
 class NewsManager private constructor() {
-    private val client: OkHttpClient
-    private val context: Context
+    private val client: OkHttpClient = BaseApplication.okHttpClient
+    private val context: Context = MyNews.get().context
 
     private var mInfoListener: ShowUserListener? = null
     private var mAuthListener: AuthListener? = null
-
-    init {
-        this.context = MyNews.get().context
-        client = BaseApplication.okHttpClient
-    }
 
     /**
      * 平台认证

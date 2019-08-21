@@ -23,7 +23,6 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
--keepnames class * com.mypackage.MyGlideModule
  -keep class me.jessyan.progressmanager.** { *; }
  -keep interface me.jessyan.progressmanager.** { *; }
  -keep class com.iflytek.**{*;}
@@ -39,4 +38,12 @@
  -dontwarn com.sina.**
  -dontwarn com.mob.**
  -dontwarn **.R$*
+
+ -keep public class * implements com.bumptech.glide.module.GlideModule
+ -keep public class * extends com.bumptech.glide.module.AppGlideModule
+ -keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
+   **[] $VALUES;
+   public *;
+ }
+ -dontwarn com.bumptech.glide.load.resource.bitmap.VideoDecoder
 

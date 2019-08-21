@@ -6,10 +6,12 @@ import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.graphics.Color
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import com.android.databinding.library.baseAdapters.BR
 import com.jw.dailyNews.R
 import com.jw.dailyNews.bean.Joke
@@ -17,13 +19,10 @@ import com.jw.dailyNews.databinding.ItemJokeGifBinding
 import com.jw.dailyNews.databinding.ItemJokeImageBinding
 import com.jw.dailyNews.databinding.ItemJokeTextBinding
 import com.jw.dailyNews.databinding.ItemJokeVidioBinding
-import com.jw.dailyNews.utils.DateUtils
 import com.jw.dailyNews.utils.GlideUtils
 import com.jw.dailyNews.wiget.ImageDetailDialog
 import com.jw.dailyNews.wiget.ImageLoadingPage
-import de.hdodenhof.circleimageview.CircleImageView
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
 
 class JokeAdapter(context: Context, lists: List<Joke>) : DefaultAdapter<Joke>(context, lists) {
 
@@ -35,7 +34,7 @@ class JokeAdapter(context: Context, lists: List<Joke>) : DefaultAdapter<Joke>(co
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder? {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == ITEM_TYPE.ITEM_TYPE_IMAGE.ordinal) {
             ImageViewHolder(mInflater.inflate(R.layout.item_joke_image, parent, false))
         } else if (viewType == ITEM_TYPE.ITEM_TYPE_TEXT.ordinal) {
@@ -45,70 +44,70 @@ class JokeAdapter(context: Context, lists: List<Joke>) : DefaultAdapter<Joke>(co
         } else if (viewType == ITEM_TYPE.ITEM_TYPE_VIDEO.ordinal) {
             VideoViewHolder(mInflater.inflate(R.layout.item_joke_vidio, parent, false))
         } else {
-            null
+            ImageViewHolder(ImageView(mContext))
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val joke = lists[position]
-        var binding:ViewDataBinding?=null
+        var binding: ViewDataBinding? = null
         //评论内容
         when (holder) {
-            is TextViewHolder -> binding= DataBindingUtil.bind<ItemJokeTextBinding>(holder.itemView)!!
+            is TextViewHolder -> binding = DataBindingUtil.bind<ItemJokeTextBinding>(holder.itemView)!!
             is ImageViewHolder -> {
-                binding= DataBindingUtil.bind<ItemJokeImageBinding>(holder.itemView)!!
+                binding = DataBindingUtil.bind<ItemJokeImageBinding>(holder.itemView)!!
                 binding.setClickListener {
-                    when(it.id){
-                        R.id.tvLarge->{
+                    when (it.id) {
+                        R.id.tvLarge -> {
                             val dialog = ImageDetailDialog(mContext, joke.image!!.big!![0])
                             dialog.show()
                         }
-                        R.id.llForward-> NewsManager.get().showShare(joke.text!!, joke.image!!.thumbnail_small!![0], joke.share_url!!)
+                        R.id.llForward -> NewsManager.get().showShare(joke.text!!, joke.image!!.thumbnail_small!![0], joke.share_url!!)
                     }
                 }
             }
             is GifViewHolder -> {
-                binding= DataBindingUtil.bind<ItemJokeGifBinding>(holder.itemView)!!
+                binding = DataBindingUtil.bind<ItemJokeGifBinding>(holder.itemView)!!
                 val url = joke.gif!!.images!![0]
                 val imageLoadingPage = ImageLoadingPage(mContext)
                 imageLoadingPage.layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
                 binding.llGif.removeAllViews()
                 binding.llGif.addView(imageLoadingPage)
                 binding.setClickListener {
-                    when(it.id){
-                        R.id.llGif->{
+                    when (it.id) {
+                        R.id.llGif -> {
                             val dialog = ImageDetailDialog(mContext, joke.gif!!.images!![0])
                             dialog.show()
                         }
-                        R.id.llForward->NewsManager.get().showShare(joke.text!!, joke.gif!!.gif_thumbnail!![0], joke.share_url!!)
+                        R.id.llForward -> NewsManager.get().showShare(joke.text!!, joke.gif!!.gif_thumbnail!![0], joke.share_url!!)
                     }
                 }
                 imageLoadingPage.setImageUrl(url)
 
             }
             is VideoViewHolder -> {
-                binding= DataBindingUtil.bind<ItemJokeVidioBinding>(holder.itemView)!!
+                binding = DataBindingUtil.bind<ItemJokeVidioBinding>(holder.itemView)!!
                 binding.jcPlayer.setUp(joke.video!!.video!![0], JCVideoPlayer.SCREEN_LAYOUT_LIST, joke.text!!)
                 binding.setClickListener {
-                    when(it.id){
-                        R.id.llForward->NewsManager.get().showShare(joke.text!!, joke.video!!.thumbnail!![0],joke.share_url!!)
+                    when (it.id) {
+                        R.id.llForward -> NewsManager.get().showShare(joke.text!!, joke.video!!.thumbnail!![0], joke.share_url!!)
                     }
                 }
                 GlideUtils.load(mContext, joke.video!!.thumbnail!![0], binding.jcPlayer.thumbImageView)
             }
         }
-        binding!!.setVariable(BR.joke,joke)
-        addComment(joke,holder,binding)
+        binding!!.setVariable(BR.joke, joke)
+        addComment(joke, holder, binding)
     }
 
-    private fun addComment(joke:Joke,holder:RecyclerView.ViewHolder,binding:ViewDataBinding){
+    private fun addComment(joke: Joke, holder: RecyclerView.ViewHolder, binding: ViewDataBinding) {
         val top_comments = joke.top_comments
         if (top_comments != null && top_comments.size != 0) {
-            if(holder is TextViewHolder )
+            if (holder is TextViewHolder)
                 (binding as ItemJokeTextBinding).bottom!!.topComments.removeAllViews()
-            else if(holder is GifViewHolder)
+            else if (holder is GifViewHolder)
                 (binding as ItemJokeGifBinding).bottom!!.topComments.removeAllViews()
-            else if(holder is VideoViewHolder)
+            else if (holder is VideoViewHolder)
                 (binding as ItemJokeVidioBinding).bottom!!.topComments.removeAllViews()
             for (comment in top_comments) {
                 //行
@@ -132,16 +131,15 @@ class JokeAdapter(context: Context, lists: List<Joke>) : DefaultAdapter<Joke>(co
                 tv_name.layoutParams = layoutParams
                 tv_content.text = comment.content
                 tv_content.setTextColor(Color.BLACK)
-
                 linearLayout.addView(tv_name)
                 linearLayout.addView(tv_content)
                 linearLayout.setBackgroundColor(Color.parseColor("#ffd7d7d7"))
 
-                if(holder is TextViewHolder )
+                if (holder is TextViewHolder)
                     (binding as ItemJokeTextBinding).bottom!!.topComments.addView(linearLayout)
-                else if(holder is GifViewHolder)
+                else if (holder is GifViewHolder)
                     (binding as ItemJokeGifBinding).bottom!!.topComments.addView(linearLayout)
-                else if(holder is VideoViewHolder)
+                else if (holder is VideoViewHolder)
                     (binding as ItemJokeVidioBinding).bottom!!.topComments.addView(linearLayout)
             }
         }

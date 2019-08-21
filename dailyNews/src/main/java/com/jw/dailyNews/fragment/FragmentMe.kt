@@ -47,7 +47,7 @@ class FragmentMe : BaseFragment(), View.OnClickListener, NewsManager.AuthListene
         tvMWeibo!!.text = userInfos!!["credit_score"].toString() + ""
         tvMFans!!.text = userInfos!!["followers_count"].toString() + ""
         tvMConcerns!!.text = userInfos!!["friends_count"].toString() + ""
-        Glide.with(context).load(userInfos!!["profile_image_url"]).into(ivMe!!)
+        Glide.with(context!!).load(userInfos!!["profile_image_url"]).into(ivMe!!)
         false
     })
 

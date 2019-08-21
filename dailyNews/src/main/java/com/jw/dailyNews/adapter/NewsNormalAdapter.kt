@@ -31,21 +31,26 @@ class NewsNormalAdapter(context: Context, lists: List<NewsNormal>) : DefaultAdap
         ITEM_TYPE_3
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder? {
-        if (viewType == NewsNormalAdapter.ITEM_TYPE.ITEM_TYPE_0.ordinal) {
-            val view = mInflater.inflate(R.layout.item_null, parent, false)
-            return NewsNormalAdapter.Holder0(view)
-        } else if (viewType == NewsNormalAdapter.ITEM_TYPE.ITEM_TYPE_1.ordinal) {
-            val view = mInflater.inflate(R.layout.item_list_img_type1, parent, false)
-            return NewsNormalAdapter.Holder1(view)
-        } else if (viewType == NewsNormalAdapter.ITEM_TYPE.ITEM_TYPE_2.ordinal) {
-            val view = mInflater.inflate(R.layout.item_list_img_type2, parent, false)
-            return NewsNormalAdapter.Holder2(view)
-        } else if (viewType == NewsNormalAdapter.ITEM_TYPE.ITEM_TYPE_3.ordinal) {
-            val view = mInflater.inflate(R.layout.item_list_img_type3, parent, false)
-            return NewsNormalAdapter.Holder3(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        when (viewType) {
+            NewsNormalAdapter.ITEM_TYPE.ITEM_TYPE_0.ordinal -> {
+                val view = mInflater.inflate(R.layout.item_null, parent, false)
+                return NewsNormalAdapter.Holder0(view)
+            }
+            NewsNormalAdapter.ITEM_TYPE.ITEM_TYPE_1.ordinal -> {
+                val view = mInflater.inflate(R.layout.item_list_img_type1, parent, false)
+                return NewsNormalAdapter.Holder1(view)
+            }
+            NewsNormalAdapter.ITEM_TYPE.ITEM_TYPE_2.ordinal -> {
+                val view = mInflater.inflate(R.layout.item_list_img_type2, parent, false)
+                return NewsNormalAdapter.Holder2(view)
+            }
+            NewsNormalAdapter.ITEM_TYPE.ITEM_TYPE_3.ordinal -> {
+                val view = mInflater.inflate(R.layout.item_list_img_type3, parent, false)
+                return NewsNormalAdapter.Holder3(view)
+            }
+            else -> return NewsNormalAdapter.Holder0(ImageView(mContext))
         }
-        return null
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

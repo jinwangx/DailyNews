@@ -80,7 +80,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation files('libs/BaiduLBS_Android.jar')
     //noinspection GradleCompatible
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     implementation 'fm.jiecao:jiecaovideoplayer:5.7'
 
     def dependencies = rootProject.ext.compileDependencies

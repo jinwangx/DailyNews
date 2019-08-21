@@ -32,7 +32,7 @@ class NewsObjectAdapter(context: Context, mNewsList: List<NewsObject.News>) : De
         ITEM_TYPE_3
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder? {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == ITEM_TYPE.ITEM_TYPE_0.ordinal) {
             val view = mInflater.inflate(R.layout.item_null, parent, false)
             return Holder0(view)
@@ -46,7 +46,7 @@ class NewsObjectAdapter(context: Context, mNewsList: List<NewsObject.News>) : De
             val view = mInflater.inflate(R.layout.item_list_img_type3_object, parent, false)
             return Holder3(view)
         }
-        return null
+        return Holder0(ImageView(mContext))
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
